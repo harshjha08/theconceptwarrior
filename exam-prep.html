@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
+  <link rel="stylesheet" href="courses.css">
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -30,7 +31,7 @@
     </div>
     <div class="nav-actions">
       <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()"><i class="fas fa-moon" id="themeIcon"></i></button>
-      <button class="btn-primary btn-sm" onclick="openDemoPopup()">Free Demo</button>
+      <button id="demo-book-btn" class="btn-primary btn-sm" onclick="openDemoPopup()">Free Demo</button>
       <button class="hamburger" id="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
     </div>
   </div>
@@ -248,23 +249,23 @@
       <span class="section-eyebrow">Included in Every Program</span>
       <h2 class="section-title">Everything You Need to <span class="gradient-text">Succeed</span></h2>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px;" data-aos="fade-up" data-aos-delay="100">
-      <div class="why-card" style="text-align:center;">
+    <div class="css-fixing-why-card-parent" style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px;" data-aos="fade-up" data-aos-delay="100">
+      <div id="why-card-fixing" class="why-card" style="text-align:center;">
         <div class="why-icon blue" style="margin:0 auto 16px;"><i class="fas fa-book"></i></div>
         <h3>Handwritten Notes</h3>
         <p>Detailed, exam-ready notes for every chapter. Crafted specifically for the exam pattern.</p>
       </div>
-      <div class="why-card" style="text-align:center;">
+      <div id="why-card-fixing" class="why-card" style="text-align:center;">
         <div class="why-icon green" style="margin:0 auto 16px;"><i class="fas fa-video"></i></div>
         <h3>Recorded Lectures</h3>
         <p>All live sessions recorded and uploaded to your dashboard within 24 hours.</p>
       </div>
-      <div class="why-card" style="text-align:center;">
+      <div id="why-card-fixing" class="why-card" style="text-align:center;">
         <div class="why-icon orange" style="margin:0 auto 16px;"><i class="fas fa-clipboard-check"></i></div>
         <h3>Regular Mock Tests</h3>
         <p>Weekly chapter tests and monthly full-length exam simulations with analysis.</p>
       </div>
-      <div class="why-card" style="text-align:center;">
+      <div id="why-card-fixing" class="why-card" style="text-align:center;">
         <div class="why-icon purple" style="margin:0 auto 16px;"><i class="fas fa-comments"></i></div>
         <h3>WhatsApp Doubt Solving</h3>
         <p>Send doubts anytime. Sandeep Sir responds personally — no waiting 24 hours.</p>
@@ -310,8 +311,8 @@
   </div>
 </footer>
 
-<a href="https://wa.me/918427168892?text=Hello%20Sir%2C%20I%20would%20like%20to%20know%20more%20about%20The%20Concept%20Warriors." target="_blank" class="whatsapp-float"><i class="fab fa-whatsapp"></i><span class="wa-tooltip">Chat with Sir</span></a>
-<button class="back-to-top" id="backToTop" onclick="scrollToTop()"><i class="fas fa-chevron-up"></i></button>
+<!-- <a href="https://wa.me/918427168892?text=Hello%20Sir%2C%20I%20would%20like%20to%20know%20more%20about%20The%20Concept%20Warriors." target="_blank" class="whatsapp-float"><i class="fab fa-whatsapp"></i><span class="wa-tooltip">Chat with Sir</span></a>
+<button class="back-to-top" id="backToTop" onclick="scrollToTop()"><i class="fas fa-chevron-up"></i></button> -->
 
 <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 <script src="script.js"></script>

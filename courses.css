@@ -1,0 +1,46 @@
+/* Mobile */
+@media (max-width:768px){
+    .course-css{
+        display: flex;
+        overflow-x: auto;
+    }
+    .course-css::-webkit-scrollbar{
+        display: none;
+    }
+
+    .course-css-card{
+        min-width: 250px;
+        height: 240px;
+    }
+    .nav-actions{
+        display: flex;
+        align-items: center;
+        justify-content: right;
+        
+        width: 160px;
+    }
+    #demo-book-btn{
+        display: none;
+    }
+    .about-css-error-correction{
+        display: flex;
+        flex-direction: column;
+    }
+    .css-fixing-why-card-parent{
+        display: flex;
+        flex-direction: column;
+        overflow-x: auto;
+    }
+    .css-fixing-why-card-parent::-webkit-scrollbar{
+        display: none;
+    }
+    #why-card-fixing{
+        min-width: 250px;
+        height: 290px;
+    }
+    
+    
+   
+    
+
+}

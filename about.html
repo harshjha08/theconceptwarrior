@@ -9,7 +9,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
+  <link rel="stylesheet" href="courses.css">
   <link rel="stylesheet" href="style.css" />
+
 </head>
 <body>
 
@@ -34,7 +36,7 @@
     </div>
     <div class="nav-actions">
       <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()"><i class="fas fa-moon" id="themeIcon"></i></button>
-      <button class="btn-primary btn-sm" onclick="openDemoPopup()">Free Demo</button>
+      <button id="demo-book-btn" class="btn-primary btn-sm" onclick="openDemoPopup()">Free Demo</button>
       <button class="hamburger" id="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
     </div>
   </div>
@@ -70,7 +72,7 @@
   <div class="container">
     <div class="about-hero-grid">
       <div class="about-hero-content" data-aos="fade-right">
-        <span class="section-eyebrow">Meet Your Mentor</span>
+        <span class="section-eyebrow" style="width: max-content;">Meet Your Mentor</span>
         <h1 class="section-title" style="text-align:left;">The Teacher Who <span class="gradient-text">Changes Lives</span></h1>
         <p style="color:var(--text-muted);font-size:1.05rem;line-height:1.8;margin-bottom:28px;">With over a decade of experience and a deep passion for making science accessible, Sandeep Kumar has helped hundreds of students unlock their academic potential — not through shortcuts, but through genuine conceptual clarity.</p>
         <div style="display:flex;gap:12px;flex-wrap:wrap;">
@@ -106,7 +108,7 @@
   </div>
 </section>
 
-<!-- TEACHING PHILOSOPHY -->
+<!-- TEACHING PHILOSOPHY
 <section class="section" style="background:var(--bg-alt);">
   <div class="container">
     <div class="section-header" data-aos="fade-up">
@@ -155,6 +157,64 @@
         </div>
       </div>
     </div>
+  </div>
+</section> -->
+
+<!--Teaching Philosophy-->
+<section class="section">
+  <div class="container">
+    <div class="section-header" data-aos="fade-up">
+      <span class="section-eyebrow">Teaching Philosophy</span>
+      <h2 class="section-title">Why <span class="gradient-text">"Concept Warriors"?</span></h2>
+    </div>
+    <div class="about-css-error-correction" style="display:flex; flex-direction: column; gap:48px;align-items:center;" data-aos="fade-up" data-aos-delay="100">
+      <div>
+        <p style="font-size:1.05rem;color:var(--text-muted);line-height:1.9;margin-bottom:20px;">The name isn't just a brand — it's a philosophy. A Concept Warrior is a student who doesn't just memorize answers but truly understands why things work the way they do. This kind of understanding makes every problem feel familiar, every exam feel manageable.
+          Sandeep Sir believes that when a student truly understands a concept, their confidence transforms. They stop fearing exams and start approaching them with strategy and calm. That is the transformation we aim for — not just better marks, but a better mindset.
+        </p>
+        
+        <div style="display:flex;flex-direction:column;gap:14px;">
+          <div style="display:flex;gap:14px;align-items:flex-start;">
+            <div style="width:40px;height:40px;border-radius:10px;background:rgba(79,70,229,.1);display:flex;align-items:center;justify-content:center;color:var(--primary);flex-shrink:0;"><i class="fas fa-brain"></i></div>
+            <div><strong>Concept Over Rote</strong><p style="font-size:0.85rem;color:var(--text-muted);margin-top:3px;">Understanding is always prioritized over memorization. Real learning is durable.</p></div>
+          </div>
+          <div style="display:flex;gap:14px;align-items:flex-start;">
+            <div style="width:40px;height:40px;border-radius:10px;background:rgba(16,185,129,.1);display:flex;align-items:center;justify-content:center;color:var(--success);flex-shrink:0;"><i class="fas fa-heart"></i></div>
+            <div><strong>Patience & Empathy</strong><p style="font-size:0.85rem;color:var(--text-muted);margin-top:3px;">Every student learns differently. No question is too simple; every doubt is valid.</p></div>
+          </div>
+          <div style="display:flex;gap:14px;align-items:flex-start;">
+            <div style="width:40px;height:40px;border-radius:10px;background:rgba(245,158,11,.1);display:flex;align-items:center;justify-content:center;color:var(--accent);flex-shrink:0;"><i class="fas fa-bullseye"></i></div>
+            <div><strong>Exam-Aware Teaching</strong><p style="font-size:0.85rem;color:var(--text-muted);margin-top:3px;">Content is taught with the exam pattern in mind — high-yield topics, MCQ strategy, and time management.</p></div>
+          </div>
+        </div>
+      </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+        <div class="why-card" style="text-align:center;padding:24px 16px;">
+          <div style="font-size:2rem;margin-bottom:8px;">🎯</div>
+          <strong style="display:block;margin-bottom:4px;">Personalized Plans</strong>
+          <p style="font-size:0.8rem;">Custom syllabus based on your current level and goal.</p>
+        </div>
+        <div class="why-card" style="text-align:center;padding:24px 16px;">
+          <div style="font-size:2rem;margin-bottom:8px;">📝</div>
+          <strong style="display:block;margin-bottom:4px;">Detailed Notes</strong>
+          <p style="font-size:0.8rem;">Handwritten, concept-dense, exam-ready notes.</p>
+        </div>
+        <div class="why-card" style="text-align:center;padding:24px 16px;">
+          <div style="font-size:2rem;margin-bottom:8px;">🔁</div>
+          <strong style="display:block;margin-bottom:4px;">Regular Revision</strong>
+          <p style="font-size:0.8rem;">Spaced repetition built into every curriculum.</p>
+        </div>
+        <div class="why-card" style="text-align:center;padding:24px 16px;">
+          <div style="font-size:2rem;margin-bottom:8px;">💬</div>
+          <strong style="display:block;margin-bottom:4px;">Always Available</strong>
+          <p style="font-size:0.8rem;">WhatsApp doubt clearing — even outside class hours.</p>
+        </div>
+      </div>
+
+    </div>
+
+
+
   </div>
 </section>
 
