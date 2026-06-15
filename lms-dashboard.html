@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Dashboard | The Concept Warriors LMS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body { overflow-x: hidden; }
+    .lms-sidebar-logo { display: flex; align-items: center; gap: 10px; }
+    .lms-sidebar-logo .logo-brand, .lms-sidebar-logo .logo-sub { color: var(--text) !important; }
+    .mobile-menu-toggle {
+      display: none; position: fixed; top: 16px; left: 16px; z-index: 200;
+      width: 40px; height: 40px; border-radius: 8px;
+      background: var(--primary); color: #fff; font-size: 1rem;
+      align-items: center; justify-content: center;
+    }
+    @media (max-width: 900px) {
+      .lms-sidebar { transform: translateX(-100%); transition: transform 0.3s; width: 260px; }
+      .lms-sidebar.open { transform: translateX(0); }
+      .lms-main { margin-left: 0 !important; }
+      .mobile-menu-toggle { display: flex; }
+      .lms-stats { grid-template-columns: 1fr 1fr; }
+      .lms-cards-row { grid-template-columns: 1fr; }
+      .notes-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 480px) {
+      .lms-stats { grid-template-columns: 1fr; }
+      .notes-grid { grid-template-columns: 1fr; }
+    }
+    .nav-section-label {
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--text-light);
+      padding: 12px 12px 4px;
+    }
+    .lms-sidebar-footer {
+      padding: 16px 12px; border-top: 1px solid var(--border);
+    }
+    .user-card {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 12px; border-radius: var(--radius-sm);
+      background: var(--bg-alt); margin-bottom: 10px;
+    }
+    .user-card .user-name { font-size: 0.85rem; font-weight: 700; }
+    .user-card .user-email { font-size: 0.72rem; color: var(--text-muted); }
+    .test-result-item {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 0; border-bottom: 1px solid var(--border);
+    }
+    .test-result-item:last-child { border-bottom: none; }
+    .test-score-circle {
+      width: 48px; height: 48px; border-radius: 50%; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 0.85rem;
+    }
+    .score-high { background: rgba(16,185,129,.15); color: var(--success); }
+    .score-mid { background: rgba(245,158,11,.15); color: var(--accent); }
+    .score-low { background: rgba(239,68,68,.15); color: var(--danger); }
+    .test-info .test-name { font-size: 0.875rem; font-weight: 600; }
+    .test-info .test-date { font-size: 0.75rem; color: var(--text-muted); }
+    .test-rank { margin-left: auto; text-align: right; }
+    .test-rank .rank-val { font-size: 0.9rem; font-weight: 700; color: var(--primary); }
+    .test-rank .rank-lbl { font-size: 0.7rem; color: var(--text-muted); }
+    .download-item {
+      display: flex; align-items: center; gap: 14px;
+      padding: 14px 0; border-bottom: 1px solid var(--border);
+    }
+    .download-item:last-child { border-bottom: none; }
+    .download-icon {
+      width: 44px; height: 44px; border-radius: 10px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; font-size: 1.2rem;
+    }
+    .dl-pdf { background: rgba(239,68,68,.1); color: var(--danger); }
+    .dl-ppt { background: rgba(245,158,11,.1); color: var(--accent); }
+    .dl-doc { background: rgba(59,130,246,.1); color: var(--physics); }
+    .download-info .dl-name { font-size: 0.875rem; font-weight: 600; margin-bottom: 2px; }
+    .download-info .dl-meta { font-size: 0.75rem; color: var(--text-muted); }
+    .download-btn {
+      margin-left: auto; padding: 7px 14px; border-radius: var(--radius-full);
+      font-size: 0.75rem; font-weight: 600; background: var(--primary); color: #fff;
+      transition: var(--transition);
+    }
+    .download-btn:hover { opacity: 0.85; }
+    .profile-section { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .profile-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 28px;
+    }
+    .profile-header { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; }
+    .profile-avatar-lg {
+      width: 72px; height: 72px; border-radius: 50%; flex-shrink: 0;
+      background: linear-gradient(135deg, var(--primary), #7C3AED);
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: 1.5rem; font-weight: 800;
+    }
+    .profile-info h3 { font-family: var(--font-display); font-weight: 700; font-size: 1.1rem; }
+    .profile-info p { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; }
+    .profile-detail { display: flex; flex-direction: column; gap: 12px; }
+    .profile-row { display: flex; justify-content: space-between; align-items: center; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+    .profile-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .profile-row .p-label { font-size: 0.78rem; color: var(--text-muted); }
+    .profile-row .p-value { font-size: 0.85rem; font-weight: 600; }
+    .badge-enrolled { background: rgba(16,185,129,.1); color: var(--success); padding: 3px 10px; border-radius: var(--radius-full); font-size: 0.72rem; font-weight: 700; }
+    @media (max-width: 768px) { .profile-section { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+<button class="mobile-menu-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+
+<div class="lms-layout">
+  <!-- SIDEBAR -->
+  <aside class="lms-sidebar" id="lmsSidebar">
+    <div class="lms-sidebar-header">
+      <div class="lms-sidebar-logo nav-logo">
+        <div class="logo-icon"><i class="fas fa-bolt"></i></div>
+        <div class="logo-text">
+          <span class="logo-brand">Concept Warriors</span>
+          <span class="logo-sub">Student Portal</span>
+        </div>
+      </div>
+    </div>
+
+    <nav class="lms-nav">
+      <p class="nav-section-label">Main</p>
+      <div class="lms-nav-item active" onclick="showSection('dashboard', this)">
+        <i class="fas fa-th-large"></i><span>Dashboard</span>
+      </div>
+      <div class="lms-nav-item" onclick="showSection('lectures', this)">
+        <i class="fas fa-play-circle"></i><span>Recorded Lectures</span>
+      </div>
+      <div class="lms-nav-item" onclick="showSection('notes', this)">
+        <i class="fas fa-file-alt"></i><span>Notes & Materials</span>
+      </div>
+      <div class="lms-nav-item" onclick="showSection('assignments', this)">
+        <i class="fas fa-tasks"></i><span>Assignments</span>
+      </div>
+      <div class="lms-nav-item" onclick="showSection('tests', this)">
+        <i class="fas fa-clipboard-check"></i><span>Tests & Results</span>
+      </div>
+      <div class="lms-nav-item" onclick="showSection('downloads', this)">
+        <i class="fas fa-download"></i><span>Downloads</span>
+      </div>
+
+      <p class="nav-section-label" style="margin-top:8px;">Progress</p>
+      <div class="lms-nav-item" onclick="showSection('progress', this)">
+        <i class="fas fa-chart-line"></i><span>My Progress</span>
+      </div>
+      <div class="lms-nav-item" onclick="showSection('schedule', this)">
+        <i class="fas fa-calendar-alt"></i><span>Upcoming Classes</span>
+      </div>
+      <div class="lms-nav-item" onclick="showSection('announcements', this)">
+        <i class="fas fa-bullhorn"></i><span>Announcements</span>
+      </div>
+
+      <p class="nav-section-label" style="margin-top:8px;">Account</p>
+      <div class="lms-nav-item" onclick="showSection('profile', this)">
+        <i class="fas fa-user-circle"></i><span>My Profile</span>
+      </div>
+    </nav>
+
+    <div class="lms-sidebar-footer">
+      <div class="user-card">
+        <div class="lms-avatar" id="sidebarAvatar">DS</div>
+        <div>
+          <div class="user-name" id="sidebarName">Demo Student</div>
+          <div class="user-email">NEET • Class 12</div>
+        </div>
+      </div>
+      <a href="index.html" class="lms-nav-item" style="margin-bottom:4px;"><i class="fas fa-home"></i><span>Main Website</span></a>
+      <div class="lms-nav-item" onclick="lmsLogout()" style="color:var(--danger);">
+        <i class="fas fa-sign-out-alt"></i><span>Logout</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="lms-main">
+    <!-- TOPBAR -->
+    <div class="lms-topbar">
+      <h1 id="lmsPageTitle">Dashboard</h1>
+      <div class="lms-user-menu">
+        <button class="theme-toggle" onclick="toggleTheme()" style="background:var(--bg-alt);border:1px solid var(--border);width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--text-muted);font-size:0.85rem;">
+          <i class="fas fa-moon" id="themeIcon"></i>
+        </button>
+        <a href="https://wa.me/918427168892?text=Hello%20Sir%2C%20I%20have%20a%20doubt." target="_blank" style="display:flex;align-items:center;gap:6px;background:#25D366;color:#fff;padding:7px 14px;border-radius:var(--radius-full);font-size:0.8rem;font-weight:600;">
+          <i class="fab fa-whatsapp"></i> Ask Doubt
+        </a>
+        <div class="lms-avatar" id="topbarAvatar">DS</div>
+      </div>
+    </div>
+
+    <div class="lms-content">
+
+      <!-- ── DASHBOARD ───────────────────────────────────── -->
+      <div id="dashboard" class="lms-section active">
+        <div class="lms-greeting">
+          <h2>Good day, <span id="greetName" class="gradient-text">Warrior!</span> 👋</h2>
+          <p>Here's your learning summary for today — keep up the momentum!</p>
+        </div>
+
+        <div class="lms-stats">
+          <div class="lms-stat-card">
+            <div class="stat-val">24</div>
+            <div class="stat-lbl">Lectures Watched</div>
+          </div>
+          <div class="lms-stat-card">
+            <div class="stat-val">7</div>
+            <div class="stat-lbl">Assignments Submitted</div>
+          </div>
+          <div class="lms-stat-card">
+            <div class="stat-val">82%</div>
+            <div class="stat-lbl">Avg Test Score</div>
+          </div>
+          <div class="lms-stat-card">
+            <div class="stat-val">3</div>
+            <div class="stat-lbl">Upcoming Classes</div>
+          </div>
+        </div>
+
+        <div class="lms-cards-row">
+          <!-- Recent Lectures -->
+          <div class="lms-card">
+            <h3><i class="fas fa-play-circle" style="color:var(--primary);margin-right:8px;"></i>Recent Lectures</h3>
+            <div class="lecture-item">
+              <div class="lecture-thumb"><i class="fas fa-atom"></i></div>
+              <div class="lecture-info">
+                <div class="lecture-title">Electrostatics — Electric Field</div>
+                <div class="lecture-meta">Physics • 58 min • 2 days ago</div>
+              </div>
+              <div class="lecture-action">
+                <button class="lecture-play" onclick="alert('Lecture playback would open here in a real system.')"><i class="fas fa-play"></i></button>
+              </div>
+            </div>
+            <div class="lecture-item">
+              <div class="lecture-thumb"><i class="fas fa-flask"></i></div>
+              <div class="lecture-info">
+                <div class="lecture-title">Organic Chemistry — Haloalkanes</div>
+                <div class="lecture-meta">Chemistry • 72 min • 3 days ago</div>
+              </div>
+              <div class="lecture-action">
+                <button class="lecture-play" onclick="alert('Lecture playback would open here.')"><i class="fas fa-play"></i></button>
+              </div>
+            </div>
+            <div class="lecture-item">
+              <div class="lecture-thumb" style="background:linear-gradient(135deg,#F59E0B,#D97706);">π</div>
+              <div class="lecture-info">
+                <div class="lecture-title">Calculus — Integration by Parts</div>
+                <div class="lecture-meta">Mathematics • 65 min • 5 days ago</div>
+              </div>
+              <div class="lecture-action">
+                <button class="lecture-play" onclick="alert('Lecture playback would open here.')"><i class="fas fa-play"></i></button>
+              </div>
+            </div>
+            <div style="text-align:center;margin-top:14px;">
+              <button class="btn-outline btn-sm" onclick="showSection('lectures', document.querySelector('[onclick*=lectures]'))">View All Lectures</button>
+            </div>
+          </div>
+
+          <!-- Announcements -->
+          <div class="lms-card">
+            <h3><i class="fas fa-bullhorn" style="color:var(--accent);margin-right:8px;"></i>Announcements</h3>
+            <div class="announcement-item">
+              <div class="ann-date">15 June 2025</div>
+              <div class="ann-title">🧪 Chemistry Mock Test — Sunday 10 AM</div>
+              <div class="ann-body">Full syllabus Organic Chemistry test. Duration: 90 minutes. Prepare chapters 6–12 thoroughly.</div>
+            </div>
+            <div class="announcement-item">
+              <div class="ann-date">12 June 2025</div>
+              <div class="ann-title">📝 Electrostatics Notes Uploaded</div>
+              <div class="ann-body">Chapter 1 Physics notes with important derivations and diagrams have been uploaded to the Notes section.</div>
+            </div>
+            <div class="announcement-item">
+              <div class="ann-date">10 June 2025</div>
+              <div class="ann-title">🎯 NEET Mock — Rank Released</div>
+              <div class="ann-body">Results from last week's full NEET mock test are now available in the Tests & Results section.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Upcoming Classes -->
+        <div class="lms-card" style="margin-bottom:24px;">
+          <h3><i class="fas fa-calendar-alt" style="color:var(--success);margin-right:8px;"></i>Upcoming Classes</h3>
+          <div class="upcoming-class">
+            <div class="class-date-badge"><div class="day">17</div><div class="month">JUN</div></div>
+            <div class="class-info">
+              <div class="class-subj">Physics — Magnetic Effects of Current</div>
+              <div class="class-time">4:00 PM – 6:00 PM • Online Live</div>
+            </div>
+            <div class="class-join">
+              <button class="btn-primary btn-sm" onclick="alert('Join link will be shared on WhatsApp 10 minutes before class.')">Join Link</button>
+            </div>
+          </div>
+          <div class="upcoming-class">
+            <div class="class-date-badge"><div class="day">19</div><div class="month">JUN</div></div>
+            <div class="class-info">
+              <div class="class-subj">Chemistry — Coordination Compounds</div>
+              <div class="class-time">5:00 PM – 7:00 PM • Online Live</div>
+            </div>
+            <div class="class-join">
+              <button class="btn-primary btn-sm" onclick="alert('Join link will be shared on WhatsApp 10 minutes before class.')">Join Link</button>
+            </div>
+          </div>
+          <div class="upcoming-class">
+            <div class="class-date-badge"><div class="day">21</div><div class="month">JUN</div></div>
+            <div class="class-info">
+              <div class="class-subj">Doubt Solving Session — All Subjects</div>
+              <div class="class-time">6:00 PM – 8:00 PM • Online Live</div>
+            </div>
+            <div class="class-join">
+              <button class="btn-primary btn-sm" onclick="alert('Join link will be shared on WhatsApp 10 minutes before class.')">Join Link</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── LECTURES ────────────────────────────────────── -->
+      <div id="lectures" class="lms-section">
+        <div class="lms-greeting">
+          <h2>Recorded <span class="gradient-text">Lectures</span></h2>
+          <p>All your class recordings — watch and re-watch anytime, at your own pace.</p>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:24px;">
+          <button class="filter-btn active" onclick="filterLectures('all',this)">All</button>
+          <button class="filter-btn" onclick="filterLectures('physics',this)">Physics</button>
+          <button class="filter-btn" onclick="filterLectures('chemistry',this)">Chemistry</button>
+          <button class="filter-btn" onclick="filterLectures('maths',this)">Mathematics</button>
+        </div>
+        <div id="lecturesList">
+          <!-- Physics -->
+          <div class="lms-card" style="margin-bottom:16px;" data-subject="physics">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;">
+              <span style="background:rgba(59,130,246,.1);color:var(--physics);padding:4px 12px;border-radius:var(--radius-full);font-size:0.75rem;font-weight:700;">PHYSICS</span>
+              <span style="font-size:0.8rem;color:var(--text-muted);">Chapter 1</span>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:0;">
+              <div class="lecture-item"><div class="lecture-thumb"><i class="fas fa-atom"></i></div><div class="lecture-info"><div class="lecture-title">Electric Charges & Coulomb's Law</div><div class="lecture-meta">48 min • Uploaded 5 Jun 2025</div></div><button class="lecture-play" onclick="alert('Playing lecture...')"><i class="fas fa-play"></i></button></div>
+              <div class="lecture-item"><div class="lecture-thumb"><i class="fas fa-atom"></i></div><div class="lecture-info"><div class="lecture-title">Electric Field & Field Lines</div><div class="lecture-meta">58 min • Uploaded 7 Jun 2025</div></div><button class="lecture-play" onclick="alert('Playing lecture...')"><i class="fas fa-play"></i></button></div>
+              <div class="lecture-item"><div class="lecture-thumb"><i class="fas fa-atom"></i></div><div class="lecture-info"><div class="lecture-title">Gauss's Law & Applications</div><div class="lecture-meta">62 min • Uploaded 9 Jun 2025</div></div><button class="lecture-play" onclick="alert('Playing lecture...')"><i class="fas fa-play"></i></button></div>
+            </div>
+          </div>
+          <!-- Chemistry -->
+          <div class="lms-card" style="margin-bottom:16px;" data-subject="chemistry">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;">
+              <span style="background:rgba(16,185,129,.1);color:var(--chemistry);padding:4px 12px;border-radius:var(--radius-full);font-size:0.75rem;font-weight:700;">CHEMISTRY</span>
+              <span style="font-size:0.8rem;color:var(--text-muted);">Organic Chemistry</span>
+            </div>
+            <div class="lecture-item"><div class="lecture-thumb" style="background:linear-gradient(135deg,#065F46,#10B981);"><i class="fas fa-flask"></i></div><div class="lecture-info"><div class="lecture-title">Haloalkanes — Nomenclature & Properties</div><div class="lecture-meta">72 min • Uploaded 3 Jun 2025</div></div><button class="lecture-play" onclick="alert('Playing lecture...')"><i class="fas fa-play"></i></button></div>
+            <div class="lecture-item"><div class="lecture-thumb" style="background:linear-gradient(135deg,#065F46,#10B981);"><i class="fas fa-flask"></i></div><div class="lecture-info"><div class="lecture-title">SN1 & SN2 Mechanisms</div><div class="lecture-meta">65 min • Uploaded 5 Jun 2025</div></div><button class="lecture-play" onclick="alert('Playing lecture...')"><i class="fas fa-play"></i></button></div>
+            <div class="lecture-item"><div class="lecture-thumb" style="background:linear-gradient(135deg,#065F46,#10B981);"><i class="fas fa-flask"></i></div><div class="lecture-info"><div class="lecture-title">Coordination Compounds — Part 1</div><div class="lecture-meta">80 min • Uploaded 12 Jun 2025</div></div><button class="lecture-play" onclick="alert('Playing lecture...')"><i class="fas fa-play"></i></button></div>
+          </div>
+          <!-- Maths -->
+          <div class="lms-card" data-subject="maths">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;">
+              <span style="background:rgba(245,158,11,.1);color:var(--maths);padding:4px 12px;border-radius:var(--radius-full);font-size:0.75rem;font-weight:700;">MATHEMATICS</span>
+              <span style="font-size:0.8rem;color:var(--text-muted);">Calculus</span>
+            </div>
+            <div class="lecture-item"><div class="lecture-thumb" style="background:linear-gradient(135deg,#92400E,#F59E0B);font-weight:800;font-size:0.9rem;">∫</div><div class="lecture-info"><div class="lecture-title">Definite Integration — Concepts</div><div class="lecture-meta">68 min • Uploaded 4 Jun 2025</div></div><button class="lecture-play" onclick="alert('Playing lecture...')"><i class="fas fa-play"></i></button></div>
+            <div class="lecture-item"><div class="lecture-thumb" style="background:linear-gradient(135deg,#92400E,#F59E0B);font-weight:800;font-size:0.9rem;">∫</div><div class="lecture-info"><div class="lecture-title">Integration by Parts — Full Method</div><div class="lecture-meta">65 min • Uploaded 8 Jun 2025</div></div><button class="lecture-play" onclick="alert('Playing lecture...')"><i class="fas fa-play"></i></button></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── NOTES ──────────────────────────────────────── -->
+      <div id="notes" class="lms-section">
+        <div class="lms-greeting">
+          <h2>Notes & <span class="gradient-text">Study Materials</span></h2>
+          <p>Handwritten notes, e-resources, and reference sheets uploaded by Sandeep Sir.</p>
+        </div>
+        <div class="notes-grid">
+          <div class="note-card"><div class="note-icon">⚡</div><h4>Electrostatics — Complete Notes</h4><p>Physics Ch 1 — All formulas, derivations, and solved examples.</p><button class="btn-primary btn-sm" onclick="alert('Downloading: Electrostatics Notes.pdf')"><i class="fas fa-download"></i> Download PDF</button></div>
+          <div class="note-card"><div class="note-icon">🧲</div><h4>Magnetism — Handwritten Notes</h4><p>Physics Ch 4 — Magnetic field, force, Biot-Savart law.</p><button class="btn-primary btn-sm" onclick="alert('Downloading: Magnetism Notes.pdf')"><i class="fas fa-download"></i> Download PDF</button></div>
+          <div class="note-card"><div class="note-icon">🧪</div><h4>Organic Chemistry — Mechanisms</h4><p>All named reactions, SN1/SN2, elimination mechanisms.</p><button class="btn-primary btn-sm" onclick="alert('Downloading: Organic Chemistry.pdf')"><i class="fas fa-download"></i> Download PDF</button></div>
+          <div class="note-card"><div class="note-icon">⚗️</div><h4>Coordination Compounds Notes</h4><p>IUPAC naming, isomerism, bonding theories — complete.</p><button class="btn-primary btn-sm" onclick="alert('Downloading: Coordination Compounds.pdf')"><i class="fas fa-download"></i> Download PDF</button></div>
+          <div class="note-card"><div class="note-icon">📐</div><h4>Calculus — Formulae Sheet</h4><p>All integration & differentiation formulas with shortcuts.</p><button class="btn-primary btn-sm" onclick="alert('Downloading: Calculus Formulae.pdf')"><i class="fas fa-download"></i> Download PDF</button></div>
+          <div class="note-card"><div class="note-icon">📊</div><h4>NEET Previous Year — Chemistry</h4><p>2019–2024 NEET Chemistry questions with detailed answers.</p><button class="btn-primary btn-sm" onclick="alert('Downloading: NEET PYQ Chemistry.pdf')"><i class="fas fa-download"></i> Download PDF</button></div>
+        </div>
+      </div>
+
+      <!-- ── ASSIGNMENTS ────────────────────────────────── -->
+      <div id="assignments" class="lms-section">
+        <div class="lms-greeting">
+          <h2>My <span class="gradient-text">Assignments</span></h2>
+          <p>Stay on top of your practice — submit assignments before their due dates.</p>
+        </div>
+        <div class="lms-card">
+          <h3 style="margin-bottom:16px;">Pending Assignments</h3>
+          <div class="assignment-item"><div class="assignment-dot dot-pending"></div><div class="assignment-info"><div class="a-title">Electrostatics — 20 MCQs Practice Set</div><div class="a-due">Due: 18 June 2025 • Physics</div></div><span class="a-status status-pending">Pending</span></div>
+          <div class="assignment-item"><div class="assignment-dot dot-pending"></div><div class="assignment-info"><div class="a-title">Organic Reactions — Worksheet 3</div><div class="a-due">Due: 20 June 2025 • Chemistry</div></div><span class="a-status status-pending">Pending</span></div>
+          <div class="assignment-item"><div class="assignment-dot dot-pending"></div><div class="assignment-info"><div class="a-title">Integration — 15 Problems</div><div class="a-due">Due: 22 June 2025 • Mathematics</div></div><span class="a-status status-pending">Pending</span></div>
+        </div>
+        <div class="lms-card" style="margin-top:20px;">
+          <h3 style="margin-bottom:16px;">Completed Assignments</h3>
+          <div class="assignment-item"><div class="assignment-dot dot-done"></div><div class="assignment-info"><div class="a-title">Coulomb's Law — Numericals Set</div><div class="a-due">Submitted: 10 June 2025 • Score: 18/20</div></div><span class="a-status status-done">Completed</span></div>
+          <div class="assignment-item"><div class="assignment-dot dot-done"></div><div class="assignment-info"><div class="a-title">Chemical Bonding — MCQ Sheet</div><div class="a-due">Submitted: 7 June 2025 • Score: 22/25</div></div><span class="a-status status-done">Completed</span></div>
+          <div class="assignment-item"><div class="assignment-dot dot-done"></div><div class="assignment-info"><div class="a-title">Limits & Derivatives — Practice</div><div class="a-due">Submitted: 4 June 2025 • Score: 17/20</div></div><span class="a-status status-done">Completed</span></div>
+          <div class="assignment-item"><div class="assignment-dot dot-done"></div><div class="assignment-info"><div class="a-title">Thermodynamics — Conceptual Questions</div><div class="a-due">Submitted: 1 June 2025 • Score: 14/15</div></div><span class="a-status status-done">Completed</span></div>
+        </div>
+        <div style="text-align:center;margin-top:20px;">
+          <a href="https://wa.me/918427168892?text=Hello%20Sir%2C%20I%20have%20submitted%20my%20assignment." target="_blank" class="btn-primary"><i class="fab fa-whatsapp"></i> Submit via WhatsApp</a>
+        </div>
+      </div>
+
+      <!-- ── TESTS ──────────────────────────────────────── -->
+      <div id="tests" class="lms-section">
+        <div class="lms-greeting">
+          <h2>Tests & <span class="gradient-text">Results</span></h2>
+          <p>Track your performance across all chapter tests and mock exams.</p>
+        </div>
+        <div class="lms-card" style="margin-bottom:20px;">
+          <h3 style="margin-bottom:16px;">Recent Test Scores</h3>
+          <div class="test-result-item"><div class="test-score-circle score-high">91%</div><div class="test-info"><div class="test-name">NEET Full Mock Test #4</div><div class="test-date">8 June 2025 • 180 Questions</div></div><div class="test-rank"><div class="rank-val">#3</div><div class="rank-lbl">Batch Rank</div></div></div>
+          <div class="test-result-item"><div class="test-score-circle score-mid">72%</div><div class="test-info"><div class="test-name">Physics — Electrostatics Chapter Test</div><div class="test-date">4 June 2025 • 30 Questions</div></div><div class="test-rank"><div class="rank-val">#5</div><div class="rank-lbl">Batch Rank</div></div></div>
+          <div class="test-result-item"><div class="test-score-circle score-high">86%</div><div class="test-info"><div class="test-name">Chemistry — Organic Reactions Test</div><div class="test-date">1 June 2025 • 40 Questions</div></div><div class="test-rank"><div class="rank-val">#2</div><div class="rank-lbl">Batch Rank</div></div></div>
+          <div class="test-result-item"><div class="test-score-circle score-mid">68%</div><div class="test-info"><div class="test-name">Mathematics — Integration Test</div><div class="test-date">27 May 2025 • 25 Questions</div></div><div class="test-rank"><div class="rank-val">#7</div><div class="rank-lbl">Batch Rank</div></div></div>
+          <div class="test-result-item"><div class="test-score-circle score-high">88%</div><div class="test-info"><div class="test-name">NEET Full Mock Test #3</div><div class="test-date">20 May 2025 • 180 Questions</div></div><div class="test-rank"><div class="rank-val">#4</div><div class="rank-lbl">Batch Rank</div></div></div>
+        </div>
+        <div style="background:var(--bg-alt);border:1px solid var(--border);border-radius:16px;padding:24px;text-align:center;">
+          <i class="fas fa-calendar-plus" style="font-size:2rem;color:var(--primary);margin-bottom:12px;display:block;"></i>
+          <h3 style="font-family:var(--font-display);font-weight:700;margin-bottom:6px;">Next Mock Test</h3>
+          <p style="color:var(--text-muted);font-size:0.875rem;margin-bottom:16px;">Full NEET Mock Test #5 — Sunday, 22 June 2025 at 10:00 AM</p>
+          <a href="https://wa.me/918427168892?text=Hello%20Sir%2C%20I%20want%20to%20confirm%20my%20participation%20in%20the%20next%20mock%20test." target="_blank" class="btn-primary btn-sm"><i class="fab fa-whatsapp"></i> Confirm Participation</a>
+        </div>
+      </div>
+
+      <!-- ── DOWNLOADS ──────────────────────────────────── -->
+      <div id="downloads" class="lms-section">
+        <div class="lms-greeting">
+          <h2>Resource <span class="gradient-text">Downloads</span></h2>
+          <p>All files, notes, and e-resources — download anytime.</p>
+        </div>
+        <div class="lms-card">
+          <div class="download-item"><div class="download-icon dl-pdf"><i class="fas fa-file-pdf"></i></div><div class="download-info"><div class="dl-name">NEET Physics Formula Sheet</div><div class="dl-meta">PDF • 2.3 MB • Uploaded 1 Jun 2025</div></div><button class="download-btn" onclick="alert('Downloading...')"><i class="fas fa-download"></i> Download</button></div>
+          <div class="download-item"><div class="download-icon dl-pdf"><i class="fas fa-file-pdf"></i></div><div class="download-info"><div class="dl-name">Organic Chemistry — Named Reactions</div><div class="dl-meta">PDF • 3.1 MB • Uploaded 5 Jun 2025</div></div><button class="download-btn" onclick="alert('Downloading...')"><i class="fas fa-download"></i> Download</button></div>
+          <div class="download-item"><div class="download-icon dl-pdf"><i class="fas fa-file-pdf"></i></div><div class="download-info"><div class="dl-name">Mathematics Formulae Booklet</div><div class="dl-meta">PDF • 1.8 MB • Uploaded 3 Jun 2025</div></div><button class="download-btn" onclick="alert('Downloading...')"><i class="fas fa-download"></i> Download</button></div>
+          <div class="download-item"><div class="download-icon dl-ppt"><i class="fas fa-file-powerpoint"></i></div><div class="download-info"><div class="dl-name">Electrostatics — Class Presentation</div><div class="dl-meta">PPT • 4.5 MB • Uploaded 7 Jun 2025</div></div><button class="download-btn" onclick="alert('Downloading...')"><i class="fas fa-download"></i> Download</button></div>
+          <div class="download-item"><div class="download-icon dl-doc"><i class="fas fa-file-word"></i></div><div class="download-info"><div class="dl-name">NEET 2024 — Question Paper with Solutions</div><div class="dl-meta">PDF • 5.2 MB • Uploaded 10 Jun 2025</div></div><button class="download-btn" onclick="alert('Downloading...')"><i class="fas fa-download"></i> Download</button></div>
+          <div class="download-item"><div class="download-icon dl-pdf"><i class="fas fa-file-pdf"></i></div><div class="download-info"><div class="dl-name">JEE Previous Year Chemistry — 2020–2024</div><div class="dl-meta">PDF • 6.8 MB • Uploaded 12 Jun 2025</div></div><button class="download-btn" onclick="alert('Downloading...')"><i class="fas fa-download"></i> Download</button></div>
+        </div>
+      </div>
+
+      <!-- ── PROGRESS ───────────────────────────────────── -->
+      <div id="progress" class="lms-section">
+        <div class="lms-greeting">
+          <h2>My <span class="gradient-text">Progress</span></h2>
+          <p>Track your syllabus completion and performance trends.</p>
+        </div>
+        <div class="lms-cards-row">
+          <div class="lms-card">
+            <h3>Syllabus Completion</h3>
+            <div class="progress-bar-wrap"><label><span>Physics</span><span>68%</span></label><div class="progress-bar"><div class="progress-fill" style="width:68%;background:linear-gradient(90deg,var(--physics),#60A5FA);"></div></div></div>
+            <div class="progress-bar-wrap"><label><span>Chemistry</span><span>75%</span></label><div class="progress-bar"><div class="progress-fill" style="width:75%;background:linear-gradient(90deg,var(--chemistry),#34D399);"></div></div></div>
+            <div class="progress-bar-wrap"><label><span>Mathematics</span><span>55%</span></label><div class="progress-bar"><div class="progress-fill" style="width:55%;background:linear-gradient(90deg,var(--maths),#FCD34D);"></div></div></div>
+            <div class="progress-bar-wrap" style="margin-top:16px;"><label><span>Overall Progress</span><span>66%</span></label><div class="progress-bar"><div class="progress-fill" style="width:66%;"></div></div></div>
+          </div>
+          <div class="lms-card">
+            <h3>Performance Metrics</h3>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+              <div style="background:var(--bg-alt);border-radius:12px;padding:16px;text-align:center;"><div style="font-size:1.8rem;font-weight:800;color:var(--primary);font-family:var(--font-display);">82%</div><div style="font-size:0.78rem;color:var(--text-muted);margin-top:4px;">Avg Test Score</div></div>
+              <div style="background:var(--bg-alt);border-radius:12px;padding:16px;text-align:center;"><div style="font-size:1.8rem;font-weight:800;color:var(--success);font-family:var(--font-display);">24</div><div style="font-size:0.78rem;color:var(--text-muted);margin-top:4px;">Lectures Watched</div></div>
+              <div style="background:var(--bg-alt);border-radius:12px;padding:16px;text-align:center;"><div style="font-size:1.8rem;font-weight:800;color:var(--accent);font-family:var(--font-display);">7</div><div style="font-size:0.78rem;color:var(--text-muted);margin-top:4px;">Assignments Done</div></div>
+              <div style="background:var(--bg-alt);border-radius:12px;padding:16px;text-align:center;"><div style="font-size:1.8rem;font-weight:800;color:#8B5CF6;font-family:var(--font-display);">5</div><div style="font-size:0.78rem;color:var(--text-muted);margin-top:4px;">Mock Tests Given</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="lms-card" style="margin-top:20px;">
+          <h3>Improvement Areas</h3>
+          <div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:10px;">
+            <span style="background:rgba(239,68,68,.08);color:var(--danger);border:1px solid rgba(239,68,68,.2);padding:6px 14px;border-radius:var(--radius-full);font-size:0.8rem;font-weight:600;">Integration Techniques</span>
+            <span style="background:rgba(245,158,11,.08);color:var(--accent);border:1px solid rgba(245,158,11,.2);padding:6px 14px;border-radius:var(--radius-full);font-size:0.8rem;font-weight:600;">Modern Physics</span>
+            <span style="background:rgba(239,68,68,.08);color:var(--danger);border:1px solid rgba(239,68,68,.2);padding:6px 14px;border-radius:var(--radius-full);font-size:0.8rem;font-weight:600;">Coordination Isomerism</span>
+          </div>
+          <p style="font-size:0.85rem;color:var(--text-muted);margin-top:14px;">These areas were identified from your recent tests. Sandeep Sir has already been informed and will address them in the next session.</p>
+        </div>
+      </div>
+
+      <!-- ── SCHEDULE ───────────────────────────────────── -->
+      <div id="schedule" class="lms-section">
+        <div class="lms-greeting">
+          <h2>Upcoming <span class="gradient-text">Classes</span></h2>
+          <p>Your complete schedule for the coming weeks.</p>
+        </div>
+        <div class="lms-card">
+          <h3 style="margin-bottom:16px;">June 2025</h3>
+          <div class="upcoming-class"><div class="class-date-badge"><div class="day">17</div><div class="month">JUN</div></div><div class="class-info"><div class="class-subj">Physics — Magnetic Effects of Current</div><div class="class-time">Mon, 4:00–6:00 PM • Online (Zoom)</div></div><button class="btn-primary btn-sm" onclick="alert('Link sent on WhatsApp before class.')">Join</button></div>
+          <div class="upcoming-class"><div class="class-date-badge"><div class="day">19</div><div class="month">JUN</div></div><div class="class-info"><div class="class-subj">Chemistry — Coordination Compounds Part 2</div><div class="class-time">Wed, 5:00–7:00 PM • Online (Zoom)</div></div><button class="btn-primary btn-sm" onclick="alert('Link sent on WhatsApp before class.')">Join</button></div>
+          <div class="upcoming-class"><div class="class-date-badge"><div class="day">21</div><div class="month">JUN</div></div><div class="class-info"><div class="class-subj">Doubt Solving — All Subjects Open</div><div class="class-time">Fri, 6:00–8:00 PM • Online (Zoom)</div></div><button class="btn-primary btn-sm" onclick="alert('Link sent on WhatsApp before class.')">Join</button></div>
+          <div class="upcoming-class"><div class="class-date-badge"><div class="day">22</div><div class="month">JUN</div></div><div class="class-info"><div class="class-subj">NEET Full Mock Test #5</div><div class="class-time">Sun, 10:00 AM–1:00 PM • Online Proctored</div></div><button class="btn-outline btn-sm" onclick="alert('You will receive login link via WhatsApp.')">Details</button></div>
+          <div class="upcoming-class"><div class="class-date-badge"><div class="day">24</div><div class="month">JUN</div></div><div class="class-info"><div class="class-subj">Maths — Probability & Statistics</div><div class="class-time">Tue, 4:00–6:00 PM • Online (Zoom)</div></div><button class="btn-primary btn-sm" onclick="alert('Link sent on WhatsApp before class.')">Join</button></div>
+        </div>
+      </div>
+
+      <!-- ── ANNOUNCEMENTS ──────────────────────────────── -->
+      <div id="announcements" class="lms-section">
+        <div class="lms-greeting">
+          <h2>Latest <span class="gradient-text">Announcements</span></h2>
+          <p>Important updates, schedule changes, and notes from Sandeep Sir.</p>
+        </div>
+        <div class="lms-card">
+          <div class="announcement-item"><div class="ann-date">15 June 2025</div><div class="ann-title">🧪 Chemistry Mock Test — Sunday 10 AM</div><div class="ann-body">Full syllabus Organic Chemistry test covering chapters 6–12. Duration: 90 minutes. Negative marking applies. Prepare thoroughly — results will be discussed in Monday's class.</div></div>
+          <div class="announcement-item"><div class="ann-date">12 June 2025</div><div class="ann-title">📝 New Notes Uploaded — Electrostatics</div><div class="ann-body">Chapter 1 Physics notes with all important derivations, diagrams, and solved examples have been uploaded to the Notes section. Refer before the upcoming Physics class.</div></div>
+          <div class="announcement-item"><div class="ann-date">10 June 2025</div><div class="ann-title">🎯 Mock Test #4 — Results Available</div><div class="ann-body">Results from last week's full NEET mock test are now visible in the Tests & Results section. Students scoring below 75% please WhatsApp Sir for a doubt session this week.</div></div>
+          <div class="announcement-item"><div class="ann-date">7 June 2025</div><div class="ann-title">📅 Class Reschedule — 9 June</div><div class="ann-body">Sunday's Chemistry class has been moved from 3 PM to 5 PM. All students please update your schedules accordingly. The WhatsApp group has also been updated.</div></div>
+          <div class="announcement-item"><div class="ann-date">1 June 2025</div><div class="ann-title">🎉 Welcome to June Batch!</div><div class="ann-body">New month, new targets! June plan has been shared in the WhatsApp group. Please print your monthly target sheet and stick it where you study. Let's make this month count!</div></div>
+        </div>
+      </div>
+
+      <!-- ── PROFILE ────────────────────────────────────── -->
+      <div id="profile" class="lms-section">
+        <div class="lms-greeting">
+          <h2>My <span class="gradient-text">Profile</span></h2>
+          <p>Your enrollment details and account information.</p>
+        </div>
+        <div class="profile-section">
+          <div class="profile-card">
+            <div class="profile-header">
+              <div class="profile-avatar-lg" id="profileAvatar">DS</div>
+              <div class="profile-info">
+                <h3 id="profileName">Demo Student</h3>
+                <p>NEET Aspirant • Class 12</p>
+                <span class="badge-enrolled">✓ Active Enrollment</span>
+              </div>
+            </div>
+            <div class="profile-detail">
+              <div class="profile-row"><span class="p-label">Full Name</span><span class="p-value" id="profileFullName">Demo Student</span></div>
+              <div class="profile-row"><span class="p-label">Email</span><span class="p-value">student@demo.com</span></div>
+              <div class="profile-row"><span class="p-label">WhatsApp</span><span class="p-value">+91 8427168892 (Sir's)</span></div>
+              <div class="profile-row"><span class="p-label">Current Class</span><span class="p-value">Class 12 (CBSE)</span></div>
+              <div class="profile-row"><span class="p-label">Target Exam</span><span class="p-value">NEET 2026</span></div>
+              <div class="profile-row"><span class="p-label">Enrolled Program</span><span class="p-value">NEET Preparation — Full</span></div>
+              <div class="profile-row"><span class="p-label">Mode</span><span class="p-value">Online Live + Recorded</span></div>
+              <div class="profile-row"><span class="p-label">Enrollment Date</span><span class="p-value">1 June 2025</span></div>
+            </div>
+          </div>
+          <div class="profile-card">
+            <h3 style="font-family:var(--font-display);font-weight:700;margin-bottom:16px;">Quick Actions</h3>
+            <div style="display:flex;flex-direction:column;gap:10px;">
+              <a href="https://wa.me/918427168892?text=Hello%20Sir%2C%20I%20need%20to%20update%20my%20profile%20information." target="_blank" class="btn-outline" style="justify-content:center;"><i class="fab fa-whatsapp"></i> Update Profile via WhatsApp</a>
+              <a href="https://wa.me/918427168892?text=Hello%20Sir%2C%20I%20have%20a%20doubt." target="_blank" class="btn-primary" style="justify-content:center;"><i class="fab fa-whatsapp"></i> Send Doubt to Sir</a>
+              <a href="index.html" class="btn-outline" style="justify-content:center;"><i class="fas fa-home"></i> Visit Main Website</a>
+              <button class="btn-ghost" onclick="lmsLogout()" style="justify-content:center;color:var(--danger);border:1px solid var(--border);border-radius:var(--radius-full);padding:12px 24px;"><i class="fas fa-sign-out-alt"></i> Logout</button>
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(79,70,229,.06),rgba(139,92,246,.06));border:1px solid rgba(79,70,229,.12);border-radius:12px;padding:18px;margin-top:20px;">
+              <p style="font-size:0.82rem;color:var(--text-muted);line-height:1.7;"><strong style="color:var(--primary);">💬 Need Help?</strong><br>WhatsApp Sandeep Sir directly at <a href="https://wa.me/918427168892" target="_blank" style="color:#25D366;font-weight:600;">+91 8427168892</a> for any account, study, or enrollment related queries.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /lms-content -->
+  </main>
+</div>
+
+<script src="script.js"></script>
+<script>
+// Auth check
+if (!localStorage.getItem('cw-lms-logged')) window.location.href = 'lms-login.html';
+
+// Set user info
+const userName = localStorage.getItem('cw-lms-user') || 'Student';
+const initials = userName.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+['sidebarAvatar','topbarAvatar','profileAvatar'].forEach(id => {
+  const el = document.getElementById(id);
+  if (el) el.textContent = initials;
+});
+['sidebarName','greetName','profileName','profileFullName'].forEach(id => {
+  const el = document.getElementById(id);
+  if (el) el.textContent = userName;
+});
+
+function showSection(id, navItem) {
+  document.querySelectorAll('.lms-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.lms-nav-item').forEach(i => i.classList.remove('active'));
+  const section = document.getElementById(id);
+  if (section) section.classList.add('active');
+  if (navItem) navItem.classList.add('active');
+  const title = document.getElementById('lmsPageTitle');
+  if (title && navItem) title.textContent = navItem.querySelector('span')?.textContent || id;
+  // Close mobile sidebar
+  document.getElementById('lmsSidebar')?.classList.remove('open');
+}
+
+function lmsLogout() {
+  localStorage.removeItem('cw-lms-logged');
+  localStorage.removeItem('cw-lms-user');
+  window.location.href = 'lms-login.html';
+}
+
+function toggleSidebar() {
+  document.getElementById('lmsSidebar').classList.toggle('open');
+}
+
+function filterLectures(subject, btn) {
+  document.querySelectorAll('#lecturesList > div').forEach(card => {
+    if (subject === 'all' || card.dataset.subject === subject) {
+      card.style.display = 'block';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+}
+
+// Theme
+function toggleTheme() {
+  const current = document.documentElement.getAttribute('data-theme') || 'light';
+  const next = current === 'light' ? 'dark' : 'light';
+  localStorage.setItem('cw-theme', next);
+  document.documentElement.setAttribute('data-theme', next);
+  const icon = document.getElementById('themeIcon');
+  if (icon) icon.className = next === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+}
+(function() {
+  const saved = localStorage.getItem('cw-theme') || 'light';
+  document.documentElement.setAttribute('data-theme', saved);
+  const icon = document.getElementById('themeIcon');
+  if (icon) icon.className = saved === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+})();
+</script>
+</body>
+</html>
