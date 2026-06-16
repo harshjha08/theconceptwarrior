@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard | The Concept Warriors</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body { overflow-x: hidden; }
+
+    /* ── sidebar ─────────────────────────────────────────── */
+    .admin-sidebar {
+      width: 240px; background: #0F172A;
+      position: fixed; top: 0; bottom: 0; left: 0; z-index: 200;
+      display: flex; flex-direction: column; overflow-y: auto;
+    }
+    .admin-sidebar-header {
+      padding: 22px 18px; border-bottom: 1px solid rgba(255,255,255,.07);
+    }
+    .admin-sidebar-header .logo-brand,
+    .admin-sidebar-header .logo-sub { color: #fff !important; }
+    .admin-nav { padding: 10px; flex: 1; }
+    .nav-section-label {
+      font-size: 0.62rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: rgba(255,255,255,.25);
+      padding: 12px 10px 4px;
+    }
+    .admin-nav-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 12px; border-radius: 8px;
+      color: rgba(255,255,255,.45); font-size: 0.845rem; font-weight: 500;
+      transition: all 0.2s; cursor: pointer; margin-bottom: 2px;
+    }
+    .admin-nav-item:hover { color: #fff; background: rgba(255,255,255,.07); }
+    .admin-nav-item.active { color: #fff; background: var(--primary); }
+    .admin-nav-item i { width: 16px; text-align: center; flex-shrink: 0; }
+    .admin-sidebar-footer {
+      padding: 14px 10px; border-top: 1px solid rgba(255,255,255,.07);
+    }
+
+    /* ── main ────────────────────────────────────────────── */
+    .admin-main { margin-left: 240px; min-height: 100vh; background: var(--bg); }
+    .admin-topbar {
+      height: 60px; background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 24px; position: sticky; top: 0; z-index: 100;
+    }
+    .admin-topbar h1 { font-family: var(--font-display); font-weight: 700; font-size: 1.05rem; }
+    .admin-topbar-right { display: flex; align-items: center; gap: 12px; }
+    .admin-content { padding: 24px; }
+    .admin-section { display: none; }
+    .admin-section.active { display: block; }
+
+    /* ── stat cards ──────────────────────────────────────── */
+    .admin-stats-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; margin-bottom: 24px; }
+    .admin-stat-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 14px; padding: 20px 20px 16px;
+      display: flex; align-items: flex-start; gap: 14px;
+      transition: var(--transition);
+    }
+    .admin-stat-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+    .admin-stat-icon {
+      width: 46px; height: 46px; border-radius: 10px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; font-size: 1.1rem;
+    }
+    .asi-blue   { background: rgba(59,130,246,.1); color: #3B82F6; }
+    .asi-green  { background: rgba(16,185,129,.1); color: #10B981; }
+    .asi-purple { background: rgba(139,92,246,.1); color: #8B5CF6; }
+    .asi-orange { background: rgba(245,158,11,.1); color: #F59E0B; }
+    .asi-red    { background: rgba(239,68,68,.1);  color: #EF4444; }
+    .asi-teal   { background: rgba(20,184,166,.1); color: #14B8A6; }
+    .admin-stat-info .stat-val { font-family: var(--font-display); font-size: 1.7rem; font-weight: 800; line-height: 1; }
+    .admin-stat-info .stat-lbl { font-size: 0.75rem; color: var(--text-muted); margin-top: 4px; }
+    .admin-stat-info .stat-delta { font-size: 0.7rem; color: var(--success); margin-top: 3px; }
+
+    /* ── tables ──────────────────────────────────────────── */
+    .admin-table-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 14px; overflow: hidden; margin-bottom: 24px;
+    }
+    .table-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 20px; border-bottom: 1px solid var(--border);
+    }
+    .table-header h3 { font-family: var(--font-display); font-weight: 700; font-size: 0.95rem; }
+    .table-actions { display: flex; gap: 8px; }
+    .table-search {
+      padding: 7px 12px; border: 1px solid var(--border); border-radius: 8px;
+      background: var(--bg); color: var(--text); font-size: 0.8rem; font-family: inherit;
+    }
+    .table-search:focus { outline: none; border-color: var(--primary); }
+    .data-table { width: 100%; border-collapse: collapse; }
+    .data-table th {
+      text-align: left; padding: 11px 18px;
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--text-muted); border-bottom: 1px solid var(--border); background: var(--bg-alt);
+    }
+    .data-table td { padding: 13px 18px; font-size: 0.845rem; border-bottom: 1px solid var(--border); vertical-align: middle; }
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table tr:hover td { background: var(--bg-alt); }
+    .status-badge { display: inline-block; padding: 3px 10px; border-radius: 100px; font-size: 0.68rem; font-weight: 700; }
+    .badge-new       { background: rgba(79,70,229,.1); color: var(--primary); }
+    .badge-contacted { background: rgba(245,158,11,.1); color: var(--accent); }
+    .badge-enrolled  { background: rgba(16,185,129,.1); color: var(--success); }
+    .badge-pending   { background: rgba(239,68,68,.1);  color: var(--danger); }
+    .badge-active    { background: rgba(16,185,129,.1); color: var(--success); }
+    .badge-inactive  { background: rgba(100,116,139,.1); color: var(--text-muted); }
+    .action-btn {
+      padding: 5px 11px; border-radius: 100px; font-size: 0.7rem; font-weight: 600;
+      border: 1px solid var(--border); color: var(--text-muted); background: transparent;
+      cursor: pointer; transition: all 0.2s; font-family: inherit;
+    }
+    .action-btn:hover { border-color: var(--primary); color: var(--primary); background: rgba(79,70,229,.05); }
+    .action-btn.danger:hover { border-color: var(--danger); color: var(--danger); background: rgba(239,68,68,.05); }
+
+    /* ── quick add form ──────────────────────────────────── */
+    .quick-add-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 14px; padding: 24px; margin-bottom: 24px;
+    }
+    .quick-add-card h3 { font-family: var(--font-display); font-weight: 700; font-size: 0.95rem; margin-bottom: 16px; }
+    .qa-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; }
+    .qa-input {
+      padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px;
+      background: var(--bg); color: var(--text); font-size: 0.845rem; font-family: inherit;
+      width: 100%;
+    }
+    .qa-input:focus { outline: none; border-color: var(--primary); }
+
+    /* ── notification card ───────────────────────────────── */
+    .notif-item {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 14px 0; border-bottom: 1px solid var(--border);
+    }
+    .notif-item:last-child { border-bottom: none; }
+    .notif-dot {
+      width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 6px;
+    }
+    .notif-unread { background: var(--primary); }
+    .notif-read   { background: var(--border); }
+    .notif-title  { font-size: 0.875rem; font-weight: 600; margin-bottom: 2px; }
+    .notif-time   { font-size: 0.72rem; color: var(--text-muted); }
+
+    /* ── overview chart placeholder ──────────────────────── */
+    .chart-placeholder {
+      height: 200px; background: linear-gradient(135deg, rgba(79,70,229,.04), rgba(139,92,246,.04));
+      border: 1px dashed var(--border); border-radius: 12px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      color: var(--text-muted); gap: 8px; margin-top: 16px;
+    }
+    .chart-bars { display: flex; align-items: flex-end; gap: 8px; height: 100px; }
+    .chart-bar {
+      width: 28px; border-radius: 6px 6px 0 0;
+      background: linear-gradient(180deg, var(--primary), #7C3AED);
+      opacity: 0.7; transition: opacity 0.2s;
+    }
+    .chart-bar:hover { opacity: 1; }
+
+    /* ── course management ───────────────────────────────── */
+    .course-mgmt-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-bottom: 24px; }
+    .course-mgmt-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 20px; transition: var(--transition);
+    }
+    .course-mgmt-card:hover { border-color: var(--primary); box-shadow: var(--shadow); }
+    .course-mgmt-card h4 { font-weight: 700; font-size: 0.9rem; margin-bottom: 6px; }
+    .course-mgmt-card p { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 12px; }
+    .course-mgmt-meta { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; }
+    .course-mgmt-meta span { font-size: 0.7rem; color: var(--text-muted); }
+    .course-mgmt-meta strong { color: var(--text); }
+
+    /* mobile ─────────────────────────────────────────────── */
+    .mob-menu-btn {
+      display: none; position: fixed; top: 14px; left: 14px; z-index: 300;
+      width: 38px; height: 38px; border-radius: 8px;
+      background: var(--primary); color: #fff; font-size: 0.9rem;
+      align-items: center; justify-content: center; cursor: pointer; border: none;
+    }
+    @media (max-width: 1024px) {
+      .admin-stats-row { grid-template-columns: repeat(2,1fr); }
+      .course-mgmt-grid { grid-template-columns: repeat(2,1fr); }
+      .qa-row { grid-template-columns: repeat(2,1fr); }
+    }
+    @media (max-width: 768px) {
+      .admin-sidebar { transform: translateX(-100%); transition: transform 0.3s; }
+      .admin-sidebar.open { transform: translateX(0); }
+      .admin-main { margin-left: 0; }
+      .mob-menu-btn { display: flex; }
+      .admin-stats-row { grid-template-columns: 1fr 1fr; }
+      .course-mgmt-grid { grid-template-columns: 1fr; }
+      .data-table { font-size: 0.78rem; }
+      .data-table th, .data-table td { padding: 10px 12px; }
+    }
+    @media (max-width: 480px) {
+      .admin-stats-row { grid-template-columns: 1fr; }
+      .qa-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<button class="mob-menu-btn" onclick="toggleAdminSidebar()"><i class="fas fa-bars"></i></button>
+
+<div class="admin-layout" style="display:flex;min-height:100vh;">
+
+  <!-- ── SIDEBAR ──────────────────────────────────────────── -->
+  <aside class="admin-sidebar" id="adminSidebar">
+    <div class="admin-sidebar-header">
+      <div class="nav-logo">
+        <div class="logo-icon"><i class="fas fa-bolt"></i></div>
+        <div class="logo-text">
+          <span class="logo-brand" style="color:#fff;">Concept Warriors</span>
+          <span class="logo-sub" style="color:rgba(255,255,255,.5);">Admin Panel</span>
+        </div>
+      </div>
+    </div>
+
+    <nav class="admin-nav">
+      <p class="nav-section-label">Overview</p>
+      <div class="admin-nav-item active" onclick="switchAdmin('overview',this)">
+        <i class="fas fa-th-large"></i><span>Dashboard</span>
+      </div>
+
+      <p class="nav-section-label">Enquiries</p>
+      <div class="admin-nav-item" onclick="switchAdmin('callbacks',this)">
+        <i class="fas fa-phone-alt"></i><span>Callback Requests</span>
+        <span id="badgeCallback" style="margin-left:auto;background:var(--danger);color:#fff;border-radius:100px;font-size:0.62rem;padding:2px 7px;font-weight:700;"></span>
+      </div>
+      <div class="admin-nav-item" onclick="switchAdmin('demos',this)">
+        <i class="fas fa-play-circle"></i><span>Demo Requests</span>
+        <span id="badgeDemo" style="margin-left:auto;background:var(--accent);color:#fff;border-radius:100px;font-size:0.62rem;padding:2px 7px;font-weight:700;"></span>
+      </div>
+      <div class="admin-nav-item" onclick="switchAdmin('enrollments',this)">
+        <i class="fas fa-user-plus"></i><span>Enrollments</span>
+        <span id="badgeEnroll" style="margin-left:auto;background:var(--success);color:#fff;border-radius:100px;font-size:0.62rem;padding:2px 7px;font-weight:700;"></span>
+      </div>
+
+      <p class="nav-section-label">Manage</p>
+      <div class="admin-nav-item" onclick="switchAdmin('students',this)">
+        <i class="fas fa-users"></i><span>Students</span>
+      </div>
+      <div class="admin-nav-item" onclick="switchAdmin('courses',this)">
+        <i class="fas fa-book-open"></i><span>Courses</span>
+      </div>
+      <div class="admin-nav-item" onclick="switchAdmin('notifications',this)">
+        <i class="fas fa-bell"></i><span>Notifications</span>
+      </div>
+      <div class="admin-nav-item" onclick="switchAdmin('announcements',this)">
+        <i class="fas fa-bullhorn"></i><span>Announcements</span>
+      </div>
+
+      <p class="nav-section-label">System</p>
+      <div class="admin-nav-item" onclick="switchAdmin('settings',this)">
+        <i class="fas fa-cog"></i><span>Settings</span>
+      </div>
+    </nav>
+
+    <div class="admin-sidebar-footer">
+      <a href="index.html" class="admin-nav-item"><i class="fas fa-home"></i><span>Website</span></a>
+      <a href="lms-dashboard.html" class="admin-nav-item"><i class="fas fa-graduation-cap"></i><span>LMS</span></a>
+      <div class="admin-nav-item" onclick="doAdminLogout()" style="color:#FC8181;">
+        <i class="fas fa-sign-out-alt"></i><span>Logout</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ── MAIN ─────────────────────────────────────────────── -->
+  <main class="admin-main">
+    <div class="admin-topbar">
+      <h1 id="adminPageTitle">Dashboard</h1>
+      <div class="admin-topbar-right">
+        <button onclick="refreshData()" style="padding:7px 14px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text-muted);font-size:0.78rem;cursor:pointer;font-family:inherit;"><i class="fas fa-sync-alt"></i> Refresh</button>
+        <button class="theme-toggle" onclick="toggleTheme()" style="width:36px;height:36px;border-radius:50%;background:var(--bg-alt);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--text-muted);font-size:0.85rem;">
+          <i class="fas fa-moon" id="themeIcon"></i>
+        </button>
+        <div style="width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#DC2626,#7C3AED);display:flex;align-items:center;justify-content:center;color:#fff;font-size:0.75rem;font-weight:700;">SA</div>
+      </div>
+    </div>
+
+    <div class="admin-content">
+
+      <!-- ── OVERVIEW ───────────────────────────────────────── -->
+      <div id="overview" class="admin-section active">
+        <div class="admin-stats-row">
+          <div class="admin-stat-card">
+            <div class="admin-stat-icon asi-blue"><i class="fas fa-phone-alt"></i></div>
+            <div class="admin-stat-info">
+              <div class="stat-val" id="statCallback">0</div>
+              <div class="stat-lbl">Callback Requests</div>
+              <div class="stat-delta"><i class="fas fa-arrow-up"></i> New today</div>
+            </div>
+          </div>
+          <div class="admin-stat-card">
+            <div class="admin-stat-icon asi-orange"><i class="fas fa-play-circle"></i></div>
+            <div class="admin-stat-info">
+              <div class="stat-val" id="statDemo">0</div>
+              <div class="stat-lbl">Demo Requests</div>
+              <div class="stat-delta"><i class="fas fa-arrow-up"></i> Awaiting contact</div>
+            </div>
+          </div>
+          <div class="admin-stat-card">
+            <div class="admin-stat-icon asi-green"><i class="fas fa-user-plus"></i></div>
+            <div class="admin-stat-info">
+              <div class="stat-val" id="statEnroll">0</div>
+              <div class="stat-lbl">Enrollments</div>
+              <div class="stat-delta"><i class="fas fa-arrow-up"></i> This month</div>
+            </div>
+          </div>
+          <div class="admin-stat-card">
+            <div class="admin-stat-icon asi-purple"><i class="fas fa-users"></i></div>
+            <div class="admin-stat-info">
+              <div class="stat-val" id="statStudents">0</div>
+              <div class="stat-lbl">Total Submissions</div>
+              <div class="stat-delta"><i class="fas fa-arrow-up"></i> All time</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chart -->
+        <div class="admin-table-card">
+          <div class="table-header">
+            <h3>📊 Enquiries — Last 7 Days</h3>
+            <span style="font-size:0.78rem;color:var(--text-muted);">Visual overview</span>
+          </div>
+          <div style="padding:24px;">
+            <div style="display:flex;gap:40px;justify-content:center;">
+              <div class="chart-bars">
+                <div class="chart-bar" style="height:40px;" title="Mon"></div>
+                <div class="chart-bar" style="height:70px;" title="Tue"></div>
+                <div class="chart-bar" style="height:55px;" title="Wed"></div>
+                <div class="chart-bar" style="height:90px;" title="Thu"></div>
+                <div class="chart-bar" style="height:65px;" title="Fri"></div>
+                <div class="chart-bar" style="height:30px;" title="Sat"></div>
+                <div class="chart-bar" style="height:80px;" title="Sun"></div>
+              </div>
+            </div>
+            <div style="display:flex;justify-content:center;gap:20px;margin-top:10px;">
+              <span style="font-size:0.72rem;color:var(--text-muted);">Mon</span>
+              <span style="font-size:0.72rem;color:var(--text-muted);">Tue</span>
+              <span style="font-size:0.72rem;color:var(--text-muted);">Wed</span>
+              <span style="font-size:0.72rem;color:var(--text-muted);">Thu</span>
+              <span style="font-size:0.72rem;color:var(--text-muted);">Fri</span>
+              <span style="font-size:0.72rem;color:var(--text-muted);">Sat</span>
+              <span style="font-size:0.72rem;color:var(--text-muted);">Sun</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="admin-table-card">
+          <div class="table-header"><h3>🔔 Recent Activity</h3></div>
+          <div id="recentActivity" style="padding:0 20px;">
+            <p style="color:var(--text-muted);font-size:0.875rem;padding:20px 0;">Loading activity…</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── CALLBACKS ──────────────────────────────────────── -->
+      <div id="callbacks" class="admin-section">
+        <div class="admin-table-card">
+          <div class="table-header">
+            <h3>📞 Callback Requests</h3>
+            <div class="table-actions">
+              <input type="text" class="table-search" placeholder="Search…" oninput="searchTable('callbackTable',this.value)" />
+              <button class="action-btn" onclick="exportCSV('cw-callback-requests','callbacks')"><i class="fas fa-download"></i> Export</button>
+            </div>
+          </div>
+          <div style="overflow-x:auto;">
+            <table class="data-table">
+              <thead><tr><th>#</th><th>Name</th><th>Phone</th><th>Email</th><th>Time Slot</th><th>Date</th><th>Status</th><th>Actions</th></tr></thead>
+              <tbody id="callbackTable"><tr><td colspan="8" style="text-align:center;color:var(--text-muted);padding:24px;">Loading…</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── DEMO REQUESTS ──────────────────────────────────── -->
+      <div id="demos" class="admin-section">
+        <div class="admin-table-card">
+          <div class="table-header">
+            <h3>🎯 Demo Class Requests</h3>
+            <div class="table-actions">
+              <input type="text" class="table-search" placeholder="Search…" oninput="searchTable('demoTable',this.value)" />
+              <button class="action-btn" onclick="exportCSV('cw-demo-requests','demo-requests')"><i class="fas fa-download"></i> Export</button>
+            </div>
+          </div>
+          <div style="overflow-x:auto;">
+            <table class="data-table">
+              <thead><tr><th>#</th><th>Name</th><th>Phone</th><th>Email</th><th>Class</th><th>Goal Exam</th><th>Date</th><th>Status</th><th>Actions</th></tr></thead>
+              <tbody id="demoTable"><tr><td colspan="9" style="text-align:center;color:var(--text-muted);padding:24px;">Loading…</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── ENROLLMENTS ────────────────────────────────────── -->
+      <div id="enrollments" class="admin-section">
+        <div class="admin-table-card">
+          <div class="table-header">
+            <h3>✅ Enrollment Requests</h3>
+            <div class="table-actions">
+              <input type="text" class="table-search" placeholder="Search…" oninput="searchTable('enrollTable',this.value)" />
+              <button class="action-btn" onclick="exportCSV('cw-enroll-requests','enrollments')"><i class="fas fa-download"></i> Export</button>
+            </div>
+          </div>
+          <div style="overflow-x:auto;">
+            <table class="data-table">
+              <thead><tr><th>#</th><th>Name</th><th>Phone</th><th>Email</th><th>Course</th><th>Mode</th><th>Date</th><th>Status</th><th>Actions</th></tr></thead>
+              <tbody id="enrollTable"><tr><td colspan="9" style="text-align:center;color:var(--text-muted);padding:24px;">Loading…</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── STUDENTS ───────────────────────────────────────── -->
+      <div id="students" class="admin-section">
+        <div class="quick-add-card">
+          <h3>➕ Add New Student</h3>
+          <div class="qa-row">
+            <input class="qa-input" id="newStudName" placeholder="Full Name *" />
+            <input class="qa-input" id="newStudPhone" placeholder="Phone *" />
+            <input class="qa-input" id="newStudCourse" placeholder="Course" />
+            <input class="qa-input" id="newStudEmail" placeholder="Email" />
+          </div>
+          <button class="btn-primary btn-sm" style="margin-top:12px;" onclick="addStudent()"><i class="fas fa-plus"></i> Add Student</button>
+        </div>
+        <div class="admin-table-card">
+          <div class="table-header">
+            <h3>👩‍🎓 Student Management</h3>
+            <div class="table-actions">
+              <input type="text" class="table-search" placeholder="Search students…" oninput="searchTable('studentTable',this.value)" />
+            </div>
+          </div>
+          <div style="overflow-x:auto;">
+            <table class="data-table">
+              <thead><tr><th>#</th><th>Name</th><th>Phone</th><th>Course</th><th>Email</th><th>Enrolled</th><th>Status</th><th>Actions</th></tr></thead>
+              <tbody id="studentTable"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── COURSES ────────────────────────────────────────── -->
+      <div id="courses" class="admin-section">
+        <div class="admin-stats-row" style="grid-template-columns:repeat(3,1fr);">
+          <div class="admin-stat-card">
+            <div class="admin-stat-icon asi-red"><i class="fas fa-heartbeat"></i></div>
+            <div class="admin-stat-info"><div class="stat-val">1</div><div class="stat-lbl">NEET Programs</div></div>
+          </div>
+          <div class="admin-stat-card">
+            <div class="admin-stat-icon asi-blue"><i class="fas fa-cog"></i></div>
+            <div class="admin-stat-info"><div class="stat-val">1</div><div class="stat-lbl">JEE Programs</div></div>
+          </div>
+          <div class="admin-stat-card">
+            <div class="admin-stat-icon asi-green"><i class="fas fa-award"></i></div>
+            <div class="admin-stat-info"><div class="stat-val">4</div><div class="stat-lbl">Other Programs</div></div>
+          </div>
+        </div>
+        <div class="course-mgmt-grid">
+          <div class="course-mgmt-card">
+            <h4>NEET Preparation Program</h4>
+            <p>Physics + Chemistry — 10–12 months</p>
+            <div class="course-mgmt-meta"><span>Students: <strong>12</strong></span><span>Mode: <strong>Online/Offline</strong></span></div>
+            <span class="status-badge badge-active">Active</span>
+          </div>
+          <div class="course-mgmt-card">
+            <h4>JEE Main & Advanced</h4>
+            <p>PCM — 12 months intensive</p>
+            <div class="course-mgmt-meta"><span>Students: <strong>8</strong></span><span>Mode: <strong>Online/Offline</strong></span></div>
+            <span class="status-badge badge-active">Active</span>
+          </div>
+          <div class="course-mgmt-card">
+            <h4>CUET-UG Preparation</h4>
+            <p>Domain + General Test — 4–6 months</p>
+            <div class="course-mgmt-meta"><span>Students: <strong>5</strong></span><span>Mode: <strong>Online</strong></span></div>
+            <span class="status-badge badge-active">Active</span>
+          </div>
+          <div class="course-mgmt-card">
+            <h4>Board Exam Prep (11–12)</h4>
+            <p>CBSE/State Board — Full year</p>
+            <div class="course-mgmt-meta"><span>Students: <strong>15</strong></span><span>Mode: <strong>All Modes</strong></span></div>
+            <span class="status-badge badge-active">Active</span>
+          </div>
+          <div class="course-mgmt-card">
+            <h4>Foundation Program (8–10)</h4>
+            <p>Science + Maths — Ongoing</p>
+            <div class="course-mgmt-meta"><span>Students: <strong>9</strong></span><span>Mode: <strong>Online/Offline</strong></span></div>
+            <span class="status-badge badge-active">Active</span>
+          </div>
+          <div class="course-mgmt-card">
+            <h4>Personal Mentorship</h4>
+            <p>1-on-1 Full Academic — Ongoing</p>
+            <div class="course-mgmt-meta"><span>Students: <strong>4</strong></span><span>Mode: <strong>1-on-1</strong></span></div>
+            <span class="status-badge badge-active">Active</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── NOTIFICATIONS ──────────────────────────────────── -->
+      <div id="notifications" class="admin-section">
+        <div class="quick-add-card">
+          <h3>📢 Send New Notification</h3>
+          <div class="qa-row" style="grid-template-columns:1fr 1fr;">
+            <input class="qa-input" id="notifTitle" placeholder="Notification Title *" />
+            <select class="qa-input" id="notifType">
+              <option value="info">ℹ️ Info</option>
+              <option value="alert">⚠️ Alert</option>
+              <option value="success">✅ Success</option>
+            </select>
+          </div>
+          <textarea class="qa-input" id="notifBody" placeholder="Notification message…" style="margin-top:10px;min-height:80px;resize:vertical;"></textarea>
+          <button class="btn-primary btn-sm" style="margin-top:10px;" onclick="addNotification()"><i class="fas fa-paper-plane"></i> Send Notification</button>
+        </div>
+        <div class="admin-table-card">
+          <div class="table-header"><h3>🔔 All Notifications</h3></div>
+          <div id="notifList" style="padding:0 20px 8px;"></div>
+        </div>
+      </div>
+
+      <!-- ── ANNOUNCEMENTS ──────────────────────────────────── -->
+      <div id="announcements" class="admin-section">
+        <div class="quick-add-card">
+          <h3>📣 Post New Announcement</h3>
+          <div class="qa-row" style="grid-template-columns:1fr 1fr;">
+            <input class="qa-input" id="annTitle" placeholder="Announcement Title *" />
+            <input class="qa-input" id="annDate" type="date" />
+          </div>
+          <textarea class="qa-input" id="annBody" placeholder="Announcement details…" style="margin-top:10px;min-height:80px;resize:vertical;"></textarea>
+          <button class="btn-primary btn-sm" style="margin-top:10px;" onclick="addAnnouncement()"><i class="fas fa-plus"></i> Post Announcement</button>
+        </div>
+        <div class="admin-table-card">
+          <div class="table-header"><h3>📋 Posted Announcements</h3></div>
+          <div id="annList" style="padding:0 20px 8px;"></div>
+        </div>
+      </div>
+
+      <!-- ── SETTINGS ───────────────────────────────────────── -->
+      <div id="settings" class="admin-section">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+          <div class="quick-add-card">
+            <h3>🏫 Business Information</h3>
+            <div style="display:flex;flex-direction:column;gap:10px;margin-top:4px;">
+              <input class="qa-input" value="The Concept Warriors" placeholder="Brand Name" />
+              <input class="qa-input" value="Sandeep Kumar" placeholder="Tutor Name" />
+              <input class="qa-input" value="+91 8427168892" placeholder="WhatsApp Number" />
+              <input class="qa-input" value="sandeep@conceptwarriors.in" placeholder="Email" />
+              <input class="qa-input" value="Punjab, India" placeholder="Location" />
+              <button class="btn-primary btn-sm" onclick="alert('Settings saved (demo — no backend).')">Save Settings</button>
+            </div>
+          </div>
+          <div class="quick-add-card">
+            <h3>🔐 Security</h3>
+            <div style="display:flex;flex-direction:column;gap:10px;margin-top:4px;">
+              <input class="qa-input" type="email" placeholder="Admin Email" value="admin@conceptwarriors.in" />
+              <input class="qa-input" type="password" placeholder="Current Password" />
+              <input class="qa-input" type="password" placeholder="New Password" />
+              <input class="qa-input" type="password" placeholder="Confirm New Password" />
+              <button class="btn-primary btn-sm" onclick="alert('Password change (demo — no backend).')">Change Password</button>
+            </div>
+            <div style="background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.15);border-radius:10px;padding:14px;margin-top:16px;">
+              <p style="font-size:0.8rem;color:var(--text-muted);">⚠️ This is a demo admin panel. In production, all data would be stored in a secure backend with authentication.</p>
+            </div>
+          </div>
+          <div class="quick-add-card">
+            <h3>🗂️ Data Management</h3>
+            <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:16px;">Manage locally stored demo data.</p>
+            <div style="display:flex;flex-direction:column;gap:8px;">
+              <button class="action-btn" onclick="exportCSV('cw-demo-requests','demo-requests')" style="text-align:left;"><i class="fas fa-download"></i> Export Demo Requests (CSV)</button>
+              <button class="action-btn" onclick="exportCSV('cw-enroll-requests','enrollments')" style="text-align:left;"><i class="fas fa-download"></i> Export Enrollments (CSV)</button>
+              <button class="action-btn" onclick="exportCSV('cw-callback-requests','callbacks')" style="text-align:left;"><i class="fas fa-download"></i> Export Callbacks (CSV)</button>
+              <button class="action-btn danger" style="text-align:left;margin-top:8px;" onclick="clearAllData()"><i class="fas fa-trash"></i> Clear All Demo Data</button>
+            </div>
+          </div>
+          <div class="quick-add-card">
+            <h3>🎨 Appearance</h3>
+            <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:16px;">Theme and display preferences.</p>
+            <div style="display:flex;gap:12px;">
+              <button class="btn-outline btn-sm" onclick="setTheme('light')"><i class="fas fa-sun"></i> Light Mode</button>
+              <button class="btn-primary btn-sm" onclick="setTheme('dark')"><i class="fas fa-moon"></i> Dark Mode</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /admin-content -->
+  </main>
+</div><!-- /admin-layout -->
+
+<script src="script.js"></script>
+<script>
+// ── AUTH ──────────────────────────────────────────────────────
+if (!localStorage.getItem('cw-admin-logged')) window.location.href = 'admin-login.html';
+
+function doAdminLogout() {
+  localStorage.removeItem('cw-admin-logged');
+  window.location.href = 'admin-login.html';
+}
+
+// ── THEME ─────────────────────────────────────────────────────
+function setTheme(t) {
+  document.documentElement.setAttribute('data-theme', t);
+  localStorage.setItem('cw-theme', t);
+  const icon = document.getElementById('themeIcon');
+  if (icon) icon.className = t === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+}
+function toggleTheme() {
+  const cur = document.documentElement.getAttribute('data-theme') || 'light';
+  setTheme(cur === 'light' ? 'dark' : 'light');
+}
+(function() {
+  const t = localStorage.getItem('cw-theme') || 'light';
+  setTheme(t);
+})();
+
+// ── SIDEBAR ───────────────────────────────────────────────────
+function toggleAdminSidebar() {
+  document.getElementById('adminSidebar').classList.toggle('open');
+}
+
+// ── NAV ───────────────────────────────────────────────────────
+function switchAdmin(id, el) {
+  document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.admin-nav-item').forEach(i => i.classList.remove('active'));
+  const sec = document.getElementById(id);
+  if (sec) sec.classList.add('active');
+  if (el) el.classList.add('active');
+  const title = document.getElementById('adminPageTitle');
+  if (title && el) title.textContent = el.querySelector('span')?.textContent || id;
+  document.getElementById('adminSidebar')?.classList.remove('open');
+}
+
+// ── SEED DATA ─────────────────────────────────────────────────
+function seedData() {
+  if (!localStorage.getItem('cw-demo-requests')) {
+    localStorage.setItem('cw-demo-requests', JSON.stringify([
+      { demoName:'Priya Sharma', demoPhone:'9876543210', demoEmail:'priya@email.com', class:'Class 12', goal:'NEET', timestamp: new Date(Date.now()-86400000).toISOString(), status:'New' },
+      { demoName:'Rahul Verma',  demoPhone:'9988776655', demoEmail:'rahul@email.com', class:'Class 11', goal:'JEE Main', timestamp: new Date(Date.now()-172800000).toISOString(), status:'Contacted' },
+      { demoName:'Anjali Singh', demoPhone:'9001122334', demoEmail:'anjali@email.com', class:'Dropper', goal:'NEET', timestamp: new Date(Date.now()-259200000).toISOString(), status:'Enrolled' }
+    ]));
+  }
+  if (!localStorage.getItem('cw-enroll-requests')) {
+    localStorage.setItem('cw-enroll-requests', JSON.stringify([
+      { enrollName:'Ananya Patel', enrollPhone:'9112233445', enrollEmail:'ananya@email.com', enrollCourse:'NEET Preparation', enrollMode:'Online', timestamp: new Date(Date.now()-86400000).toISOString(), status:'New' },
+      { enrollName:'Karan Mehta', enrollPhone:'9223344556', enrollEmail:'karan@email.com', enrollCourse:'JEE Preparation', enrollMode:'Home Tutoring', timestamp: new Date(Date.now()-432000000).toISOString(), status:'Enrolled' }
+    ]));
+  }
+  if (!localStorage.getItem('cw-callback-requests')) {
+    localStorage.setItem('cw-callback-requests', JSON.stringify([
+      { name:'Mohan Lal', phone:'9001122334', email:'mohan@email.com', timeSlot:'Evening (4–8 PM)', timestamp: new Date(Date.now()-86400000).toISOString(), status:'New' },
+      { name:'Suresh Kumar', phone:'9112244556', email:'suresh@email.com', timeSlot:'Morning (9–12 PM)', timestamp: new Date(Date.now()-172800000).toISOString(), status:'Contacted' }
+    ]));
+  }
+  if (!localStorage.getItem('cw-students')) {
+    localStorage.setItem('cw-students', JSON.stringify([
+      { name:'Arjun Patel', phone:'9876543210', course:'NEET Preparation', email:'arjun@cw.in', date:'2025-06-01', status:'Active' },
+      { name:'Simran Kaur', phone:'9988776655', course:'Board Exam Prep', email:'simran@cw.in', date:'2025-05-15', status:'Active' },
+      { name:'Rohan Sharma', phone:'9001122334', course:'JEE Main & Advanced', email:'rohan@cw.in', date:'2025-04-10', status:'Active' },
+    ]));
+  }
+  if (!localStorage.getItem('cw-notifications')) {
+    localStorage.setItem('cw-notifications', JSON.stringify([
+      { title:'NEET Mock Test Scheduled', body:'Full NEET mock on Sunday 22 June, 10 AM.', type:'info', date: new Date().toLocaleDateString() },
+      { title:'New Enrollment Received', body:'Ananya Patel enrolled for NEET Prep.', type:'success', date: new Date().toLocaleDateString() }
+    ]));
+  }
+  if (!localStorage.getItem('cw-announcements')) {
+    localStorage.setItem('cw-announcements', JSON.stringify([
+      { title:'Chemistry Mock Test Sunday', body:'Full Organic Chemistry test covering ch 6–12. Negative marking applies.', date:'2025-06-15' },
+      { title:'New Notes Uploaded', body:'Electrostatics chapter notes are live in the LMS.', date:'2025-06-12' }
+    ]));
+  }
+}
+
+// ── LOAD DATA ─────────────────────────────────────────────────
+function loadData() {
+  seedData();
+  const demos     = JSON.parse(localStorage.getItem('cw-demo-requests')     || '[]');
+  const enrolls   = JSON.parse(localStorage.getItem('cw-enroll-requests')   || '[]');
+  const callbacks = JSON.parse(localStorage.getItem('cw-callback-requests') || '[]');
+  const students  = JSON.parse(localStorage.getItem('cw-students')          || '[]');
+  const total = demos.length + enrolls.length + callbacks.length;
+
+  // Stats
+  setEl('statCallback', callbacks.length);
+  setEl('statDemo',     demos.length);
+  setEl('statEnroll',   enrolls.length);
+  setEl('statStudents', total);
+
+  // Badges
+  const newCB  = callbacks.filter(r => r.status === 'New').length;
+  const newDem = demos.filter(r => r.status === 'New').length;
+  const newEnr = enrolls.filter(r => r.status === 'New').length;
+  setBadge('badgeCallback', newCB);
+  setBadge('badgeDemo',     newDem);
+  setBadge('badgeEnroll',   newEnr);
+
+  // Tables
+  renderCallbacks(callbacks);
+  renderDemos(demos);
+  renderEnrollments(enrolls);
+  renderStudents(students);
+  renderNotifications();
+  renderAnnouncements();
+  renderRecentActivity([...demos, ...enrolls, ...callbacks]);
+}
+
+function setEl(id, val) { const e = document.getElementById(id); if(e) e.textContent = val; }
+function setBadge(id, val) {
+  const e = document.getElementById(id);
+  if (!e) return;
+  e.textContent = val > 0 ? val : '';
+  e.style.display = val > 0 ? 'inline' : 'none';
+}
+
+// ── RENDER CALLBACKS ──────────────────────────────────────────
+function renderCallbacks(data) {
+  const tb = document.getElementById('callbackTable');
+  if (!tb) return;
+  if (!data.length) { tb.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--text-muted);padding:24px;">No callback requests yet.</td></tr>'; return; }
+  tb.innerHTML = data.map((r,i) => `
+    <tr>
+      <td style="color:var(--text-muted);">${i+1}</td>
+      <td><strong>${r.name || r.demoName || '—'}</strong></td>
+      <td><a href="tel:${r.phone}" style="color:var(--primary);">${r.phone}</a></td>
+      <td>${r.email || '—'}</td>
+      <td>${r.timeSlot || '—'}</td>
+      <td>${fmtDate(r.timestamp)}</td>
+      <td><span class="status-badge badge-${statusClass(r.status)}">${r.status||'New'}</span></td>
+      <td>
+        <button class="action-btn" onclick="updateStatus('cw-callback-requests',${i},'Contacted','callbacks')">Contacted</button>
+        <button class="action-btn" onclick="deleteRow('cw-callback-requests',${i},'callbacks')" style="margin-left:4px;color:var(--danger);border-color:rgba(239,68,68,.3);">✕</button>
+      </td>
+    </tr>`).join('');
+}
+
+// ── RENDER DEMOS ──────────────────────────────────────────────
+function renderDemos(data) {
+  const tb = document.getElementById('demoTable');
+  if (!tb) return;
+  if (!data.length) { tb.innerHTML = '<tr><td colspan="9" style="text-align:center;color:var(--text-muted);padding:24px;">No demo requests yet.</td></tr>'; return; }
+  tb.innerHTML = data.map((r,i) => `
+    <tr>
+      <td style="color:var(--text-muted);">${i+1}</td>
+      <td><strong>${r.demoName || r.name || '—'}</strong></td>
+      <td><a href="tel:${r.demoPhone||r.phone}" style="color:var(--primary);">${r.demoPhone||r.phone}</a></td>
+      <td>${r.demoEmail||r.email||'—'}</td>
+      <td>${r.demoClass||r.class||'—'}</td>
+      <td>${r.demoGoal||r.goal||'—'}</td>
+      <td>${fmtDate(r.timestamp)}</td>
+      <td><span class="status-badge badge-${statusClass(r.status)}">${r.status||'New'}</span></td>
+      <td>
+        <button class="action-btn" onclick="updateStatus('cw-demo-requests',${i},'Contacted','demos')">Contacted</button>
+        <button class="action-btn" onclick="updateStatus('cw-demo-requests',${i},'Enrolled','demos')" style="margin-left:4px;">Enroll</button>
+        <button class="action-btn" onclick="deleteRow('cw-demo-requests',${i},'demos')" style="margin-left:4px;color:var(--danger);border-color:rgba(239,68,68,.3);">✕</button>
+      </td>
+    </tr>`).join('');
+}
+
+// ── RENDER ENROLLMENTS ────────────────────────────────────────
+function renderEnrollments(data) {
+  const tb = document.getElementById('enrollTable');
+  if (!tb) return;
+  if (!data.length) { tb.innerHTML = '<tr><td colspan="9" style="text-align:center;color:var(--text-muted);padding:24px;">No enrollment requests yet.</td></tr>'; return; }
+  tb.innerHTML = data.map((r,i) => `
+    <tr>
+      <td style="color:var(--text-muted);">${i+1}</td>
+      <td><strong>${r.enrollName||r.name||'—'}</strong></td>
+      <td><a href="tel:${r.enrollPhone||r.phone}" style="color:var(--primary);">${r.enrollPhone||r.phone}</a></td>
+      <td>${r.enrollEmail||r.email||'—'}</td>
+      <td>${r.enrollCourse||r.course||'—'}</td>
+      <td>${r.enrollMode||r.mode||'—'}</td>
+      <td>${fmtDate(r.timestamp)}</td>
+      <td><span class="status-badge badge-${statusClass(r.status)}">${r.status||'New'}</span></td>
+      <td>
+        <button class="action-btn" onclick="updateStatus('cw-enroll-requests',${i},'Enrolled','enrollments')">Confirm</button>
+        <button class="action-btn" onclick="deleteRow('cw-enroll-requests',${i},'enrollments')" style="margin-left:4px;color:var(--danger);border-color:rgba(239,68,68,.3);">✕</button>
+      </td>
+    </tr>`).join('');
+}
+
+// ── RENDER STUDENTS ───────────────────────────────────────────
+function renderStudents(data) {
+  const tb = document.getElementById('studentTable');
+  if (!tb) return;
+  if (!data.length) { tb.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--text-muted);padding:24px;">No students added yet.</td></tr>'; return; }
+  tb.innerHTML = data.map((s,i) => `
+    <tr>
+      <td style="color:var(--text-muted);">${i+1}</td>
+      <td><strong>${s.name}</strong></td>
+      <td><a href="tel:${s.phone}" style="color:var(--primary);">${s.phone}</a></td>
+      <td>${s.course||'—'}</td>
+      <td>${s.email||'—'}</td>
+      <td>${s.date||'—'}</td>
+      <td><span class="status-badge badge-${s.status==='Active'?'active':'inactive'}">${s.status||'Active'}</span></td>
+      <td>
+        <button class="action-btn" onclick="toggleStudentStatus(${i})">Toggle</button>
+        <button class="action-btn" onclick="deleteStudent(${i})" style="margin-left:4px;color:var(--danger);border-color:rgba(239,68,68,.3);">✕</button>
+      </td>
+    </tr>`).join('');
+}
+
+// ── RENDER NOTIFICATIONS ──────────────────────────────────────
+function renderNotifications() {
+  const list = document.getElementById('notifList');
+  if (!list) return;
+  const data = JSON.parse(localStorage.getItem('cw-notifications') || '[]');
+  if (!data.length) { list.innerHTML = '<p style="color:var(--text-muted);font-size:0.875rem;padding:20px 0;">No notifications yet.</p>'; return; }
+  list.innerHTML = data.map((n,i) => `
+    <div class="notif-item">
+      <div class="notif-dot notif-unread"></div>
+      <div style="flex:1;">
+        <div class="notif-title">${n.title}</div>
+        <div class="notif-time">${n.date} · ${n.type}</div>
+        <p style="font-size:0.82rem;color:var(--text-muted);margin-top:4px;">${n.body}</p>
+      </div>
+      <button class="action-btn danger" onclick="deleteNotif(${i})" style="flex-shrink:0;">✕</button>
+    </div>`).join('');
+}
+
+// ── RENDER ANNOUNCEMENTS ──────────────────────────────────────
+function renderAnnouncements() {
+  const list = document.getElementById('annList');
+  if (!list) return;
+  const data = JSON.parse(localStorage.getItem('cw-announcements') || '[]');
+  if (!data.length) { list.innerHTML = '<p style="color:var(--text-muted);font-size:0.875rem;padding:20px 0;">No announcements yet.</p>'; return; }
+  list.innerHTML = data.map((a,i) => `
+    <div class="announcement-item" style="padding:14px 0;border-bottom:1px solid var(--border);">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;">
+        <div>
+          <div style="font-size:0.72rem;color:var(--primary);font-weight:600;margin-bottom:4px;">${a.date}</div>
+          <div style="font-size:0.875rem;font-weight:700;margin-bottom:4px;">${a.title}</div>
+          <div style="font-size:0.8rem;color:var(--text-muted);">${a.body}</div>
+        </div>
+        <button class="action-btn danger" onclick="deleteAnn(${i})" style="flex-shrink:0;">✕</button>
+      </div>
+    </div>`).join('');
+}
+
+// ── RENDER RECENT ACTIVITY ────────────────────────────────────
+function renderRecentActivity(all) {
+  const el = document.getElementById('recentActivity');
+  if (!el) return;
+  if (!all.length) { el.innerHTML = '<p style="color:var(--text-muted);font-size:0.875rem;padding:20px 0;">No activity yet.</p>'; return; }
+  const sorted = [...all].sort((a,b) => new Date(b.timestamp) - new Date(a.timestamp)).slice(0,8);
+  el.innerHTML = sorted.map(r => {
+    const name = r.demoName||r.enrollName||r.name||'Unknown';
+    const type = r.enrollCourse ? 'Enrollment' : r.demoGoal ? 'Demo Request' : 'Callback';
+    const icon = type==='Enrollment' ? '✅' : type==='Demo Request' ? '🎯' : '📞';
+    return `<div class="notif-item">
+      <span style="font-size:1.2rem;">${icon}</span>
+      <div>
+        <div class="notif-title">${name} — ${type}</div>
+        <div class="notif-time">${fmtDate(r.timestamp)}</div>
+      </div>
+      <span class="status-badge badge-${statusClass(r.status)}" style="margin-left:auto;flex-shrink:0;">${r.status||'New'}</span>
+    </div>`;
+  }).join('');
+}
+
+// ── HELPERS ───────────────────────────────────────────────────
+function fmtDate(ts) {
+  try { return new Date(ts).toLocaleDateString('en-IN', { day:'2-digit', month:'short', year:'numeric' }); } catch { return ts||'—'; }
+}
+function statusClass(s) {
+  const map = { 'New':'new', 'Contacted':'contacted', 'Enrolled':'enrolled', 'Pending':'pending', 'Active':'active', 'Inactive':'inactive' };
+  return map[s] || 'new';
+}
+
+function updateStatus(key, idx, status, section) {
+  const data = JSON.parse(localStorage.getItem(key) || '[]');
+  if (data[idx]) data[idx].status = status;
+  localStorage.setItem(key, JSON.stringify(data));
+  loadData();
+}
+function deleteRow(key, idx, section) {
+  if (!confirm('Delete this entry?')) return;
+  const data = JSON.parse(localStorage.getItem(key) || '[]');
+  data.splice(idx, 1);
+  localStorage.setItem(key, JSON.stringify(data));
+  loadData();
+}
+function addStudent() {
+  const name   = document.getElementById('newStudName').value.trim();
+  const phone  = document.getElementById('newStudPhone').value.trim();
+  if (!name || !phone) { alert('Name and Phone are required.'); return; }
+  const students = JSON.parse(localStorage.getItem('cw-students') || '[]');
+  students.push({ name, phone, course: document.getElementById('newStudCourse').value, email: document.getElementById('newStudEmail').value, date: new Date().toLocaleDateString('en-IN'), status: 'Active' });
+  localStorage.setItem('cw-students', JSON.stringify(students));
+  ['newStudName','newStudPhone','newStudCourse','newStudEmail'].forEach(id => document.getElementById(id).value = '');
+  loadData();
+}
+function toggleStudentStatus(idx) {
+  const students = JSON.parse(localStorage.getItem('cw-students') || '[]');
+  if (students[idx]) students[idx].status = students[idx].status === 'Active' ? 'Inactive' : 'Active';
+  localStorage.setItem('cw-students', JSON.stringify(students));
+  loadData();
+}
+function deleteStudent(idx) {
+  if (!confirm('Remove this student?')) return;
+  const students = JSON.parse(localStorage.getItem('cw-students') || '[]');
+  students.splice(idx, 1);
+  localStorage.setItem('cw-students', JSON.stringify(students));
+  loadData();
+}
+function addNotification() {
+  const title = document.getElementById('notifTitle').value.trim();
+  const body  = document.getElementById('notifBody').value.trim();
+  if (!title) { alert('Title required.'); return; }
+  const data = JSON.parse(localStorage.getItem('cw-notifications') || '[]');
+  data.unshift({ title, body, type: document.getElementById('notifType').value, date: new Date().toLocaleDateString('en-IN') });
+  localStorage.setItem('cw-notifications', JSON.stringify(data));
+  document.getElementById('notifTitle').value = '';
+  document.getElementById('notifBody').value = '';
+  renderNotifications();
+}
+function deleteNotif(idx) {
+  const data = JSON.parse(localStorage.getItem('cw-notifications') || '[]');
+  data.splice(idx, 1);
+  localStorage.setItem('cw-notifications', JSON.stringify(data));
+  renderNotifications();
+}
+function addAnnouncement() {
+  const title = document.getElementById('annTitle').value.trim();
+  const body  = document.getElementById('annBody').value.trim();
+  const date  = document.getElementById('annDate').value || new Date().toLocaleDateString('en-IN');
+  if (!title) { alert('Title required.'); return; }
+  const data = JSON.parse(localStorage.getItem('cw-announcements') || '[]');
+  data.unshift({ title, body, date });
+  localStorage.setItem('cw-announcements', JSON.stringify(data));
+  document.getElementById('annTitle').value = '';
+  document.getElementById('annBody').value = '';
+  renderAnnouncements();
+}
+function deleteAnn(idx) {
+  const data = JSON.parse(localStorage.getItem('cw-announcements') || '[]');
+  data.splice(idx, 1);
+  localStorage.setItem('cw-announcements', JSON.stringify(data));
+  renderAnnouncements();
+}
+
+function searchTable(tableId, query) {
+  const rows = document.querySelectorAll(`#${tableId} tr`);
+  rows.forEach(row => {
+    row.style.display = row.textContent.toLowerCase().includes(query.toLowerCase()) ? '' : 'none';
+  });
+}
+
+function exportCSV(key, filename) {
+  const data = JSON.parse(localStorage.getItem(key) || '[]');
+  if (!data.length) { alert('No data to export.'); return; }
+  const headers = Object.keys(data[0]).filter(k => k !== '__proto__');
+  const csv = [headers.join(','), ...data.map(r => headers.map(h => `"${(r[h]||'').toString().replace(/"/g,'""')}"`).join(','))].join('\n');
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `${filename}.csv`; a.click();
+}
+
+function clearAllData() {
+  if (!confirm('This will delete ALL demo data. Are you sure?')) return;
+  ['cw-demo-requests','cw-enroll-requests','cw-callback-requests','cw-students','cw-notifications','cw-announcements'].forEach(k => localStorage.removeItem(k));
+  loadData();
+}
+
+function refreshData() { loadData(); }
+
+// INIT
+document.addEventListener('DOMContentLoaded', loadData);
+</script>
+</body>
+</html>
