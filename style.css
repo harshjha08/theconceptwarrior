@@ -930,17 +930,27 @@ input, select, textarea { font-family: inherit; }
   border: 1px solid rgba(255,255,255,.6);
   border-radius: var(--radius-lg);
   padding: 36px;
+  overflow: hidden; 
   text-align: center;
   box-shadow: var(--shadow-lg);
 }
 [data-theme="dark"] .tutor-profile-card { border-color: rgba(255,255,255,.1); }
 .tutor-avatar-lg {
   width: 120px; height: 120px; border-radius: 50%;
-  background: linear-gradient(135deg, var(--primary), #7C3AED);
+  background-image: url(teacherIMG.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 110%;
   display: flex; align-items: center; justify-content: center;
   color: #fff; font-size: 2.5rem; font-weight: 800;
   margin: 0 auto 20px;
   box-shadow: 0 8px 30px rgba(79,70,229,.3);
+  transition: all .2s ease-in;
+}
+
+.tutor-avatar-lg:hover{
+  transform: scale(1.1);
+  background-size: 120%;
 }
 .tutor-profile-card h2 { font-family: var(--font-display); font-size: 1.6rem; font-weight: 700; margin-bottom: 6px; }
 .tutor-title { color: var(--primary); font-weight: 600; margin-bottom: 16px; }
