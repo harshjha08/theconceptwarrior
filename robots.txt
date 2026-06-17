@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://the-concept-warrior.vercel.app/sitemap.xml
