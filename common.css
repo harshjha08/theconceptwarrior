@@ -41,5 +41,10 @@
     #exam-prep-error-btn-margin{
         margin-bottom: 20px;
     }
+    #feedbackBtn{
+        margin-top: 30px;
+        margin-bottom: 20px;
+        margin-left: 55px;
+    }
     
 }
