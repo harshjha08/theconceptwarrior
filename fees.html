@@ -1,19 +1,1849 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Under Construction</title>
-      <link rel="icon" type="image/jpeg" href="idea.png" />
-    <link rel="stylesheet" href="underConstruction.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fee Structure | The Concept Warriors</title>
+  <meta name="description" content="Transparent fee structure for all courses at The Concept Warriors — NEET, JEE, CUET, Board Prep, Foundation, One-to-One and Home Tutoring programs." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
+
+  <style>
+  /* ============================================================
+     THE CONCEPT WARRIORS — FEE PAGE
+     Fully self-contained, matches main design system exactly
+  ============================================================ */
+
+  /* ── DESIGN TOKENS (mirrored from style.css) ─────────────── */
+  :root {
+    --primary:       #4F46E5;
+    --primary-dark:  #3730A3;
+    --primary-light: #818CF8;
+    --accent:        #F59E0B;
+    --accent-dark:   #D97706;
+    --success:       #10B981;
+    --danger:        #EF4444;
+    --physics:       #3B82F6;
+    --chemistry:     #10B981;
+    --maths:         #F59E0B;
+    --neet:          #EF4444;
+    --jee:           #3B82F6;
+    --cuet:          #8B5CF6;
+    --boards:        #10B981;
+
+    --bg:            #FAFAFA;
+    --bg-alt:        #F1F5F9;
+    --surface:       #FFFFFF;
+    --surface-glass: rgba(255,255,255,0.72);
+    --border:        #E2E8F0;
+    --text:          #0F172A;
+    --text-muted:    #64748B;
+    --text-light:    #94A3B8;
+
+    --shadow-sm: 0 1px 3px rgba(0,0,0,.08);
+    --shadow:    0 4px 20px rgba(0,0,0,.08), 0 2px 8px rgba(0,0,0,.04);
+    --shadow-lg: 0 20px 60px rgba(0,0,0,.12), 0 8px 24px rgba(0,0,0,.06);
+    --shadow-glow: 0 0 40px rgba(79,70,229,.25);
+
+    --radius:      16px;
+    --radius-sm:   8px;
+    --radius-lg:   24px;
+    --radius-full: 999px;
+
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-body:    'Inter', sans-serif;
+    --nav-h:        72px;
+    --transition:   all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  [data-theme="dark"] {
+    --bg:            #0B0F1A;
+    --bg-alt:        #111827;
+    --surface:       #1E2536;
+    --surface-glass: rgba(30,37,54,0.85);
+    --border:        #2D3748;
+    --text:          #F1F5F9;
+    --text-muted:    #94A3B8;
+    --text-light:    #64748B;
+    --shadow:        0 4px 20px rgba(0,0,0,.3);
+    --shadow-lg:     0 20px 60px rgba(0,0,0,.4);
+  }
+
+  /* ── RESET ───────────────────────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--font-body);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    overflow-x: hidden;
+    transition: background 0.3s, color 0.3s;
+  }
+ body::-webkit-scrollbar{
+  display: none;
+}
+  a { text-decoration: none; color: inherit; }
+  ul { list-style: none; }
+  button { cursor: pointer; border: none; background: none; font-family: inherit; }
+  input, select { font-family: inherit; }
+
+  /* ── UTILITIES ───────────────────────────────────────────── */
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+  .gradient-text {
+    background: linear-gradient(135deg, var(--primary) 0%, #8B5CF6 50%, #EC4899 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .gradient-text-light {
+    background: linear-gradient(135deg, #A5B4FC 0%, #F0ABFC 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .section { padding: 96px 0; }
+
+  .section-eyebrow {
+    display: inline-block;
+    font-size: 0.75rem; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--primary);
+    background: rgba(79,70,229,.1);
+    border: 1px solid rgba(79,70,229,.2);
+    border-radius: var(--radius-full);
+    padding: 4px 16px; margin-bottom: 16px;
+  }
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 4vw, 2.75rem);
+    font-weight: 700; line-height: 1.2; margin-bottom: 16px;
+  }
+  .section-subtitle {
+    font-size: 1.05rem; color: var(--text-muted);
+    max-width: 600px; margin: 0 auto;
+  }
+  .section-header { text-align: center; margin-bottom: 64px; }
+
+  /* ── BUTTONS ─────────────────────────────────────────────── */
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: linear-gradient(135deg, var(--primary), #7C3AED);
+    color: #fff; padding: 12px 28px;
+    border-radius: var(--radius-full);
+    font-weight: 600; font-size: 0.95rem;
+    transition: var(--transition);
+    box-shadow: 0 4px 20px rgba(79,70,229,.3);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(79,70,229,.4); filter: brightness(1.05); }
+
+  .btn-outline {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: transparent; color: var(--primary);
+    padding: 12px 28px; border-radius: var(--radius-full);
+    font-weight: 600; font-size: 0.95rem;
+    border: 2px solid var(--primary);
+    transition: var(--transition);
+  }
+  .btn-outline:hover { background: var(--primary); color: #fff; transform: translateY(-2px); }
+
+  .btn-white {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: #fff; color: var(--primary);
+    padding: 14px 32px; border-radius: var(--radius-full);
+    font-weight: 700; font-size: 1rem;
+    transition: var(--transition);
+    box-shadow: 0 4px 20px rgba(0,0,0,.15);
+  }
+  .btn-white:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(0,0,0,.2); }
+
+  .btn-whatsapp {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: #25D366; color: #fff;
+    padding: 14px 32px; border-radius: var(--radius-full);
+    font-weight: 700; font-size: 1rem;
+    transition: var(--transition);
+  }
+  .btn-whatsapp:hover { background: #128C7E; transform: translateY(-3px); }
+
+  .btn-sm { padding: 8px 20px; font-size: 0.85rem; }
+  .btn-lg { padding: 16px 36px; font-size: 1.05rem; }
+  .btn-full { width: 100%; justify-content: center; }
+
+  /* ── NAVBAR ──────────────────────────────────────────────── */
+  .navbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    height: var(--nav-h);
+    background: var(--surface-glass);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    transition: var(--transition);
+  }
+  .navbar.scrolled { box-shadow: var(--shadow); }
+  .nav-container {
+    max-width: 1280px; margin: 0 auto; padding: 0 24px;
+    height: 100%; display: flex; align-items: center; gap: 24px;
+  }
+  .nav-logo { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+  .logo-icon {
+    width: 40px; height: 40px;
+    background: linear-gradient(135deg, var(--primary), #7C3AED);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 1.1rem; flex-shrink: 0;
+  }
+  .logo-text { display: flex; flex-direction: column; line-height: 1.1; }
+  .logo-brand { font-family: var(--font-display); font-weight: 700; font-size: 0.95rem; color: var(--text); }
+  .logo-sub   { font-size: 0.7rem; font-weight: 600; color: var(--primary); letter-spacing: 0.1em; text-transform: uppercase; }
+
+  .nav-links { display: flex; align-items: center; gap: 4px; flex: 1; }
+  .nav-link {
+    font-size: 0.875rem; font-weight: 500; color: var(--text-muted);
+    padding: 8px 12px; border-radius: var(--radius-sm); transition: var(--transition);
+  }
+  .nav-link:hover, .nav-link.active { color: var(--primary); background: rgba(79,70,229,.08); }
+  .nav-lms { color: var(--primary); font-weight: 600; }
+
+  .nav-actions { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+  .theme-toggle {
+    width: 40px; height: 40px; border-radius: var(--radius-full);
+    background: var(--bg-alt); border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text-muted); font-size: 0.9rem; transition: var(--transition);
+  }
+  .theme-toggle:hover { color: var(--accent); border-color: var(--accent); }
+  .hamburger {
+    display: none; flex-direction: column; gap: 5px;
+    width: 40px; height: 40px; padding: 10px;
+    border-radius: var(--radius-sm); background: var(--bg-alt);
+  }
+  .hamburger span { display: block; height: 2px; background: var(--text); border-radius: 2px; transition: var(--transition); }
+
+  /* ── HERO ────────────────────────────────────────────────── */
+  .fee-hero {
+    padding: calc(var(--nav-h) + 72px) 0 80px;
+    position: relative; overflow: hidden;
+    background: linear-gradient(135deg, #EEF2FF 0%, #F3E8FF 50%, #FDFCFB 100%);
+  }
+  [data-theme="dark"] .fee-hero {
+    background: linear-gradient(135deg, #0F0A2E 0%, #1A0A3E 50%, #0B0F1A 100%);
+  }
+  .fee-hero .orb {
+    position: absolute; border-radius: 50%;
+    filter: blur(80px); opacity: 0.45; animation: orbFloat 8s ease-in-out infinite;
+    pointer-events: none;
+  }
+  .orb-1 { width: 480px; height: 480px; background: radial-gradient(circle, rgba(79,70,229,.3), transparent); top: -120px; left: -100px; }
+  .orb-2 { width: 360px; height: 360px; background: radial-gradient(circle, rgba(139,92,246,.25), transparent); bottom: -60px; right: 160px; animation-delay: -3s; }
+  .orb-3 { width: 280px; height: 280px; background: radial-gradient(circle, rgba(245,158,11,.2), transparent); top: 40%; right: -40px; animation-delay: -5s; }
+  @keyframes orbFloat { 0%,100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-28px) scale(1.04); } }
+
+  .fee-hero-inner {
+    position: relative; z-index: 1; text-align: center;
+  }
+  .fee-hero-inner .section-eyebrow { margin-bottom: 20px; }
+  .fee-hero-inner h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
+    font-weight: 700; line-height: 1.15; margin-bottom: 22px;
+  }
+  .fee-hero-inner p {
+    font-size: 1.1rem; color: var(--text-muted);
+    max-width: 620px; margin: 0 auto 36px; line-height: 1.75;
+  }
+  .hero-cta { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-bottom: 52px; }
+
+  /* Hero trust pills */
+  .hero-pills { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+  .hero-pill {
+    display: inline-flex; align-items: center; gap: 7px;
+    background: var(--surface-glass);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-full);
+    padding: 7px 16px;
+    font-size: 0.82rem; font-weight: 600; color: var(--text-muted);
+  }
+  .hero-pill i { color: var(--primary); font-size: 0.85rem; }
+
+  /* ── BILLING TOGGLE ──────────────────────────────────────── */
+  .billing-toggle-wrap {
+    display: flex; align-items: center; justify-content: center;
+    gap: 16px; margin-bottom: 52px;
+  }
+  .billing-label {
+    font-size: 0.9rem; font-weight: 600; color: var(--text-muted);
+    transition: var(--transition);
+  }
+  .billing-label.active { color: var(--text); }
+
+  .toggle-switch {
+    position: relative; width: 52px; height: 28px; cursor: pointer;
+  }
+  .toggle-switch input { opacity: 0; width: 0; height: 0; }
+  .toggle-track {
+    position: absolute; inset: 0; border-radius: var(--radius-full);
+    background: var(--bg-alt); border: 2px solid var(--border);
+    transition: var(--transition);
+  }
+  .toggle-track::after {
+    content: ''; position: absolute;
+    width: 20px; height: 20px; border-radius: 50%;
+    background: var(--primary); left: 2px; top: 2px;
+    transition: var(--transition);
+    box-shadow: 0 2px 6px rgba(79,70,229,.4);
+  }
+  .toggle-switch input:checked + .toggle-track { background: rgba(79,70,229,.12); border-color: var(--primary); }
+  .toggle-switch input:checked + .toggle-track::after { transform: translateX(24px); }
+
+  .save-badge {
+    background: linear-gradient(135deg, var(--success), #059669);
+    color: #fff; font-size: 0.7rem; font-weight: 800;
+    padding: 3px 10px; border-radius: var(--radius-full);
+    letter-spacing: 0.05em;
+  }
+
+  /* ── PRICING CARDS ───────────────────────────────────────── */
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    align-items: start;
+  }
+
+  .price-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: var(--transition);
+    position: relative;
+  }
+  .price-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); }
+
+  /* Featured card */
+  .price-card.featured {
+    border: 2px solid var(--primary);
+    transform: scale(1.04);
+    box-shadow: var(--shadow-glow);
+    z-index: 1;
+  }
+  .price-card.featured:hover { transform: scale(1.04) translateY(-8px); }
+
+  .popular-ribbon {
+    background: linear-gradient(135deg, var(--primary), #7C3AED);
+    color: #fff; font-size: 0.7rem; font-weight: 800;
+    text-align: center; padding: 8px 0; letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* Card header */
+  .card-head {
+    padding: 28px 28px 20px;
+    border-bottom: 1px solid var(--border);
+  }
+  .card-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 0.68rem; font-weight: 800; letter-spacing: 0.1em;
+    text-transform: uppercase; padding: 3px 10px;
+    border-radius: var(--radius-full); margin-bottom: 12px;
+  }
+  .card-head h3 {
+    font-family: var(--font-display); font-size: 1.2rem; font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .card-head p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; }
+
+  /* Pricing display */
+  .price-display { padding: 20px 28px; border-bottom: 1px solid var(--border); }
+  .price-amount {
+    display: flex; align-items: baseline; gap: 4px; margin-bottom: 4px;
+  }
+  .price-currency { font-size: 1.2rem; font-weight: 700; color: var(--primary); margin-top: 4px; }
+  .price-number {
+    font-family: var(--font-display); font-size: 2.8rem; font-weight: 800;
+    color: var(--text); line-height: 1;
+  }
+  .price-period { font-size: 0.85rem; color: var(--text-muted); align-self: flex-end; margin-bottom: 4px; }
+  .price-original {
+    font-size: 0.82rem; color: var(--text-light);
+    text-decoration: line-through; margin-right: 8px;
+  }
+  .price-discount {
+    display: inline-block;
+    background: rgba(16,185,129,.12); color: var(--success);
+    font-size: 0.72rem; font-weight: 800;
+    padding: 2px 8px; border-radius: var(--radius-full);
+  }
+  .price-note { font-size: 0.78rem; color: var(--text-muted); margin-top: 6px; }
+
+  /* Card features */
+  .card-features { padding: 20px 28px; }
+  .card-features h4 {
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--text-muted);
+    margin-bottom: 14px;
+  }
+  .feature-item {
+    display: flex; align-items: flex-start; gap: 10px;
+    margin-bottom: 10px; font-size: 0.875rem;
+  }
+  .feature-item i { font-size: 0.8rem; margin-top: 3px; flex-shrink: 0; }
+  .feat-yes { color: var(--success); }
+  .feat-no  { color: var(--border); }
+  .feature-item span { color: var(--text-muted); }
+  .feature-item span.strong { color: var(--text); font-weight: 600; }
+
+  /* Card footer */
+  .card-foot {
+    padding: 16px 28px 24px;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+
+  /* ── SUBJECT PRICING TABLE ───────────────────────────────── */
+  .subject-pricing { background: var(--bg-alt); }
+
+  .subject-table-wrap { overflow-x: auto; border-radius: var(--radius-lg); box-shadow: var(--shadow); }
+  .subject-table {
+    width: 100%; border-collapse: collapse;
+    background: var(--surface);
+    border-radius: var(--radius-lg); overflow: hidden;
+  }
+  .subject-table th {
+    background: linear-gradient(135deg, #1E1B4B, #4F46E5);
+    color: #fff; padding: 16px 20px;
+    font-family: var(--font-display); font-size: 0.82rem; font-weight: 700;
+    letter-spacing: 0.06em; text-align: left; white-space: nowrap;
+  }
+  .subject-table th:first-child { border-radius: 0; }
+  .subject-table td {
+    padding: 14px 20px; font-size: 0.875rem;
+    border-bottom: 1px solid var(--border); vertical-align: middle;
+  }
+  .subject-table tr:last-child td { border-bottom: none; }
+  .subject-table tr:nth-child(even) td { background: var(--bg-alt); }
+  .subject-table tr:hover td { background: rgba(79,70,229,.04); }
+
+  .subj-icon {
+    width: 34px; height: 34px; border-radius: 8px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 0.9rem; flex-shrink: 0; margin-right: 8px; vertical-align: middle;
+  }
+  .subj-physics  { background: rgba(59,130,246,.12);  color: var(--physics); }
+  .subj-chem     { background: rgba(16,185,129,.12);  color: var(--chemistry); }
+  .subj-maths    { background: rgba(245,158,11,.12);  color: var(--maths); }
+  .subj-combo    { background: rgba(79,70,229,.12);   color: var(--primary); }
+
+  .price-tag {
+    font-family: var(--font-display); font-weight: 700;
+    color: var(--primary); font-size: 0.95rem;
+  }
+  .mode-badge {
+    display: inline-block; font-size: 0.68rem; font-weight: 700;
+    padding: 3px 8px; border-radius: var(--radius-full); margin: 2px;
+  }
+  .mode-online  { background: rgba(59,130,246,.1);  color: var(--physics); }
+  .mode-offline { background: rgba(16,185,129,.1);  color: var(--success); }
+  .mode-home    { background: rgba(245,158,11,.1);  color: var(--accent); }
+  .mode-oto     { background: rgba(139,92,246,.1);  color: var(--cuet); }
+
+  /* ── MODE PRICING ────────────────────────────────────────── */
+  .mode-pricing-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;
+  }
+  .mode-price-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius-lg); padding: 28px 22px;
+    text-align: center; transition: var(--transition); position: relative; overflow: hidden;
+  }
+  .mode-price-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  }
+  .mode-price-card.online::before  { background: var(--physics); }
+  .mode-price-card.offline::before { background: var(--success); }
+  .mode-price-card.home::before    { background: var(--accent); }
+  .mode-price-card.oto::before     { background: var(--cuet); }
+  .mode-price-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+
+  .mode-icon-wrap {
+    width: 56px; height: 56px; border-radius: var(--radius);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem; margin: 0 auto 16px;
+  }
+  .mode-price-card.online  .mode-icon-wrap { background: rgba(59,130,246,.1);  color: var(--physics); }
+  .mode-price-card.offline .mode-icon-wrap { background: rgba(16,185,129,.1);  color: var(--success); }
+  .mode-price-card.home    .mode-icon-wrap { background: rgba(245,158,11,.1);  color: var(--accent); }
+  .mode-price-card.oto     .mode-icon-wrap { background: rgba(139,92,246,.1);  color: var(--cuet); }
+
+  .mode-price-card h3 {
+    font-family: var(--font-display); font-weight: 700; font-size: 1rem; margin-bottom: 6px;
+  }
+  .mode-price-card .mode-desc { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 16px; line-height: 1.5; }
+  .mode-price-val {
+    font-family: var(--font-display); font-size: 1.6rem; font-weight: 800;
+    color: var(--text); margin-bottom: 4px;
+  }
+  .mode-price-val span { font-size: 0.9rem; color: var(--text-muted); font-weight: 400; }
+  .mode-price-note { font-size: 0.72rem; color: var(--text-light); }
+
+  /* ── WHAT'S INCLUDED ─────────────────────────────────────── */
+  .included-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+  }
+  .included-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 22px; transition: var(--transition);
+  }
+  .included-card:hover { border-color: var(--primary); transform: translateY(-4px); box-shadow: var(--shadow); }
+  .included-icon {
+    width: 44px; height: 44px; border-radius: var(--radius-sm);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem; margin-bottom: 12px;
+  }
+  .included-card h4 { font-family: var(--font-display); font-weight: 700; font-size: 0.95rem; margin-bottom: 6px; }
+  .included-card p  { font-size: 0.82rem; color: var(--text-muted); line-height: 1.55; }
+  .inc-free {
+    display: inline-block; font-size: 0.62rem; font-weight: 800;
+    background: rgba(16,185,129,.1); color: var(--success);
+    padding: 2px 8px; border-radius: var(--radius-full); margin-bottom: 8px;
+    letter-spacing: 0.08em; text-transform: uppercase;
+  }
+
+  /* ── PAYMENT INFO ────────────────────────────────────────── */
+  .payment-info { background: var(--bg-alt); }
+
+  .payment-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 28px;
+  }
+  .payment-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius-lg); padding: 32px;
+  }
+  .payment-card h3 {
+    font-family: var(--font-display); font-weight: 700; font-size: 1.05rem;
+    margin-bottom: 20px; display: flex; align-items: center; gap: 10px;
+  }
+  .payment-card h3 i { color: var(--primary); }
+
+  .payment-method {
+    display: flex; align-items: center; gap: 14px;
+    padding: 12px 0; border-bottom: 1px solid var(--border);
+  }
+  .payment-method:last-child { border-bottom: none; }
+  .pm-icon {
+    width: 40px; height: 40px; border-radius: 10px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center; font-size: 1rem;
+  }
+  .pm-icon.upi   { background: rgba(79,70,229,.1);  color: var(--primary); }
+  .pm-icon.bank  { background: rgba(16,185,129,.1);  color: var(--success); }
+  .pm-icon.cash  { background: rgba(245,158,11,.1);  color: var(--accent); }
+  .pm-icon.wa    { background: rgba(37,211,102,.1);  color: #25D366; }
+  .pm-info strong { font-size: 0.875rem; font-weight: 700; display: block; margin-bottom: 2px; }
+  .pm-info span   { font-size: 0.78rem; color: var(--text-muted); }
+
+  .policy-item {
+    display: flex; gap: 12px; align-items: flex-start;
+    padding: 12px 0; border-bottom: 1px solid var(--border);
+  }
+  .policy-item:last-child { border-bottom: none; }
+  .policy-item i  { color: var(--primary); font-size: 0.9rem; margin-top: 2px; flex-shrink: 0; }
+  .policy-item div strong { font-size: 0.875rem; font-weight: 700; display: block; margin-bottom: 2px; }
+  .policy-item div p { font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; }
+
+  /* ── COMPARISON TABLE ────────────────────────────────────── */
+  .compare-section { background: var(--bg-alt); }
+  .compare-wrap { overflow-x: auto; border-radius: var(--radius-lg); box-shadow: var(--shadow); }
+  .compare-table {
+    width: 100%; border-collapse: collapse;
+    background: var(--surface); min-width: 700px;
+  }
+  .compare-table th {
+    padding: 14px 18px; text-align: center;
+    font-family: var(--font-display); font-size: 0.85rem; font-weight: 700;
+    border-bottom: 2px solid var(--border); background: var(--bg-alt);
+  }
+  .compare-table th:first-child { text-align: left; }
+  .compare-table th.highlight-col {
+    background: linear-gradient(135deg, rgba(79,70,229,.1), rgba(139,92,246,.08));
+    color: var(--primary);
+  }
+  .compare-table td {
+    padding: 13px 18px; font-size: 0.875rem;
+    border-bottom: 1px solid var(--border); text-align: center;
+    vertical-align: middle;
+  }
+  .compare-table td:first-child { text-align: left; font-weight: 600; }
+  .compare-table tr:last-child td { border-bottom: none; }
+  .compare-table tr:hover td { background: rgba(79,70,229,.025); }
+  .compare-table td.highlight-col { background: rgba(79,70,229,.04); }
+  .check-yes { color: var(--success); font-size: 1rem; }
+  .check-no  { color: var(--border);  font-size: 1rem; }
+  .check-partial { color: var(--accent); font-size: 0.75rem; font-weight: 700; }
+
+  /* ── FAQ ─────────────────────────────────────────────────── */
+  .fee-faq { max-width: 780px; margin: 0 auto; }
+  .faq-item {
+    border: 1px solid var(--border); border-radius: var(--radius);
+    margin-bottom: 10px; overflow: hidden; transition: var(--transition);
+  }
+  .faq-item:hover { border-color: rgba(79,70,229,.3); }
+  .faq-question {
+    width: 100%; display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 22px; text-align: left; font-weight: 600; font-size: 0.92rem;
+    background: var(--surface); color: var(--text); transition: var(--transition);
+  }
+  .faq-question:hover { background: var(--bg-alt); }
+  .faq-question.open  { color: var(--primary); background: rgba(79,70,229,.04); }
+  .faq-icon { transition: transform 0.3s; color: var(--text-muted); font-size: 0.85rem; }
+  .faq-question.open .faq-icon { transform: rotate(45deg); color: var(--primary); }
+  .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+  .faq-answer.open { max-height: 220px; }
+  .faq-answer p { padding: 0 22px 18px; font-size: 0.875rem; color: var(--text-muted); line-height: 1.7; }
+
+  /* ── CTA SECTION ─────────────────────────────────────────── */
+  .fee-cta {
+    padding: 96px 0;
+    background: linear-gradient(135deg, #312E81 0%, #1E1B4B 100%);
+    position: relative; overflow: hidden; text-align: center;
+  }
+  .cta-orb-1 {
+    position: absolute; width: 500px; height: 500px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(99,102,241,.3), transparent);
+    top: -150px; left: -100px; filter: blur(60px);
+  }
+  .cta-orb-2 {
+    position: absolute; width: 400px; height: 400px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(236,72,153,.2), transparent);
+    bottom: -100px; right: -80px; filter: blur(60px);
+  }
+  .fee-cta h2 { font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; color: #fff; margin-bottom: 16px; position: relative; z-index: 1; }
+  .fee-cta p  { font-size: 1.05rem; color: rgba(255,255,255,.7); max-width: 540px; margin: 0 auto 40px; position: relative; z-index: 1; }
+  .cta-btns   { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; position: relative; z-index: 1; }
+  .fee-cta .note { font-size: 0.78rem; color: rgba(255,255,255,.45); margin-top: 18px; position: relative; z-index: 1; }
+
+  /* ── FOOTER ──────────────────────────────────────────────── */
+  .footer { background: var(--bg-alt); border-top: 1px solid var(--border); padding: 64px 0 0; }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 48px; padding-bottom: 48px; border-bottom: 1px solid var(--border); }
+  .footer-brand p { font-size: 0.875rem; color: var(--text-muted); margin: 16px 0 24px; line-height: 1.7; }
+  .social-links   { display: flex; gap: 10px; }
+  .social-links a {
+    width: 38px; height: 38px; border-radius: 50%;
+    background: var(--surface); border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text-muted); font-size: 0.9rem; transition: var(--transition);
+  }
+  .social-links a:hover { background: var(--primary); color: #fff; border-color: var(--primary); }
+  .footer-links h4, .footer-contact h4 {
+    font-family: var(--font-display); font-weight: 700; font-size: 0.9rem;
+    margin-bottom: 20px; color: var(--text);
+  }
+  .footer-links ul li { margin-bottom: 10px; }
+  .footer-links ul li a { font-size: 0.875rem; color: var(--text-muted); transition: var(--transition); }
+  .footer-links ul li a:hover { color: var(--primary); padding-left: 4px; }
+  .contact-item { display: flex; align-items: flex-start; gap: 10px; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px; }
+  .contact-item i { color: var(--primary); font-size: 0.9rem; margin-top: 2px; flex-shrink: 0; }
+  .contact-item a { color: var(--text-muted); transition: var(--transition); }
+  .contact-item a:hover { color: var(--primary); }
+  .footer-bottom { padding: 24px 0; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+  .footer-bottom p { font-size: 0.8rem; color: var(--text-light); }
+  .footer-bottom-links { display: flex; gap: 20px; }
+  .footer-bottom-links a { font-size: 0.8rem; color: var(--text-light); transition: var(--transition); }
+  .footer-bottom-links a:hover { color: var(--primary); }
+
+  /* ── FLOATING BUTTONS ────────────────────────────────────── */
+  .whatsapp-float {
+    position: fixed; bottom: 88px; right: 24px; z-index: 900;
+    width: 56px; height: 56px; border-radius: 50%;
+    background: #25D366;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 1.5rem;
+    box-shadow: 0 4px 20px rgba(37,211,102,.4);
+    transition: var(--transition);
+    animation: waPulse 3s ease-in-out infinite;
+  }
+  .whatsapp-float:hover { transform: scale(1.1); }
+  @keyframes waPulse {
+    0%,100% { box-shadow: 0 4px 20px rgba(37,211,102,.4), 0 0 0 0 rgba(37,211,102,.4); }
+    50%      { box-shadow: 0 4px 20px rgba(37,211,102,.4), 0 0 0 12px rgba(37,211,102,0); }
+  }
+  .wa-tooltip {
+    position: absolute; right: 68px;
+    background: #fff; color: #0F172A;
+    font-size: 0.8rem; font-weight: 600; padding: 6px 12px;
+    border-radius: var(--radius-full); box-shadow: var(--shadow);
+    white-space: nowrap; opacity: 0; transition: opacity 0.2s; pointer-events: none;
+  }
+  .whatsapp-float:hover .wa-tooltip { opacity: 1; }
+
+  .back-to-top {
+    position: fixed; bottom: 152px; right: 24px; z-index: 900;
+    width: 44px; height: 44px; border-radius: 50%;
+    background: var(--surface); border: 1px solid var(--border);
+    color: var(--text-muted); font-size: 0.9rem;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: var(--shadow); transition: var(--transition);
+    opacity: 0; pointer-events: none;
+  }
+  .back-to-top.visible { opacity: 1; pointer-events: all; }
+  .back-to-top:hover { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+  /* ── POPUP ───────────────────────────────────────────────── */
+  .popup-overlay {
+    position: fixed; inset: 0; z-index: 10000;
+    background: rgba(0,0,0,.6); backdrop-filter: blur(8px);
+    display: flex; align-items: center; justify-content: center; padding: 24px;
+    opacity: 0; pointer-events: none; transition: opacity 0.3s;
+  }
+  .popup-overlay.active { opacity: 1; pointer-events: all; }
+  .popup-box {
+    background: var(--surface); border-radius: var(--radius-lg);
+    padding: 40px; max-width: 460px; width: 100%;
+    max-height: 90vh; overflow-y: auto; position: relative;
+    transform: scale(0.9) translateY(20px); transition: transform 0.3s;
+    box-shadow: var(--shadow-lg);
+  }
+  .popup-overlay.active .popup-box { transform: scale(1) translateY(0); }
+  .popup-close {
+    position: absolute; top: 16px; right: 16px;
+    width: 32px; height: 32px; border-radius: 50%;
+    background: var(--bg-alt); color: var(--text-muted);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.85rem; transition: var(--transition);
+  }
+  .popup-close:hover { background: var(--danger); color: #fff; }
+  .popup-box h2 { font-family: var(--font-display); font-size: 1.6rem; font-weight: 700; margin-bottom: 10px; }
+  .popup-box > p { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 20px; }
+  .form-group { margin-bottom: 14px; }
+  .form-group input, .form-group select {
+    width: 100%; padding: 12px 16px;
+    border: 1px solid var(--border); border-radius: var(--radius-sm);
+    background: var(--bg); color: var(--text); font-size: 0.9rem; transition: var(--transition);
+  }
+  .form-group input:focus, .form-group select:focus {
+    outline: none; border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(79,70,229,.12);
+  }
+  .success-icon { font-size: 3rem; margin-bottom: 16px; }
+
+  /* ── RESPONSIVE ──────────────────────────────────────────── */
+  @media (max-width: 1024px) {
+    .pricing-grid       { grid-template-columns: 1fr 1fr; }
+    .price-card.featured { transform: none; }
+    .price-card.featured:hover { transform: translateY(-8px); }
+    .mode-pricing-grid  { grid-template-columns: repeat(2, 1fr); }
+    .included-grid      { grid-template-columns: repeat(2, 1fr); }
+    .footer-grid        { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 768px) {
+    .nav-links { display: none; flex-direction: column; position: fixed; top: var(--nav-h); left: 0; right: 0; background: var(--surface); padding: 16px; border-bottom: 1px solid var(--border); box-shadow: var(--shadow); z-index: 999; }
+    .nav-links.open { display: flex; }
+    .hamburger { display: flex; }
+    .pricing-grid       { grid-template-columns: 1fr; }
+    .mode-pricing-grid  { grid-template-columns: 1fr 1fr; }
+    .included-grid      { grid-template-columns: 1fr 1fr; }
+    .payment-grid       { grid-template-columns: 1fr; }
+    .footer-grid        { grid-template-columns: 1fr; }
+    .section { padding: 64px 0; }
+    .cta-btns { flex-direction: column; align-items: center; }
+  }
+  @media (max-width: 480px) {
+    .mode-pricing-grid  { grid-template-columns: 1fr; }
+    .included-grid      { grid-template-columns: 1fr; }
+    .hero-pills         { flex-direction: column; align-items: center; }
+    .billing-toggle-wrap { flex-wrap: wrap; gap: 10px; }
+    .popup-box { padding: 28px 22px; }
+  }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <img id="construction-img" src="Firefighter-cuate.png" alt="Under Construction" style="display: flex; width: 40%; height: auto; margin: 0 auto;">
-    <h1 id="heading" style="text-align: center; color: red;">Page Under Construction</h1>
-    <p style="text-align: center;">Sorry for the inconvenience. This page is currently under construction.Kindly check back later.</p>
+
+<!-- ═══════════════════════════════════════════════════════════
+     POPUPS
+════════════════════════════════════════════════════════════ -->
+<div id="enquiryPopup" class="popup-overlay">
+  <div class="popup-box">
+    <button class="popup-close" onclick="closePopup('enquiryPopup')"><i class="fas fa-times"></i></button>
+    <h2>Get a <span class="gradient-text">Custom Quote</span></h2>
+    <p>Tell us your requirements and Sandeep Sir will send you a personalised fee structure within 24 hours.</p>
+    <div class="form-group"><input type="text" id="eq-name" placeholder="Your Full Name *" /></div>
+    <div class="form-group"><input type="tel" id="eq-phone" placeholder="Phone / WhatsApp *" /></div>
+    <div class="form-group"><input type="email" id="eq-email" placeholder="Email Address" /></div>
+    <div class="form-group">
+      <select id="eq-course">
+        <option value="">I'm interested in…</option>
+        <option>NEET Preparation</option>
+        <option>JEE Main & Advanced</option>
+        <option>CUET Preparation</option>
+        <option>Board Exam Prep (11–12)</option>
+        <option>Foundation Program (8–10)</option>
+        <option>Crash Course (60 Days)</option>
+        <option>Personal Mentorship (1-on-1)</option>
+        <option>Dropper / Repeater Batch</option>
+        <option>Multiple Subjects</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <select id="eq-mode">
+        <option value="">Preferred Mode</option>
+        <option>Online Live</option>
+        <option>Offline / In-Person</option>
+        <option>Home Tutoring</option>
+        <option>One-to-One (Any Mode)</option>
+      </select>
+    </div>
+    <button class="btn-primary btn-full" onclick="submitEnquiry()"><i class="fas fa-paper-plane"></i> Send Enquiry</button>
+  </div>
+</div>
+
+<div id="successPopup" class="popup-overlay">
+  <div class="popup-box" style="text-align:center;">
+    <div class="success-icon">✅</div>
+    <h2>Enquiry <span class="gradient-text">Received!</span></h2>
+    <p>Sandeep Sir will reach out with a personalised fee quote within 24 hours.</p>
+    <p style="margin-top:12px;font-size:0.85rem;color:var(--text-muted);">For faster response, WhatsApp directly:</p>
+    <a href="https://wa.me/918427168892?text=Hello%20Sir%2C%20I%20enquired%20about%20the%20fee%20structure%20on%20your%20website." target="_blank" class="btn-primary btn-full" style="margin-top:12px;"><i class="fab fa-whatsapp"></i> WhatsApp Now</a>
+    <button class="btn-outline btn-full" style="margin-top:8px;" onclick="closePopup('successPopup')">Close</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     NAVBAR
+════════════════════════════════════════════════════════════ -->
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="nav-logo">
+      <div class="logo-icon"><i class="fas fa-bolt"></i></div>
+      <div class="logo-text">
+        <span class="logo-brand">The Concept</span>
+        <span class="logo-sub">Warriors</span>
+      </div>
+    </a>
+    <div class="nav-links" id="navLinks">
+      <a href="index.html"       class="nav-link">Home</a>
+      <a href="about.html"       class="nav-link">About</a>
+      <a href="courses.html"     class="nav-link">Courses</a>
+      <a href="mentorship.html"  class="nav-link">Mentorship</a>
+      <a href="exam-prep.html"   class="nav-link">Exam Prep</a>
+      <a href="fees.html"        class="nav-link active">Fee Structure</a>
+      <a href="contact.html"     class="nav-link">Contact</a>
+      <a href="lms-login.html"   class="nav-link nav-lms"><i class="fas fa-graduation-cap"></i> Student Resources</a>
+    </div>
+    <div class="nav-actions">
+      <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle theme">
+        <i class="fas fa-moon" id="themeIcon"></i>
+      </button>
+      <button class="btn-primary btn-sm" onclick="openPopup('enquiryPopup')">Get Quote</button>
+      <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════════
+     HERO
+════════════════════════════════════════════════════════════ -->
+<section class="fee-hero">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+  <div class="container fee-hero-inner">
+    <span class="section-eyebrow" data-aos="fade-down">Transparent Pricing</span>
+    <h1 data-aos="fade-up" data-aos-delay="80">
+      Honest Fees for <span class="gradient-text">Real Results</span>
+    </h1>
+    <p data-aos="fade-up" data-aos-delay="160">
+      No hidden charges. No fine print. Just straightforward pricing for expert, concept-driven tutoring that actually transforms your marks. Book a free demo first — no payment until you're convinced.
+    </p>
+    <div class="hero-cta" data-aos="fade-up" data-aos-delay="240">
+      <button class="btn-primary btn-lg" onclick="openPopup('enquiryPopup')">
+        <i class="fas fa-tag"></i> Get Custom Fee Quote
+      </button>
+      <a href="https://wa.me/918427168892?text=Hello%20Sir%2C%20I%20want%20to%20know%20about%20your%20fee%20structure." target="_blank" class="btn-outline btn-lg">
+        <i class="fab fa-whatsapp"></i> Ask on WhatsApp
+      </a>
+    </div>
+    <div class="hero-pills" data-aos="fade-up" data-aos-delay="320">
+      <span class="hero-pill"><i class="fas fa-check-circle"></i> Free Demo Before Payment</span>
+      <span class="hero-pill"><i class="fas fa-lock-open"></i> No Hidden Charges</span>
+      <span class="hero-pill"><i class="fas fa-redo"></i> Flexible Payment Plans</span>
+      <span class="hero-pill"><i class="fas fa-shield-alt"></i> Value Guaranteed</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 1 — COURSE PLAN PRICING CARDS
+════════════════════════════════════════════════════════════ -->
+<section class="section" id="plans">
+  <div class="container">
+    <div class="section-header" data-aos="fade-up">
+      <span class="section-eyebrow">Course Plans</span>
+      <h2 class="section-title">Choose Your <span class="gradient-text">Learning Plan</span></h2>
+      <p class="section-subtitle">Three tiers designed around how much support you need. All plans include core concept teaching, handwritten notes, and doubt solving.</p>
+    </div>
+
+    <!-- Billing Toggle -->
+    <div class="billing-toggle-wrap" data-aos="fade-up" data-aos-delay="100">
+      <span class="billing-label active" id="label-monthly">Monthly</span>
+      <label class="toggle-switch">
+        <input type="checkbox" id="billingToggle" onchange="switchBilling(this)" />
+        <div class="toggle-track"></div>
+      </label>
+      <span class="billing-label" id="label-annual">Annual &nbsp;</span>
+      <span class="save-badge">Save up to 20%</span>
+    </div>
+
+    <div class="pricing-grid" data-aos="fade-up" data-aos-delay="150">
+
+      <!-- STARTER -->
+      <div class="price-card">
+        <div class="card-head">
+          <div class="card-badge" style="background:rgba(16,185,129,.1);color:var(--success);">
+            <i class="fas fa-seedling"></i> Foundation
+          </div>
+          <h3>Foundation Plan</h3>
+          <p>For Class 8–10 students building strong academic basics in Science & Maths.</p>
+        </div>
+        <div class="price-display">
+          <div class="price-amount">
+            <span class="price-currency">₹</span>
+            <span class="price-number" id="price-starter">2,000</span>
+            <span class="price-period">/ month</span>
+          </div>
+          <div style="margin-top:6px;">
+            <span class="price-original" id="orig-starter"></span>
+            <span class="price-discount" id="disc-starter" style="display:none;">20% OFF</span>
+          </div>
+          <p class="price-note">Per subject · 8 sessions/month · 1.5 hrs/session</p>
+        </div>
+        <div class="card-features">
+          <h4>What's Included</h4>
+          <div class="feature-item"><i class="fas fa-check feat-yes"></i><span class="strong">8 Live Sessions / Month</span></div>
+          <div class="feature-item"><i class="fas fa-check feat-yes"></i><span>Handwritten Notes (PDF)</span></div>
+          <div class="feature-item"><i class="fas fa-check feat-yes"></i><span>Weekly Chapter Tests</span></div>
+          <div class="feature-item"><i class="fas fa-check feat-yes"></i><span>WhatsApp Doubt Solving</span></div>
+          <div class="feature-item"><i class="fas fa-check feat-yes"></i><span>Recorded Sessions</span></div>
+          <div class="feature-item"><i class="fas fa-check feat-yes"></i><span>Monthly Progress Report</span></div>
+          <div class="feature-item"><i class="fas fa-times feat-no"></i><span>Personal Mentorship</span></div>
+          <div class="feature-item"><i class="fas fa-times feat-no"></i><span>Full-Length Mock Tests</span></div>
+          <div class="feature-item"><i class="fas fa-times feat-no"></i><span>Exam Strategy Sessions</span></div>
+        </div>
+        <div class="card-foot">
+          <button class="btn-outline btn-full" onclick="openPopup('enquiryPopup')">Enroll in Foundation</button>
+          <a href="https://wa.me/918427168892?text=Hello%20Sir%2C%20I%20am%20interested%20in%20the%20Foundation%20Plan." target="_blank" class="btn-ghost btn-full" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 20px;font-size:0.85rem;color:var(--text-muted);border-radius:var(--radius-full);transition:var(--transition);" onmouseover="this.style.background='var(--bg-alt)'" onmouseout="this.style.background='transparent'"><i class="fab fa-whatsapp" style="color:#25D366;"></i> Ask on WhatsApp</a>
+        </div>
+      </div>
+
+      <!-- STANDARD (FEATURED) -->
+      <div class="price-card featured">
+        <div class="popular-ribbon">⭐ Most Popular — Best Value</div>
+        <div class="card-head">
+          <div class="card-badge" style="background:rgba(79,70,229,.1);color:var(--primary);">
+            <i class="fas fa-fire"></i> Competitive Exam
+          </div>
+          <h3>Warrior Plan</h3>
+          <p>Complete NEET / JEE / CUET or Board exam preparation with full support.</p>
+        </div>
+        <div class="price-display">
+          <div class="price-amount">
+            <span class="price-currency">₹</span>
+            <span class="price-number" id="price-warrior">3,500</span>
+            <span class="price-period">/ month</span>
+          </div>
+          <div style="margin-top:6px;">
+            <span class="price-original" id="orig-warrior"></span>
+            <span class="price-discount" id="disc-warrior" style="display:none;">20% OFF</span>
+          </div>
+          <p class="price-note">Per subject · 10 sessions/month · 1.5–2 hrs/session</p>
+        </div>
+        <div class="card-features">
+          <h4>What's Included</h4>
+          <div class="feature-item"><i class="fas fa-check feat-yes"></i><span class="strong">10 Live Sessions / Month</span></div>
+          <div class="feature-item"><i class="fas fa-check feat-yes"></i><span>Handwritten + Digital Notes</span></div>
+          <div class="feature-item"><i class="fas fa-check feat-yes"></i><span>Weekly Chapter Tests</span></div>
+          <div class="feature-item"><i class="fas fa-check feat-yes"></i><span>WhatsApp Doubt Solving</span></div>
+          <div class="feature-item"><i class="fas fa-check feat-yes"></i><span>All Sessions Recorded</span></div>
+          <div class="feature-item"><i class="fas fa-check feat-yes"></i><span>Monthly Progress Report</span></div>
+          <div class="feature-item"><i class="fas fa-check feat-yes"></i><span class="strong">Monthly Full Mock Test</span></div>
+          <div class="feature-item"><i class="fas fa-check feat-yes"></i><span class="strong">Exam Strategy Sessions</span></div>
+          <div class="feature-item"><i class="fas fa-times feat-no"></i><span>Personal 1-on-1 Mentorship</span></div>
+        </div>
+        <div class="card-foot">
+          <button class="btn-primary btn-full" onclick="openPopup('enquiryPopup')">Enroll in Warrior Plan</button>
+          <a href="https://wa.me/918427168892?text=Hello%20Sir%2C%20I%20am%20interested%20in%20the%20Warrior%20Plan." target="_blank" class="btn-ghost btn-full" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 20px;font-size:0.85rem;color:var(--text-muted);border-radius:var(--radius-full);transition:var(--transition);" onmouseover="this.style.background='var(--bg-alt)'" onmouseout="this.style.background='transparent'"><i class="fab fa-whatsapp" style="color:#25D366;"></i> Ask on WhatsApp</a>
+        </div>
+      </div>
+
+      <!-- ELITE -->
+      <div class="price-card">
+        <div class="card-head">
+          <div class="card-badge" style="background:rgba(245,158,11,.1);color:var(--accent);">
+            <i class="fas fa-crown"></i> Premium
+          </div>
+          <h3>Elite Mentorship Plan</h3>
+          <p>100% one-to-one, fully dedicated sessions with complete personal mentorship and career guidance.</p>
+        </div>
+        <div class="price-display">
+          <div class="price-amount">
+            <span class="price-currency">₹</span>
+            <span class="price-number" id="price-elite">5,500</span>
+            <span class="price-period">/ month</span>
+          </div>
+          <div style="margin-top:6px;">
+            <span class="price-original" id="orig-elite"></span>
+            <span class="price-discount" id="disc-elite" style="display:none;">15% OFF</span>
+          </div>
+          <p class="price-note">Per subject · 12 dedicated sessions · Flexible timing</p>
+        </div>
+        <div class="card-features">
+          <h4>What's Included</h4>
+          <div class="feature-item"><i class="fas fa-check feat-yes"></i><span class="strong">12 Dedicated 1-on-1 Sessions</span></div>
+          <div class="feature-item"><i class="fas fa-check feat-yes"></i><span>Complete Study Material</span></div>
+          <div class="feature-item"><i class="fas fa-check feat-yes"></i><span>Weekly Tests + Analysis</span></div>
+          <div class="feature-item"><i class="fas fa-check feat-yes"></i><span class="strong">Direct WhatsApp Access to Sir</span></div>
+          <div class="feature-item"><i class="fas fa-check feat-yes"></i><span>All Sessions Recorded</span></div>
+          <div class="feature-item"><i class="fas fa-check feat-yes"></i><span class="strong">Personal Mentorship Sessions</span></div>
+          <div class="feature-item"><i class="fas fa-check feat-yes"></i><span class="strong">2× Full Mock Tests / Month</span></div>
+          <div class="feature-item"><i class="fas fa-check feat-yes"></i><span class="strong">Exam + Career Guidance</span></div>
+          <div class="feature-item"><i class="fas fa-check feat-yes"></i><span class="strong">Parent Progress Updates</span></div>
+        </div>
+        <div class="card-foot">
+          <button class="btn-outline btn-full" onclick="openPopup('enquiryPopup')">Enroll in Elite Plan</button>
+          <a href="https://wa.me/918427168892?text=Hello%20Sir%2C%20I%20am%20interested%20in%20the%20Elite%20Mentorship%20Plan." target="_blank" class="btn-ghost btn-full" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 20px;font-size:0.85rem;color:var(--text-muted);border-radius:var(--radius-full);transition:var(--transition);" onmouseover="this.style.background='var(--bg-alt)'" onmouseout="this.style.background='transparent'"><i class="fab fa-whatsapp" style="color:#25D366;"></i> Ask on WhatsApp</a>
+        </div>
+      </div>
+
+    </div><!-- /pricing-grid -->
+
+    <!-- Disclaimer -->
+    <p style="text-align:center;margin-top:28px;font-size:0.82rem;color:var(--text-light);" data-aos="fade-up">
+      <i class="fas fa-info-circle" style="color:var(--primary);"></i>
+      Prices shown are per subject per month. Multi-subject discounts available — contact for bundle pricing.
+      Annual pricing saves up to 20% vs month-by-month.
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 2 — SUBJECT × MODE PRICING TABLE
+════════════════════════════════════════════════════════════ -->
+<section class="section subject-pricing" id="subject-pricing">
+  <div class="container">
+    <div class="section-header" data-aos="fade-up">
+      <span class="section-eyebrow">Detailed Breakdown</span>
+      <h2 class="section-title">Fee by Subject <span class="gradient-text">& Mode</span></h2>
+      <p class="section-subtitle">Every subject, every teaching mode, every exam — with exact monthly fees so you can plan with full clarity.</p>
+    </div>
+
+    <div class="subject-table-wrap" data-aos="fade-up" data-aos-delay="100">
+      <table class="subject-table">
+        <thead>
+          <tr>
+            <th>Subject / Program</th>
+            <th>Target</th>
+            <th>Online Live</th>
+            <th>Offline</th>
+            <th>Home Tutoring</th>
+            <th>One-to-One</th>
+            <th>Duration</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- PHYSICS -->
+          <tr>
+            <td>
+              <span class="subj-icon subj-physics"><i class="fas fa-atom"></i></span>
+              <strong>Physics</strong>
+            </td>
+            <td><span class="mode-badge mode-online">8–10</span><span class="mode-badge mode-offline">11–12</span></td>
+            <td class="price-tag">₹ 2,000</td>
+            <td class="price-tag">₹ 2,500</td>
+            <td class="price-tag">₹ 3,200</td>
+            <td class="price-tag">₹ 4,000</td>
+            <td style="color:var(--text-muted);font-size:0.82rem;">8–10 sessions<br>1.5 hrs each</td>
+          </tr>
+          <!-- CHEMISTRY -->
+          <tr>
+            <td>
+              <span class="subj-icon subj-chem"><i class="fas fa-flask"></i></span>
+              <strong>Chemistry</strong>
+            </td>
+            <td><span class="mode-badge mode-online">8–10</span><span class="mode-badge mode-offline">11–12</span></td>
+            <td class="price-tag">₹ 2,000</td>
+            <td class="price-tag">₹ 2,500</td>
+            <td class="price-tag">₹ 3,200</td>
+            <td class="price-tag">₹ 4,000</td>
+            <td style="color:var(--text-muted);font-size:0.82rem;">8–10 sessions<br>1.5 hrs each</td>
+          </tr>
+          <!-- MATHS -->
+          <tr>
+            <td>
+              <span class="subj-icon subj-maths"><span style="font-weight:800;font-size:1rem;">π</span></span>
+              <strong>Mathematics</strong>
+            </td>
+            <td><span class="mode-badge mode-online">8–10</span><span class="mode-badge mode-offline">11–12</span></td>
+            <td class="price-tag">₹ 2,000</td>
+            <td class="price-tag">₹ 2,500</td>
+            <td class="price-tag">₹ 3,200</td>
+            <td class="price-tag">₹ 4,000</td>
+            <td style="color:var(--text-muted);font-size:0.82rem;">8–10 sessions<br>1.5 hrs each</td>
+          </tr>
+          <!-- PCM COMBO -->
+          <tr>
+            <td>
+              <span class="subj-icon subj-combo"><i class="fas fa-layer-group"></i></span>
+              <strong>PCM Combo</strong>
+              <span style="display:inline-block;margin-left:6px;background:rgba(79,70,229,.1);color:var(--primary);font-size:0.65rem;font-weight:800;padding:2px 7px;border-radius:var(--radius-full);">SAVE 15%</span>
+            </td>
+            <td><span class="mode-badge mode-offline">11–12</span></td>
+            <td class="price-tag">₹ 5,100</td>
+            <td class="price-tag">₹ 6,375</td>
+            <td class="price-tag">₹ 8,160</td>
+            <td class="price-tag">₹ 10,200</td>
+            <td style="color:var(--text-muted);font-size:0.82rem;">3 subjects<br>15% bundle off</td>
+          </tr>
+          <!-- PC COMBO (NEET) -->
+          <tr>
+            <td>
+              <span class="subj-icon" style="background:rgba(239,68,68,.1);color:var(--neet);"><i class="fas fa-heartbeat"></i></span>
+              <strong>PC Combo (NEET)</strong>
+              <span style="display:inline-block;margin-left:6px;background:rgba(239,68,68,.1);color:var(--neet);font-size:0.65rem;font-weight:800;padding:2px 7px;border-radius:var(--radius-full);">NEET</span>
+            </td>
+            <td><span class="mode-badge mode-offline">11–12</span><span class="mode-badge" style="background:rgba(239,68,68,.1);color:var(--neet);">Dropper</span></td>
+            <td class="price-tag">₹ 3,500</td>
+            <td class="price-tag">₹ 4,250</td>
+            <td class="price-tag">₹ 5,500</td>
+            <td class="price-tag">₹ 7,000</td>
+            <td style="color:var(--text-muted);font-size:0.82rem;">Physics + Chem<br>10 sessions each</td>
+          </tr>
+          <!-- NEET FULL PREP -->
+          <tr>
+            <td>
+              <span class="subj-icon" style="background:rgba(239,68,68,.1);color:var(--neet);"><i class="fas fa-stethoscope"></i></span>
+              <strong>NEET Full Prep</strong>
+            </td>
+            <td><span class="mode-badge" style="background:rgba(239,68,68,.1);color:var(--neet);">NEET</span></td>
+            <td class="price-tag">₹ 4,500</td>
+            <td class="price-tag">₹ 5,500</td>
+            <td class="price-tag">₹ 7,000</td>
+            <td class="price-tag">₹ 9,000</td>
+            <td style="color:var(--text-muted);font-size:0.82rem;">Full program<br>12 sessions/mo</td>
+          </tr>
+          <!-- JEE PREP -->
+          <tr>
+            <td>
+              <span class="subj-icon" style="background:rgba(59,130,246,.1);color:var(--jee);"><i class="fas fa-cog"></i></span>
+              <strong>JEE Main + Advanced</strong>
+            </td>
+            <td><span class="mode-badge mode-online">JEE</span></td>
+            <td class="price-tag">₹ 5,000</td>
+            <td class="price-tag">₹ 6,000</td>
+            <td class="price-tag">₹ 7,500</td>
+            <td class="price-tag">₹ 10,000</td>
+            <td style="color:var(--text-muted);font-size:0.82rem;">PCM full<br>12 sessions/mo</td>
+          </tr>
+          <!-- CUET -->
+          <tr>
+            <td>
+              <span class="subj-icon" style="background:rgba(139,92,246,.1);color:var(--cuet);"><i class="fas fa-university"></i></span>
+              <strong>CUET Preparation</strong>
+            </td>
+            <td><span class="mode-badge" style="background:rgba(139,92,246,.1);color:var(--cuet);">CUET</span></td>
+            <td class="price-tag">₹ 3,000</td>
+            <td class="price-tag">₹ 3,500</td>
+            <td class="price-tag">₹ 4,500</td>
+            <td class="price-tag">₹ 6,000</td>
+            <td style="color:var(--text-muted);font-size:0.82rem;">Domain + Gen Test<br>4–6 months</td>
+          </tr>
+          <!-- CRASH COURSE -->
+          <tr>
+            <td>
+              <span class="subj-icon" style="background:rgba(236,72,153,.1);color:#EC4899;"><i class="fas fa-rocket"></i></span>
+              <strong>60-Day Crash Course</strong>
+            </td>
+            <td><span class="mode-badge mode-online">Any Exam</span></td>
+            <td class="price-tag">₹ 6,000</td>
+            <td class="price-tag">₹ 7,500</td>
+            <td class="price-tag">₹ 9,500</td>
+            <td class="price-tag">₹ 12,000</td>
+            <td style="color:var(--text-muted);font-size:0.82rem;">One-time fee<br>60-day intensive</td>
+          </tr>
+          <!-- PERSONAL MENTORSHIP -->
+          <tr>
+            <td>
+              <span class="subj-icon" style="background:rgba(245,158,11,.1);color:var(--accent);"><i class="fas fa-user-tie"></i></span>
+              <strong>Personal Mentorship</strong>
+            </td>
+            <td><span class="mode-badge" style="background:rgba(245,158,11,.1);color:var(--accent);">All</span></td>
+            <td class="price-tag">₹ 5,500</td>
+            <td class="price-tag">₹ 6,500</td>
+            <td class="price-tag">₹ 8,000</td>
+            <td class="price-tag">₹ 10,000</td>
+            <td style="color:var(--text-muted);font-size:0.82rem;">All subjects incl.<br>12 sessions/mo</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p style="text-align:center;margin-top:20px;font-size:0.82rem;color:var(--text-light);" data-aos="fade-up">
+      <i class="fas fa-info-circle" style="color:var(--primary);"></i>
+      All fees are monthly (per month). Home Tutoring includes travel within the local area.
+      For students outside Punjab, Online mode is recommended. GST not applicable.
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 3 — MODE-BASED PRICING
+════════════════════════════════════════════════════════════ -->
+<section class="section" id="modes">
+  <div class="container">
+    <div class="section-header" data-aos="fade-up">
+      <span class="section-eyebrow">Teaching Modes</span>
+      <h2 class="section-title">Pricing by <span class="gradient-text">Learning Mode</span></h2>
+      <p class="section-subtitle">All modes include the same quality of teaching — price difference reflects session format and logistics.</p>
+    </div>
+    <div class="mode-pricing-grid">
+
+      <div class="mode-price-card online" data-aos="fade-up" data-aos-delay="0">
+        <div class="mode-icon-wrap"><i class="fas fa-wifi"></i></div>
+        <h3>Online Live</h3>
+        <p class="mode-desc">Interactive sessions via Zoom/Google Meet with shared whiteboard, screen share, and real-time Q&A.</p>
+        <div class="mode-price-val">₹2,000 <span>/ subject / month</span></div>
+        <div class="mode-price-note">↑ Most affordable · Available Pan-India</div>
+        <div style="margin-top:14px;display:flex;flex-direction:column;gap:6px;text-align:left;">
+          <div style="font-size:0.78rem;color:var(--text-muted);display:flex;gap:8px;"><i class="fas fa-check" style="color:var(--success);margin-top:2px;"></i>Sessions recorded automatically</div>
+          <div style="font-size:0.78rem;color:var(--text-muted);display:flex;gap:8px;"><i class="fas fa-check" style="color:var(--success);margin-top:2px;"></i>No travel needed anywhere</div>
+          <div style="font-size:0.78rem;color:var(--text-muted);display:flex;gap:8px;"><i class="fas fa-check" style="color:var(--success);margin-top:2px;"></i>Flexible time slots</div>
+          <div style="font-size:0.78rem;color:var(--text-muted);display:flex;gap:8px;"><i class="fas fa-check" style="color:var(--success);margin-top:2px;"></i>Digital notes shared instantly</div>
+        </div>
+      </div>
+
+      <div class="mode-price-card offline" data-aos="fade-up" data-aos-delay="80">
+        <div class="mode-icon-wrap"><i class="fas fa-chalkboard-teacher"></i></div>
+        <h3>Offline / In-Person</h3>
+        <p class="mode-desc">Face-to-face classroom sessions at a fixed location in Punjab. Ideal for students who prefer in-person interaction.</p>
+        <div class="mode-price-val">₹2,500 <span>/ subject / month</span></div>
+        <div class="mode-price-note">↑ In-person experience · Punjab only</div>
+        <div style="margin-top:14px;display:flex;flex-direction:column;gap:6px;text-align:left;">
+          <div style="font-size:0.78rem;color:var(--text-muted);display:flex;gap:8px;"><i class="fas fa-check" style="color:var(--success);margin-top:2px;"></i>Physical whiteboard + diagrams</div>
+          <div style="font-size:0.78rem;color:var(--text-muted);display:flex;gap:8px;"><i class="fas fa-check" style="color:var(--success);margin-top:2px;"></i>Structured classroom discipline</div>
+          <div style="font-size:0.78rem;color:var(--text-muted);display:flex;gap:8px;"><i class="fas fa-check" style="color:var(--success);margin-top:2px;"></i>All handwritten materials</div>
+          <div style="font-size:0.78rem;color:var(--text-muted);display:flex;gap:8px;"><i class="fas fa-check" style="color:var(--success);margin-top:2px;"></i>Small group (max 5 students)</div>
+        </div>
+      </div>
+
+      <div class="mode-price-card home" data-aos="fade-up" data-aos-delay="160">
+        <div class="mode-icon-wrap"><i class="fas fa-home"></i></div>
+        <h3>Home Tutoring</h3>
+        <p class="mode-desc">Sandeep Sir visits your home — the most comfortable learning experience with complete personal attention.</p>
+        <div class="mode-price-val">₹3,200 <span>/ subject / month</span></div>
+        <div class="mode-price-note">↑ Maximum comfort · Local Punjab area</div>
+        <div style="margin-top:14px;display:flex;flex-direction:column;gap:6px;text-align:left;">
+          <div style="font-size:0.78rem;color:var(--text-muted);display:flex;gap:8px;"><i class="fas fa-check" style="color:var(--success);margin-top:2px;"></i>Sir comes to your location</div>
+          <div style="font-size:0.78rem;color:var(--text-muted);display:flex;gap:8px;"><i class="fas fa-check" style="color:var(--success);margin-top:2px;"></i>Zero commute for student</div>
+          <div style="font-size:0.78rem;color:var(--text-muted);display:flex;gap:8px;"><i class="fas fa-check" style="color:var(--success);margin-top:2px;"></i>Fully focused environment</div>
+          <div style="font-size:0.78rem;color:var(--text-muted);display:flex;gap:8px;"><i class="fas fa-check" style="color:var(--success);margin-top:2px;"></i>Travel within local area included</div>
+        </div>
+      </div>
+
+      <div class="mode-price-card oto" data-aos="fade-up" data-aos-delay="240">
+        <div class="mode-icon-wrap"><i class="fas fa-user-friends"></i></div>
+        <h3>One-to-One</h3>
+        <p class="mode-desc">Fully dedicated sessions — 100% of every minute is exclusively for you. The fastest path to improvement.</p>
+        <div class="mode-price-val">₹4,000 <span>/ subject / month</span></div>
+        <div class="mode-price-note">↑ Maximum impact · Any location</div>
+        <div style="margin-top:14px;display:flex;flex-direction:column;gap:6px;text-align:left;">
+          <div style="font-size:0.78rem;color:var(--text-muted);display:flex;gap:8px;"><i class="fas fa-check" style="color:var(--success);margin-top:2px;"></i>Zero shared attention</div>
+          <div style="font-size:0.78rem;color:var(--text-muted);display:flex;gap:8px;"><i class="fas fa-check" style="color:var(--success);margin-top:2px;"></i>Completely custom pace</div>
+          <div style="font-size:0.78rem;color:var(--text-muted);display:flex;gap:8px;"><i class="fas fa-check" style="color:var(--success);margin-top:2px;"></i>Deep doubt clearing every session</div>
+          <div style="font-size:0.78rem;color:var(--text-muted);display:flex;gap:8px;"><i class="fas fa-check" style="color:var(--success);margin-top:2px;"></i>Fastest progress guaranteed</div>
+        </div>
+      </div>
 
     </div>
-    
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 4 — WHAT'S INCLUDED IN EVERY PLAN
+════════════════════════════════════════════════════════════ -->
+<section class="section" style="background:var(--bg-alt);">
+  <div class="container">
+    <div class="section-header" data-aos="fade-up">
+      <span class="section-eyebrow">Always Included</span>
+      <h2 class="section-title">Everything in <span class="gradient-text">Every Plan</span></h2>
+      <p class="section-subtitle">These are not add-ons or extras — they come standard with every enrollment, no questions asked.</p>
+    </div>
+    <div class="included-grid">
+
+      <div class="included-card" data-aos="fade-up" data-aos-delay="0">
+        <div class="included-icon" style="background:rgba(79,70,229,.1);color:var(--primary);"><i class="fas fa-book-open"></i></div>
+        <span class="inc-free">Free</span>
+        <h4>Handwritten Notes</h4>
+        <p>Chapter-wise handwritten notes with all important formulas, derivations, reaction mechanisms and exam tips — shared as clean PDFs.</p>
+      </div>
+      <div class="included-card" data-aos="fade-up" data-aos-delay="60">
+        <div class="included-icon" style="background:rgba(16,185,129,.1);color:var(--success);"><i class="fas fa-video"></i></div>
+        <span class="inc-free">Free</span>
+        <h4>Recorded Lectures</h4>
+        <p>Every live session is recorded and uploaded to your LMS dashboard within 24 hours. Re-watch any concept any time.</p>
+      </div>
+      <div class="included-card" data-aos="fade-up" data-aos-delay="120">
+        <div class="included-icon" style="background:rgba(245,158,11,.1);color:var(--accent);"><i class="fab fa-whatsapp"></i></div>
+        <span class="inc-free">Free</span>
+        <h4>WhatsApp Doubt Solving</h4>
+        <p>Send any doubt anytime on WhatsApp. Sandeep Sir personally replies with voice notes, images, or written explanations — fast.</p>
+      </div>
+      <div class="included-card" data-aos="fade-up" data-aos-delay="180">
+        <div class="included-icon" style="background:rgba(59,130,246,.1);color:var(--physics);"><i class="fas fa-clipboard-check"></i></div>
+        <span class="inc-free">Free</span>
+        <h4>Weekly Chapter Tests</h4>
+        <p>Short weekly tests after every chapter to reinforce what's been taught and identify any remaining gaps early.</p>
+      </div>
+      <div class="included-card" data-aos="fade-up" data-aos-delay="240">
+        <div class="included-icon" style="background:rgba(139,92,246,.1);color:var(--cuet);"><i class="fas fa-chart-bar"></i></div>
+        <span class="inc-free">Free</span>
+        <h4>Monthly Progress Report</h4>
+        <p>Written performance analysis shared with student and parent every month — test scores, improvement areas, next month targets.</p>
+      </div>
+      <div class="included-card" data-aos="fade-up" data-aos-delay="300">
+        <div class="included-icon" style="background:rgba(236,72,153,.1);color:#EC4899;"><i class="fas fa-file-download"></i></div>
+        <span class="inc-free">Free</span>
+        <h4>Previous Year Papers</h4>
+        <p>Last 5–10 years of relevant exam papers (NEET, JEE, CUET, Board) with solved answer keys and pattern analysis notes.</p>
+      </div>
+      <div class="included-card" data-aos="fade-up" data-aos-delay="360">
+        <div class="included-icon" style="background:rgba(16,185,129,.1);color:var(--success);"><i class="fas fa-graduation-cap"></i></div>
+        <span class="inc-free">Free</span>
+        <h4>LMS Portal Access</h4>
+        <p>Personal login to the student dashboard — lectures, notes, assignments, test results, schedule, and announcements all in one place.</p>
+      </div>
+      <div class="included-card" data-aos="fade-up" data-aos-delay="420">
+        <div class="included-icon" style="background:rgba(79,70,229,.1);color:var(--primary);"><i class="fas fa-play-circle"></i></div>
+        <span class="inc-free">Free</span>
+        <h4>Free Demo Class First</h4>
+        <p>Experience Sandeep Sir's teaching style for free before making any payment. No obligations — try it, love it, then decide.</p>
+      </div>
+      <div class="included-card" data-aos="fade-up" data-aos-delay="480">
+        <div class="included-icon" style="background:rgba(245,158,11,.1);color:var(--accent);"><i class="fas fa-clock"></i></div>
+        <span class="inc-free">Free</span>
+        <h4>Flexible Rescheduling</h4>
+        <p>Life happens. Sessions can be rescheduled with prior notice at no extra charge — we work around your schedule, not the other way.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 5 — COMPARISON VS OTHERS
+════════════════════════════════════════════════════════════ -->
+<section class="section compare-section">
+  <div class="container">
+    <div class="section-header" data-aos="fade-up">
+      <span class="section-eyebrow">Value Comparison</span>
+      <h2 class="section-title">Why We're Worth <span class="gradient-text">Every Rupee</span></h2>
+      <p class="section-subtitle">See how The Concept Warriors stacks up against large coaching institutes and generic online platforms.</p>
+    </div>
+    <div class="compare-wrap" data-aos="fade-up" data-aos-delay="100">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th class="highlight-col">⚡ Concept Warriors</th>
+            <th>Large Coaching Institute</th>
+            <th>Generic Online Platform</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Personal Attention</td>
+            <td class="highlight-col"><i class="fas fa-check-circle check-yes"></i> 100% Dedicated</td>
+            <td>50–100 students / batch</td>
+            <td>Pre-recorded, no interaction</td>
+          </tr>
+          <tr>
+            <td>Teaches You Personally</td>
+            <td class="highlight-col"><i class="fas fa-check-circle check-yes"></i> Sandeep Sir always</td>
+            <td>Different teachers each time</td>
+            <td>Random instructors</td>
+          </tr>
+          <tr>
+            <td>Doubt Solving</td>
+            <td class="highlight-col"><i class="fas fa-check-circle check-yes"></i> WhatsApp, anytime</td>
+            <td>Fixed doubt hours only</td>
+            <td>Forum / community only</td>
+          </tr>
+          <tr>
+            <td>Recorded Lectures</td>
+            <td class="highlight-col"><i class="fas fa-check-circle check-yes"></i> Every session</td>
+            <td>Selected classes only</td>
+            <td><i class="fas fa-check-circle check-yes"></i> Available</td>
+          </tr>
+          <tr>
+            <td>Handwritten Notes</td>
+            <td class="highlight-col"><i class="fas fa-check-circle check-yes"></i> Every chapter</td>
+            <td>Printed booklets (extra cost)</td>
+            <td><i class="fas fa-times-circle check-no"></i> Not available</td>
+          </tr>
+          <tr>
+            <td>Flexible Timing</td>
+            <td class="highlight-col"><i class="fas fa-check-circle check-yes"></i> Your schedule</td>
+            <td>Fixed batch timings</td>
+            <td><i class="fas fa-check-circle check-yes"></i> Self-paced</td>
+          </tr>
+          <tr>
+            <td>Progress Tracking</td>
+            <td class="highlight-col"><i class="fas fa-check-circle check-yes"></i> Monthly reports</td>
+            <td><span class="check-partial">LIMITED</span></td>
+            <td><span class="check-partial">AUTO-ONLY</span></td>
+          </tr>
+          <tr>
+            <td>Career Mentorship</td>
+            <td class="highlight-col"><i class="fas fa-check-circle check-yes"></i> Included in Elite</td>
+            <td><i class="fas fa-times-circle check-no"></i> Not offered</td>
+            <td><i class="fas fa-times-circle check-no"></i> Not offered</td>
+          </tr>
+          <tr>
+            <td>Parent Updates</td>
+            <td class="highlight-col"><i class="fas fa-check-circle check-yes"></i> Monthly</td>
+            <td><span class="check-partial">RARELY</span></td>
+            <td><i class="fas fa-times-circle check-no"></i> Never</td>
+          </tr>
+          <tr>
+            <td>Free Demo Class</td>
+            <td class="highlight-col"><i class="fas fa-check-circle check-yes"></i> Always free</td>
+            <td>Usually not offered</td>
+            <td><span class="check-partial">SOMETIMES</span></td>
+          </tr>
+          <tr>
+            <td>Monthly Fee (1 Subject)</td>
+            <td class="highlight-col" style="font-weight:700;color:var(--primary);">₹2,000 – ₹5,500</td>
+            <td>₹4,000 – ₹12,000</td>
+            <td>₹1,500 – ₹3,000 (no live)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 6 — PAYMENT INFO & POLICIES
+════════════════════════════════════════════════════════════ -->
+<section class="section payment-info">
+  <div class="container">
+    <div class="section-header" data-aos="fade-up">
+      <span class="section-eyebrow">Payment & Policies</span>
+      <h2 class="section-title">Simple, Transparent <span class="gradient-text">Payment Process</span></h2>
+      <p class="section-subtitle">We keep payment as simple as possible — pay after your demo class, not before.</p>
+    </div>
+    <div class="payment-grid">
+
+      <!-- PAYMENT METHODS -->
+      <div class="payment-card" data-aos="fade-right">
+        <h3><i class="fas fa-credit-card"></i> Accepted Payment Methods</h3>
+        <div class="payment-method">
+          <div class="pm-icon upi"><i class="fas fa-mobile-alt"></i></div>
+          <div class="pm-info">
+            <strong>UPI (Recommended)</strong>
+            <span>Google Pay · PhonePe · Paytm · Any UPI app — instant transfer</span>
+          </div>
+        </div>
+        <div class="payment-method">
+          <div class="pm-icon bank"><i class="fas fa-university"></i></div>
+          <div class="pm-info">
+            <strong>Bank Transfer (NEFT / IMPS)</strong>
+            <span>Direct bank transfer to Sandeep Kumar's account. Details shared on enrollment.</span>
+          </div>
+        </div>
+        <div class="payment-method">
+          <div class="pm-icon cash"><i class="fas fa-money-bill-wave"></i></div>
+          <div class="pm-info">
+            <strong>Cash (Offline / Home Tutoring)</strong>
+            <span>Accepted for offline and home tutoring students at the start of each month.</span>
+          </div>
+        </div>
+        <div class="payment-method">
+          <div class="pm-icon wa"><i class="fab fa-whatsapp"></i></div>
+          <div class="pm-info">
+            <strong>Confirm Payment on WhatsApp</strong>
+            <span>Send payment screenshot on WhatsApp for instant confirmation and receipt.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- POLICIES -->
+      <div class="payment-card" data-aos="fade-left">
+        <h3><i class="fas fa-shield-alt"></i> Fee Policies</h3>
+        <div class="policy-item">
+          <i class="fas fa-calendar-check"></i>
+          <div>
+            <strong>Monthly Payment Cycle</strong>
+            <p>Fees are due at the start of each month. No advance payment required beyond one month at a time.</p>
+          </div>
+        </div>
+        <div class="policy-item">
+          <i class="fas fa-play-circle"></i>
+          <div>
+            <strong>Free Demo Before Any Payment</strong>
+            <p>You attend one complete free demo class first. Payment only begins after you're satisfied and choose to enroll.</p>
+          </div>
+        </div>
+        <div class="policy-item">
+          <i class="fas fa-undo-alt"></i>
+          <div>
+            <strong>Session Credit Policy</strong>
+            <p>If a session is cancelled by Sir, it will be rescheduled at no extra charge or credited to next month's count.</p>
+          </div>
+        </div>
+        <div class="policy-item">
+          <i class="fas fa-pause-circle"></i>
+          <div>
+            <strong>Pause / Hold Option</strong>
+            <p>Students can pause their enrollment for up to 30 days (exams, illness, travel) with prior notice. No fees charged during pause.</p>
+          </div>
+        </div>
+        <div class="policy-item">
+          <i class="fas fa-tags"></i>
+          <div>
+            <strong>Sibling & Referral Discount</strong>
+            <p>Enroll a sibling or refer a friend who joins — get ₹500 off your next month's fee. No limit on referrals.</p>
+          </div>
+        </div>
+        <div class="policy-item">
+          <i class="fas fa-hand-holding-heart"></i>
+          <div>
+            <strong>Financial Hardship Consideration</strong>
+            <p>Deserving students facing genuine financial difficulty are encouraged to speak with Sandeep Sir directly — case-by-case support is available.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 7 — FEE FAQs
+════════════════════════════════════════════════════════════ -->
+<section class="section" id="faq">
+  <div class="container">
+    <div class="section-header" data-aos="fade-up">
+      <span class="section-eyebrow">Common Questions</span>
+      <h2 class="section-title">Fee <span class="gradient-text">FAQs</span></h2>
+      <p class="section-subtitle">Every question you might have about fees, payments, and enrollments — answered clearly.</p>
+    </div>
+    <div class="fee-faq" data-aos="fade-up" data-aos-delay="100">
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          <span>Do I have to pay before the demo class?</span>
+          <i class="fas fa-plus faq-icon"></i>
+        </button>
+        <div class="faq-answer">
+          <p>Absolutely not. The demo class is completely free — no payment, no credit card, no obligation. You experience one full session, and only after you're satisfied do you choose to enroll. Payment begins from Month 1 after enrollment.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          <span>Are the prices listed per month or per year?</span>
+          <i class="fas fa-plus faq-icon"></i>
+        </button>
+        <div class="faq-answer">
+          <p>All prices shown are per month unless explicitly stated (like the 60-Day Crash Course which is a one-time fee). Annual pricing is available with up to 20% savings — toggle the billing switch on the plans section to see annual rates.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          <span>Is there a discount for taking multiple subjects?</span>
+          <i class="fas fa-plus faq-icon"></i>
+        </button>
+        <div class="faq-answer">
+          <p>Yes! Taking 2 subjects together gets you a 10% bundle discount, and the PCM combo (all 3 subjects) comes with a 15% discount. Contact us for exact pricing for your specific combination — we'll give you the best possible rate.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          <span>What if I miss a session? Do I lose that money?</span>
+          <i class="fas fa-plus faq-icon"></i>
+        </button>
+        <div class="faq-answer">
+          <p>No. If you inform Sir at least a few hours in advance, the session will be rescheduled at no extra cost. If Sir cancels a session, it will either be rescheduled or credited as an extra session in the following month. Your money is always protected.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          <span>Can I switch from online to offline mid-course?</span>
+          <i class="fas fa-plus faq-icon"></i>
+        </button>
+        <div class="faq-answer">
+          <p>Yes, you can switch modes with prior notice. The fee will be adjusted accordingly from the next month's billing cycle. There is no penalty for switching modes — flexibility is one of our core commitments.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          <span>Is there a registration fee or admission fee?</span>
+          <i class="fas fa-plus faq-icon"></i>
+        </button>
+        <div class="faq-answer">
+          <p>No registration fee, no admission fee, no deposit. The fee you see is exactly what you pay — only the monthly tuition for your chosen plan. No hidden charges of any kind.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          <span>How do I pay? Is online payment safe?</span>
+          <i class="fas fa-plus faq-icon"></i>
+        </button>
+        <div class="faq-answer">
+          <p>You can pay via UPI (Google Pay, PhonePe, Paytm), direct bank transfer (NEFT/IMPS), or cash for offline/home tutoring students. Simply send the payment screenshot on WhatsApp and you'll receive instant confirmation. All payment details are shared directly by Sandeep Sir.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          <span>Are study materials included in the fee?</span>
+          <i class="fas fa-plus faq-icon"></i>
+        </button>
+        <div class="faq-answer">
+          <p>Yes — handwritten notes (PDF), previous year papers, practice worksheets, and e-resources are all included at no extra cost. You do not need to buy any additional books or materials — everything is provided.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          <span>Is the LMS / student dashboard access free?</span>
+          <i class="fas fa-plus faq-icon"></i>
+        </button>
+        <div class="faq-answer">
+          <p>Yes, completely free. Every enrolled student gets personal login credentials for the Student LMS where they can access all recorded lectures, notes, assignments, test results, and announcements — included in every plan at no additional cost.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          <span>Do you offer any scholarships or discounts?</span>
+          <i class="fas fa-plus faq-icon"></i>
+        </button>
+        <div class="faq-answer">
+          <p>Sibling discounts (₹500 off per month per sibling), referral discounts (₹500 off per successful referral), and annual payment discounts (up to 20%) are available. For students facing genuine financial hardship, please speak directly with Sandeep Sir — support is available on a case-by-case basis.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     CTA SECTION
+════════════════════════════════════════════════════════════ -->
+<section class="fee-cta">
+  <div class="cta-orb-1"></div>
+  <div class="cta-orb-2"></div>
+  <div class="container">
+    <h2>Still Thinking? <span class="gradient-text-light">Start For Free.</span></h2>
+    <p>Book a free demo class — no payment, no commitment. Experience the quality yourself and then decide. Most students enroll after the very first session.</p>
+    <div class="cta-btns">
+      <button class="btn-white" onclick="openPopup('enquiryPopup')"><i class="fas fa-play-circle"></i> Book Free Demo Class</button>
+      <a href="https://wa.me/918427168892?text=Hello%20Sir%2C%20I%20would%20like%20to%20know%20more%20about%20the%20fees%20and%20book%20a%20demo." target="_blank" class="btn-whatsapp"><i class="fab fa-whatsapp"></i> Chat on WhatsApp</a>
+    </div>
+    <p class="note"><i class="fas fa-lock"></i> No credit card. No registration fee. Completely free demo.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════════════════════ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo" style="margin-bottom:14px;display:inline-flex;">
+          <div class="logo-icon"><i class="fas fa-bolt"></i></div>
+          <div class="logo-text"><span class="logo-brand">The Concept</span><span class="logo-sub">Warriors</span></div>
+        </a>
+        <p>Better Concepts. Better Confidence. Better Future. Premium tutoring for students who dare to dream big.</p>
+        <div class="social-links">
+          <a href="https://wa.me/918427168892" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+          <a href="#" aria-label="Telegram"><i class="fab fa-telegram"></i></a>
+        </div>
+      </div>
+      <div class="footer-links">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Sandeep Sir</a></li>
+          <li><a href="courses.html">Courses</a></li>
+          <li><a href="fees.html">Fee Structure</a></li>
+          <li><a href="mentorship.html">Mentorship</a></li>
+          <li><a href="exam-prep.html">Exam Preparation</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>Programs</h4>
+        <ul>
+          <li><a href="courses.html">NEET Preparation</a></li>
+          <li><a href="courses.html">JEE Preparation</a></li>
+          <li><a href="courses.html">CUET Preparation</a></li>
+          <li><a href="courses.html">Board Exam Prep</a></li>
+          <li><a href="courses.html">Foundation (8–10)</a></li>
+          <li><a href="courses.html">Crash Course</a></li>
+          <li><a href="mentorship.html">Personal Mentorship</a></li>
+        </ul>
+      </div>
+      <div class="footer-contact">
+        <h4>Get In Touch</h4>
+        <div class="contact-item"><i class="fab fa-whatsapp"></i><a href="https://wa.me/918427168892" target="_blank">+91 8427168892</a></div>
+        <div class="contact-item"><i class="fas fa-envelope"></i><a href="mailto:sandeep@conceptwarriors.in">sandeep@conceptwarriors.in</a></div>
+        <div class="contact-item"><i class="fas fa-map-marker-alt"></i><span>Punjab, India (Online Nationwide)</span></div>
+        <div class="contact-item"><i class="fas fa-clock"></i><span>Available 9 AM – 9 PM daily</span></div>
+        <button class="btn-primary btn-sm" style="margin-top:14px;" onclick="openPopup('enquiryPopup')">Get Fee Quote</button>
+      </div>
+    </div>
+     <div class="footer-bottom">
+      <p>© 2026 The Concept Warriors. All rights reserved.</p>
+      <div class="footer-bottom-links">
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+        <a href="copyright.html">Copyright</a>
+        <a href="fees.html">Admin</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- FLOATING BUTTONS -->
+<!-- <a href="https://wa.me/918427168892?text=Hello%20Sir%2C%20I%20would%20like%20to%20know%20about%20your%20fee%20structure." target="_blank" class="whatsapp-float" aria-label="Chat on WhatsApp">
+  <i class="fab fa-whatsapp"></i>
+  <span class="wa-tooltip">Ask About Fees</span>
+</a>
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">
+  <i class="fas fa-chevron-up"></i>
+</button> -->
+
+<!-- ═══════════════════════════════════════════════════════════
+     SCRIPTS
+════════════════════════════════════════════════════════════ -->
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script>
+  /* ── INIT ────────────────────────────────────────────────── */
+  AOS.init({ once: true, duration: 680, easing: 'ease-out-cubic', offset: 55 });
+
+  /* ── THEME ───────────────────────────────────────────────── */
+  (function() {
+    const t = localStorage.getItem('cw-theme') || 'light';
+    document.documentElement.setAttribute('data-theme', t);
+    const icon = document.getElementById('themeIcon');
+    if (icon) icon.className = t === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+  })();
+  function toggleTheme() {
+    const cur = document.documentElement.getAttribute('data-theme') || 'light';
+    const next = cur === 'light' ? 'dark' : 'light';
+    localStorage.setItem('cw-theme', next);
+    document.documentElement.setAttribute('data-theme', next);
+    document.getElementById('themeIcon').className = next === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+  }
+
+  /* ── NAVBAR ──────────────────────────────────────────────── */
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 20);
+    document.getElementById('backToTop').classList.toggle('visible', window.scrollY > 400);
+  });
+  function toggleMenu() {
+    document.getElementById('navLinks').classList.toggle('open');
+  }
+  document.querySelectorAll('.nav-link').forEach(l => {
+    l.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open'));
+  });
+
+  /* ── POPUP ───────────────────────────────────────────────── */
+  function openPopup(id) {
+    document.getElementById(id).classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  function closePopup(id) {
+    document.getElementById(id).classList.remove('active');
+    document.body.style.overflow = '';
+  }
+  document.querySelectorAll('.popup-overlay').forEach(el => {
+    el.addEventListener('click', e => { if (e.target === el) closePopup(el.id); });
+  });
+
+  /* ── FORM ────────────────────────────────────────────────── */
+  function submitEnquiry() {
+    const name  = document.getElementById('eq-name').value.trim();
+    const phone = document.getElementById('eq-phone').value.trim();
+    if (!name || !phone) { alert('Please fill in your name and phone number.'); return; }
+    const data = {
+      name, phone,
+      email:  document.getElementById('eq-email').value.trim(),
+      course: document.getElementById('eq-course').value,
+      mode:   document.getElementById('eq-mode').value,
+      timestamp: new Date().toISOString(),
+      status: 'New',
+      source: 'Fee Page'
+    };
+    const existing = JSON.parse(localStorage.getItem('cw-demo-requests') || '[]');
+    existing.push(data);
+    localStorage.setItem('cw-demo-requests', JSON.stringify(existing));
+    closePopup('enquiryPopup');
+    openPopup('successPopup');
+  }
+
+  /* ── BILLING TOGGLE ──────────────────────────────────────── */
+  const prices = {
+    monthly: { starter: '2,000', warrior: '3,500', elite: '5,500' },
+    annual:  { starter: '1,600', warrior: '2,800', elite: '4,675' },
+    originals: { starter: '2,000', warrior: '3,500', elite: '5,500' }
+  };
+  function switchBilling(checkbox) {
+    const isAnnual = checkbox.checked;
+    document.getElementById('label-monthly').classList.toggle('active', !isAnnual);
+    document.getElementById('label-annual').classList.toggle('active',  isAnnual);
+    const set = isAnnual ? prices.annual : prices.monthly;
+    ['starter','warrior','elite'].forEach(k => {
+      document.getElementById(`price-${k}`).textContent = set[k];
+      const origEl = document.getElementById(`orig-${k}`);
+      const discEl = document.getElementById(`disc-${k}`);
+      if (isAnnual) {
+        origEl.textContent = `₹${prices.monthly[k]}`;
+        discEl.style.display = 'inline-block';
+      } else {
+        origEl.textContent = '';
+        discEl.style.display = 'none';
+      }
+    });
+    document.querySelectorAll('.price-period').forEach(el => {
+      el.textContent = isAnnual ? '/ month (billed annually)' : '/ month';
+    });
+  }
+
+  /* ── FAQ ─────────────────────────────────────────────────── */
+  function toggleFaq(btn) {
+    const ans = btn.nextElementSibling;
+    const isOpen = ans.classList.contains('open');
+    document.querySelectorAll('.faq-answer.open').forEach(a => {
+      a.classList.remove('open');
+      a.previousElementSibling.classList.remove('open');
+    });
+    if (!isOpen) { ans.classList.add('open'); btn.classList.add('open'); }
+  }
+</script>
 </body>
 </html>
