@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Login | The Concept Warriors</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="icon" type="image/jpeg" href="../assets/web page Images/idea.jpeg" />
+  <link rel="stylesheet" href="../CSS/style.css" />
+  <style>
+    body { margin: 0; }
+    .admin-login-wrapper {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #0F172A 0%, #1E1B4B 60%, #0F172A 100%);
+      display: flex; align-items: center; justify-content: center;
+      padding: 24px; position: relative; overflow: hidden;
+    }
+    .al-orb-1 { position: absolute; width: 500px; height: 500px; border-radius: 50%; background: radial-gradient(circle, rgba(239,68,68,.15), transparent); top: -150px; right: -100px; filter: blur(80px); }
+    .al-orb-2 { position: absolute; width: 400px; height: 400px; border-radius: 50%; background: radial-gradient(circle, rgba(79,70,229,.2), transparent); bottom: -100px; left: -80px; filter: blur(80px); }
+    .admin-login-card {
+      background: rgba(15,23,42,.95);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 24px;
+      padding: 52px 48px;
+      max-width: 420px; width: 100%;
+      position: relative; z-index: 1;
+    }
+    .al-logo { text-align: center; margin-bottom: 32px; }
+    .al-logo-icon {
+      width: 64px; height: 64px; border-radius: 16px;
+      background: linear-gradient(135deg, #DC2626, #991B1B);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 16px; font-size: 1.5rem; color: #fff;
+      box-shadow: 0 0 30px rgba(239,68,68,.3);
+    }
+    .al-logo h2 { font-family: var(--font-display); font-size: 1.4rem; font-weight: 700; color: #fff; margin-bottom: 4px; }
+    .al-logo p { color: rgba(255,255,255,.4); font-size: 0.82rem; }
+    .admin-badge-tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(239,68,68,.1); border: 1px solid rgba(239,68,68,.25);
+      color: #FC8181; border-radius: 100px; padding: 4px 12px;
+      font-size: 0.72rem; font-weight: 700; margin-bottom: 24px;
+    }
+    .al-input-group { margin-bottom: 16px; }
+    .al-input-group label { display: block; font-size: 0.78rem; font-weight: 600; color: rgba(255,255,255,.5); margin-bottom: 7px; letter-spacing: 0.02em; }
+    .al-input-group .input-wrap { position: relative; }
+    .al-input-group .input-wrap i { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: rgba(255,255,255,.3); font-size: 0.85rem; }
+    .al-input-group input {
+      width: 100%; padding: 12px 14px 12px 40px;
+      background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1);
+      border-radius: 10px; color: #fff; font-size: 0.875rem; font-family: inherit;
+      transition: all 0.3s; box-sizing: border-box;
+    }
+    .al-input-group input::placeholder { color: rgba(255,255,255,.25); }
+    .al-input-group input:focus { outline: none; border-color: rgba(239,68,68,.5); background: rgba(255,255,255,.09); box-shadow: 0 0 0 3px rgba(239,68,68,.12); }
+    .al-creds-box {
+      background: rgba(79,70,229,.1); border: 1px solid rgba(79,70,229,.2);
+      border-radius: 10px; padding: 13px 16px; margin-bottom: 20px;
+    }
+    .al-creds-box p { font-size: 0.72rem; color: rgba(255,255,255,.4); margin-bottom: 6px; }
+    .al-creds-row { display: flex; justify-content: space-between; margin-bottom: 3px; }
+    .al-creds-row span { font-size: 0.75rem; color: rgba(255,255,255,.35); }
+    .al-creds-row strong { font-size: 0.75rem; color: #A5B4FC; }
+    .al-btn {
+      width: 100%; padding: 13px;
+      background: linear-gradient(135deg, #DC2626, #7C3AED);
+      color: #fff; border: none; border-radius: 10px;
+      font-weight: 700; font-size: 0.95rem; cursor: pointer;
+      transition: all 0.3s; box-shadow: 0 4px 20px rgba(220,38,38,.25);
+      font-family: inherit;
+    }
+    .al-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(220,38,38,.35); }
+    .al-error { color: #FC8181; font-size: 0.8rem; text-align: center; margin-top: 10px; display: none; }
+    .al-footer { text-align: center; margin-top: 24px; display: flex; flex-direction: column; gap: 8px; }
+    .al-footer a { color: rgba(255,255,255,.35); font-size: 0.75rem; text-decoration: none; transition: color 0.2s; }
+    .al-footer a:hover { color: rgba(255,255,255,.7); }
+    .al-divider { border: none; border-top: 1px solid rgba(255,255,255,.08); margin: 20px 0; }
+  </style>
+</head>
+<body>
+<div class="admin-login-wrapper">
+  <div class="al-orb-1"></div>
+  <div class="al-orb-2"></div>
+
+  <div class="admin-login-card">
+    <div class="al-logo">
+      <div class="al-logo-icon"><i class="fas fa-shield-alt"></i></div>
+      <h2>Admin Control Panel</h2>
+      <p>The Concept Warriors — Restricted Access</p>
+    </div>
+
+    <div style="text-align:center;margin-bottom:24px;">
+      <span class="admin-badge-tag"><i class="fas fa-lock"></i> Authorized Personnel Only</span>
+    </div>
+
+    <div class="al-creds-box">
+      <p><i class="fas fa-info-circle"></i>&nbsp; Demo Admin Credentials:</p>
+      <div class="al-creds-row"><span>Email:</span><strong>admin@conceptwarriors.in</strong></div>
+      <div class="al-creds-row"><span>Password:</span><strong>Admin@2025</strong></div>
+    </div>
+
+    <div class="al-input-group">
+      <label>Admin Email</label>
+      <div class="input-wrap">
+        <i class="fas fa-envelope"></i>
+        <input type="email" id="adminUser" placeholder="admin@conceptwarriors.in" value="admin@conceptwarriors.in" />
+      </div>
+    </div>
+
+    <div class="al-input-group">
+      <label>Password</label>
+      <div class="input-wrap">
+        <i class="fas fa-lock"></i>
+        <input type="password" id="adminPass" placeholder="Enter admin password" value="Admin@2025"
+               onkeypress="if(event.key==='Enter') doAdminLogin()" />
+      </div>
+    </div>
+
+    <p class="al-error" id="adminError"></p>
+
+    <button class="al-btn" onclick="doAdminLogin()">
+      <i class="fas fa-sign-in-alt"></i>&nbsp; Sign In to Dashboard
+    </button>
+
+    <hr class="al-divider" />
+
+    <div class="al-footer">
+      <a href="../pages/lms-login.html"><i class="fas fa-graduation-cap"></i>&nbsp; Student Login</a>
+      <a href="../index.html"><i class="fas fa-home"></i>&nbsp; Back to Website</a>
+    </div>
+  </div>
+</div>
+
+<script src="../scripts/script.js"></script>
+<script>
+  // Redirect if already logged in
+  if (localStorage.getItem('cw-admin-logged')) window.location.href = 'admin.html';
+
+  function doAdminLogin() {
+    const user = document.getElementById('adminUser').value.trim();
+    const pass = document.getElementById('adminPass').value.trim();
+    const err  = document.getElementById('adminError');
+    if (user === 'admin@conceptwarriors.in' && pass === 'Admin@2025') {
+      localStorage.setItem('cw-admin-logged', 'true');
+      window.location.href = 'admin.html';
+    } else {
+      err.textContent = 'Invalid credentials. Use the demo credentials shown above.';
+      err.style.display = 'block';
+      setTimeout(() => err.style.display = 'none', 4000);
+    }
+  }
+
+  // Always dark for login page
+  document.documentElement.setAttribute('data-theme', 'dark');
+</script>
+</body>
+</html>

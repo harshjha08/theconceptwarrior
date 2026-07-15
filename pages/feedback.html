@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Student Feedback | The Concept Warriors</title>
+
+  <meta name="description"
+    content="Share your learning experience with The Concept Warriors. Your feedback helps us improve and inspire future students.">
+
+  <meta name="robots" content="index, follow">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <link rel="icon" href="idea.jpeg">
+    <link rel="stylesheet" href="../CSS/style.css">
+  <link rel="stylesheet" href="../CSS/feedback.css">
+
+</head>
+
+<body>
+  <!--Demo popup-->
+<form action="https://formspree.io/f/xvzjqgjq" method="post">
+<div id="demoPopup" class="popup-overlay">
+  <div class="popup-box">
+    <button type="button" class="popup-close"  onclick="closePopup('demoPopup')"><i class="fas fa-times"></i></button>
+    <h2>Book Free <span class="gradient-text">Demo Class</span></h2>
+    <p>Fill in your details and we'll contact you within 24 hours.</p>
+    <div class="form-group">
+      <input type="text" name="Name" id="demoName" placeholder="Your Name" />
+    </div>
+    <div class="form-group">
+      <input type="tel" name="Phone" id="demoPhone" placeholder="Phone Number" />
+    </div>
+    <div class="form-group">
+      <input type="email" name="Email" id="demoEmail" placeholder="Email Address" />
+    </div>
+    <div class="form-group">
+      <select name="Class" id="demoClass">
+        <option value="">Select Your Class</option>
+        <option>Class 8</option><option>Class 9</option><option>Class 10</option>
+        <option>Class 11</option><option>Class 12</option><option>Dropper/Repeater</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <select name="Goal" id="demoGoal">
+        <option value="">Target Exam</option>
+        <option>NEET</option><option>JEE Main</option><option>JEE Advanced</option>
+        <option>CUET</option><option>Board Exams</option>
+      </select>
+    </div>
+    <!-- onclick="submitDemo()" -->
+    <button type="submit" class="btn-primary btn-full" >Book Free Demo</button>
+  </div>
+</div>
+</form>
+
+<section class="feedback-hero">
+
+  <div class="feedback-container">
+
+    <div class="hero-content">
+
+      <span class="eyebrow">
+        Student Stories
+      </span>
+
+      <h1>
+        Share Your
+        <span class="gradient-text">
+          Experience
+        </span>
+      </h1>
+
+      <p>
+        Your feedback helps us improve our teaching and motivates
+        future warriors to achieve their academic goals.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+<section class="feedback-form-section">
+
+  <div class="feedback-container">
+
+    <div class="feedback-card">
+
+      <form
+        action="https://formspree.io/f/xnjkznkl"
+        method="POST">
+
+        <h2>Feedback Form</h2>
+
+        <div class="form-grid">
+
+          <div class="form-group">
+            <label>Full Name *</label>
+            <input
+              type="text"
+              name="name"
+              required
+              placeholder="Enter your full name">
+          </div>
+
+          <div class="form-group">
+            <label>You Are *</label>
+            <select name="role" required>
+
+              <option value="">
+                Select
+              </option>
+
+              <option>
+                Student
+              </option>
+
+              <option>
+                Parent
+              </option>
+
+              <option>
+                Former Student
+              </option>
+
+              <option>
+                NEET Aspirant
+              </option>
+
+              <option>
+                JEE Aspirant
+              </option>
+
+              <option>
+                CUET Aspirant
+              </option>
+
+              <option>
+                Other
+              </option>
+
+            </select>
+          </div>
+                    <div class="form-group">
+            <label>Class</label>
+
+            <select name="class">
+
+              <option value="">
+                Select Class
+              </option>
+
+              <option>Class 8</option>
+              <option>Class 9</option>
+              <option>Class 10</option>
+              <option>Class 11</option>
+              <option>Class 12</option>
+              <option>Dropper</option>
+
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Location</label>
+
+            <input
+              type="text"
+              name="location"
+              placeholder="City / State">
+          </div>
+
+          <div class="form-group">
+            <label>Achievement / Result</label>
+
+            <input
+              type="text"
+              name="achievement"
+              placeholder="95% Boards, NEET Qualified, JEE 97 Percentile">
+          </div>
+
+          <div class="form-group">
+            <label>Rating *</label>
+
+            <select
+              name="rating"
+              required>
+
+              <option value="">
+                Select Rating
+              </option>
+
+              <option>
+                ⭐⭐⭐⭐⭐ Excellent
+              </option>
+
+              <option>
+                ⭐⭐⭐⭐ Very Good
+              </option>
+
+              <option>
+                ⭐⭐⭐ Good
+              </option>
+
+              <option>
+                ⭐⭐ Fair
+              </option>
+
+              <option>
+                ⭐ Poor
+              </option>
+
+            </select>
+          </div>
+
+        </div>
+                <div class="form-group">
+
+          <label>
+            How did The Concept Warriors help you? *
+          </label>
+
+          <textarea
+            name="impact"
+            rows="4"
+            required
+            placeholder="Tell us how our mentorship helped you..."></textarea>
+
+        </div>
+
+        <div class="form-group">
+
+          <label>
+            Share Your Experience *
+          </label>
+
+          <textarea
+            name="feedback"
+            rows="6"
+            required
+            placeholder="Write your complete experience here..."></textarea>
+
+        </div>
+                <label class="checkbox-wrap">
+
+          <input
+            type="checkbox"
+            required>
+
+          <span>
+            I allow The Concept Warriors to publish my feedback
+            as a testimonial.
+          </span>
+
+        </label>
+
+        <button
+          type="submit"
+          class="submit-btn">
+
+          <i class="fas fa-paper-plane"></i>
+
+          Submit Feedback
+
+        </button>
+
+      </form>
+
+    </div>
+
+  </div>
+
+</section>
+
+</body>
+</html>
+
+       
+
+        <!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-logo">
+          <div class="logo-icon"><i class="fas fa-bolt"></i></div>
+          <div class="logo-text">
+            <span class="logo-brand">The Concept</span>
+            <span class="logo-sub">Warriors</span>
+          </div>
+        </div>
+        <p>Better Concepts. Better Confidence. Better Future. Premium tutoring for the students who dare to dream big.</p>
+        <div class="social-links">
+          <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+          <a href="#" aria-label="Telegram"><i class="fab fa-telegram"></i></a>
+        </div>
+      </div>
+      <div class="footer-links">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="../pages/about.html">About Sandeep Sir</a></li>
+          <li><a href="../pages/courses.html">Courses</a></li>
+          <li><a href="../pages/mentorship.html">Mentorship</a></li>
+          <li><a href="../pages/exam-prep.html">Exam Preparation</a></li>
+          <li><a href="../pages/contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>Programs</h4>
+        <ul>
+          <li><a href="../pages/courses.html">NEET Preparation</a></li>
+          <li><a href="../pages/courses.html">JEE Preparation</a></li>
+          <li><a href="../pages/courses.html">CUET Preparation</a></li>
+          <li><a href="../pages/courses.html">Board Exam Prep</a></li>
+          <li><a href="../pages/courses.html">Foundation (8-10)</a></li>
+          <li><a href="../pages/mentorship.html">Personal Mentorship</a></li>
+        </ul>
+      </div>
+      <div class="footer-contact">
+        <h4>Get In Touch</h4>
+        <div class="contact-info">
+          <div class="contact-item">
+            <i class="fab fa-whatsapp"></i>
+            <a href="https://wa.me/918427168892" target="_blank">+91 8427168892</a>
+          </div>
+          <div class="contact-item">
+            <i class="fas fa-envelope"></i>
+            <a href="mailto:theconceptwarrior@gmail.com">theconceptwarrior@gmail.com</a>
+          </div>
+          <div class="contact-item">
+            <i class="fas fa-map-marker-alt"></i>
+            <span>Punjab, India (Online Nationwide)</span>
+          </div>
+        </div>
+        <button class="btn-primary btn-sm" style="margin-top:1rem;" onclick="openDemoPopup()">Book Free Demo</button>
+      </div>
+    </div>
+     <div class="footer-bottom">
+      <p>© 2026 The Concept Warriors. All rights reserved.</p>
+      <div class="footer-bottom-links">
+        <a href="../pages/privacy.html">Privacy Policy</a>
+        <a href="../pages/terms.html">Terms of Service</a>
+        <a href="../pages/copyright.html">Copyright</a>
+        <a href="../pages/fees.html">Admin</a>
+      </div>
+    </div>
+  </div>
+</footer>
+<script src="../scripts/script.js"></script>
+</body>
+</html>

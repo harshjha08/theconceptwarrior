@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Courses & Programs | NEET, JEE, CUET & Board Coaching | The Concept Warriors</title>
+
+  <meta name="description" content="Explore comprehensive coaching programs at The Concept Warriors including NEET, JEE Main & Advanced, CUET, Board Exam Preparation, Foundation Courses, Crash Courses and Personal Mentorship." />
+
+  <meta name="keywords" content="NEET Coaching, JEE Coaching, CUET Preparation, Board Exam Coaching, Foundation Course, Crash Course, Personal Mentorship, Online Tuition, Physics Chemistry Maths Coaching, The Concept Warriors" />
+
+  <meta name="author" content="Sandeep Kumar" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#0f172a" />
+
+  <link rel="canonical" href="https://theconceptwarrior.vercel.app/../pages/courses.html" />
+
+  <!-- Open Graph -->
+
+  <meta property="og:title" content="Courses & Programs | The Concept Warriors" />
+  <meta property="og:description" content="Discover expert coaching programs for NEET, JEE, CUET, Board Exams, Foundation Learning and Personal Mentorship." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://theconceptwarrior.vercel.app/../pages/courses.html" />
+  <meta property="og:site_name" content="The Concept Warriors" />
+  <meta property="og:image" content="https://theconceptwarrior.vercel.app/../assets/web page Images/linkpreviewimg.jpeg" />
+
+  <!-- Twitter -->
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Courses & Programs | The Concept Warriors" />
+  <meta name="twitter:description" content="Professional coaching programs for academic excellence and competitive exam success." />
+  <meta name="twitter:image" content="https://share.google/hPD4bEOptoZOD09NH" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
+
+  <link rel="icon" type="image/png" href="../assets/web page Images/idea.jpeg" />
+
+  <link rel="stylesheet" href="../CSS/common.css">
+  <link rel="stylesheet" href="../CSS/style.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Course",
+    "name": "The Concept Warriors Coaching Programs",
+    "description": "NEET, JEE, CUET, Board Exam Preparation, Foundation Courses, Crash Courses and Personal Mentorship.",
+    "provider": {
+      "@type": "EducationalOrganization",
+      "name": "The Concept Warriors",
+      "url": "https://theconceptwarrior.vercel.app/"
+    }
+  }
+  </script>
+
+</head>
+
+<body>
+
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="../index.html" class="nav-logo">
+      <div class="logo-icon"><i class="fas fa-bolt"></i></div>
+      <div class="logo-text"><span class="logo-brand">The Concept</span><span class="logo-sub">Warriors</span></div>
+    </a>
+    <div class="nav-links" id="navLinks">
+      <a href="../index.html" class="nav-link">Home</a>
+      <a href="../pages/about.html" class="nav-link">About</a>
+      <a href="../pages/courses.html" class="nav-link active">Courses</a>
+      <a href="../pages/mentorship.html" class="nav-link">Mentorship</a>
+      <a href="../pages/exam-prep.html" class="nav-link">Exam Prep</a>
+      <a href="../pages/fees.html"        class="nav-link ">Fee Structure</a>
+      <a href="../pages/contact.html" class="nav-link">Contact</a>
+      <a href="../pages/lms-dashboard.html" class="nav-link nav-lms"><i class="fas fa-graduation-cap"></i> Student Resources</a>
+    </div>
+    <div class="nav-actions">
+      <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()"><i class="fas fa-moon" id="themeIcon"></i></button>
+      <button id="demo-book-btn" class="btn-primary btn-sm" onclick="openDemoPopup()">Free Demo</button>
+      <button class="hamburger" id="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+
+<!-- POPUPS -->
+<!-- DEMO POPUP -->
+<form action="https://formspree.io/f/xvzjqgjq" method="POST">
+
+  <div id="demoPopup" class="popup-overlay">
+    <div class="popup-box">
+
+      <button class="popup-close" onclick="closePopup('demoPopup')" type="button">
+        <i class="fas fa-times"></i>
+      </button>
+
+      <h2>Book Free <span class="gradient-text">Demo Class</span></h2>
+      <p>Fill in your details and we'll contact you within 24 hours.</p>
+
+      <div class="form-group">
+        <input type="text" name="Name" placeholder="Your Name" required />
+      </div>
+
+      <div class="form-group">
+        <input type="tel" name="Phone" placeholder="Phone Number" required />
+      </div>
+
+      <div class="form-group">
+        <input type="email" name="Email" placeholder="Email Address" required />
+      </div>
+
+      <div class="form-group">
+        <select name="Class" required>
+          <option value="">Select Your Class</option>
+          <option>Class 8</option>
+          <option>Class 9</option>
+          <option>Class 10</option>
+          <option>Class 11</option>
+          <option>Class 12</option>
+          <option>Dropper/Repeater</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <select name="Goal" required>
+          <option value="">Target Exam</option>
+          <option>NEET</option>
+          <option>JEE Main</option>
+          <option>JEE Advanced</option>
+          <option>CUET</option>
+          <option>Board Exams</option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn-primary btn-full">
+        Book Free Demo
+      </button>
+
+    </div>
+  </div>
+
+</form>
+<!-- <div id="enrollPopup" class="popup-overlay">
+  <div class="popup-box">
+    <button class="popup-close" onclick="closePopup('enrollPopup')"><i class="fas fa-times"></i></button>
+    <h2>Enroll Now – <span class="gradient-text">Start Learning</span></h2>
+    <div class="form-group"><input type="text" id="enrollName" placeholder="Full Name" /></div>
+    <div class="form-group"><input type="tel" id="enrollPhone" placeholder="Phone Number" /></div>
+    <div class="form-group"><input type="email" id="enrollEmail" placeholder="Email Address" /></div>
+    <div class="form-group"><select id="enrollCourse"><option value="">Select Course</option><option>Foundation Program (8-10)</option><option>NEET Preparation</option><option>JEE Preparation</option><option>CUET Preparation</option><option>Board Exam Prep</option><option>Personal Mentorship</option></select></div>
+    <div class="form-group"><select id="enrollMode"><option value="">Preferred Mode</option><option>Online</option><option>Offline</option><option>Home Tutoring</option><option>One-to-One</option></select></div>
+    <button class="btn-primary btn-full" onclick="submitEnroll()">Complete Enrollment</button>
+  </div>
+</div> -->
+<!-- ENROLL POPUP -->
+<form action="https://formspree.io/f/mvzjqgeq" method="POST">
+
+  <div id="enrollPopup" class="popup-overlay">
+    <div class="popup-box">
+
+      <button  type="button" class="popup-close" onclick="closePopup('enrollPopup')" type="button">
+        <i class="fas fa-times"></i>
+      </button>
+
+      <h2>Enroll Now – <span class="gradient-text">Start Learning</span></h2>
+
+      <div class="form-group">
+        <input type="text" name="Name" placeholder="Full Name" required />
+      </div>
+
+      <div class="form-group">
+        <input type="tel" name="Phone" placeholder="Phone Number" required />
+      </div>
+
+      <div class="form-group">
+        <input type="email" name="Email" placeholder="Email Address" required />
+      </div>
+
+      <div class="form-group">
+        <select name="Course" required>
+          <option value="">Select Course</option>
+          <option>Foundation Program (8-10)</option>
+          <option>NEET Preparation</option>
+          <option>JEE Preparation</option>
+          <option>CUET Preparation</option>
+          <option>Board Exam Prep</option>
+          <option>Personal Mentorship</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <select name="Mode" required>
+          <option value="">Preferred Mode</option>
+          <option>Online</option>
+          <option>Offline</option>
+          <option>Home Tutoring</option>
+          <option>One-to-One</option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn-primary btn-full">
+        Complete Enrollment
+      </button>
+
+    </div>
+  </div>
+
+</form>
+
+<!-- COURSES HERO -->
+<section class="courses-hero">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="container" style="position:relative;z-index:1;">
+    <span class="section-eyebrow" data-aos="fade-down">Programs & Courses</span>
+    <h1 class="section-title" data-aos="fade-up" data-aos-delay="100">Find Your Perfect <span class="gradient-text">Learning Path</span></h1>
+    <p class="section-subtitle" data-aos="fade-up" data-aos-delay="200">Structured, expert-designed programs for every stage — from building fundamentals to cracking India's toughest competitive exams.</p>
+  </div>
+</section>
+
+<!-- FILTER + COURSES GRID -->
+<section class="section">
+  <div class="container">
+    <div class="course-filter" data-aos="fade-up">
+      <button class="filter-btn active" onclick="filterCourses('all')">All Programs</button>
+      <button class="filter-btn" onclick="filterCourses('competitive')">Competitive Exams</button>
+      <button class="filter-btn" onclick="filterCourses('school')">School Boards</button>
+      <button class="filter-btn" onclick="filterCourses('foundation')">Foundation</button>
+      <button class="filter-btn" onclick="filterCourses('mentorship')">Mentorship</button>
+    </div>
+
+    <div class="courses-grid" id="coursesGrid" data-aos="fade-up" data-aos-delay="100">
+
+      <!-- NEET -->
+      <div class="course-card" data-category="competitive">
+        <div class="course-header" style="background:linear-gradient(135deg,#991B1B,#EF4444);">
+          <span class="course-level">Competitive Exam</span>
+          <h3>NEET Preparation Program</h3>
+          <div class="course-icon"><i class="fas fa-heartbeat"></i></div>
+        </div>
+        <div class="course-body">
+          <div class="course-meta">
+            <span><i class="fas fa-clock"></i> 10–12 Months</span>
+            <span><i class="fas fa-book"></i> Physics + Chemistry</span>
+            <span><i class="fas fa-users"></i> Small Batch / 1-on-1</span>
+          </div>
+          <p class="course-desc">A comprehensive, structured program designed to help you crack NEET with confidence. Covers the full NCERT syllabus, previous year papers, mock tests, and exam strategy.</p>
+          <ul class="course-outcomes">
+            <li><i class="fas fa-check-circle"></i> Full NCERT mastery for Physics & Chemistry</li>
+            <li><i class="fas fa-check-circle"></i> Chapter-wise MCQ banks with explanations</li>
+            <li><i class="fas fa-check-circle"></i> Monthly full-length mock tests</li>
+            <li><i class="fas fa-check-circle"></i> High-yield topic identification</li>
+            <li><i class="fas fa-check-circle"></i> Previous 10-year paper analysis</li>
+          </ul>
+        </div>
+        <div class="course-footer">
+          <button class="btn-primary btn-sm" onclick="openDemoPopup()">Book Free Demo</button>
+          <button class="btn-outline btn-sm" onclick="openEnrollPopup()">Enroll Now</button>
+        </div>
+      </div>
+
+      <!-- JEE -->
+      <div class="course-card" data-category="competitive">
+        <div class="course-header" style="background:linear-gradient(135deg,#1E3A8A,#3B82F6);">
+          <span class="course-level">Competitive Exam</span>
+          <h3>JEE Main & Advanced</h3>
+          <div class="course-icon"><i class="fas fa-cog"></i></div>
+        </div>
+        <div class="course-body">
+          <div class="course-meta">
+            <span><i class="fas fa-clock"></i> 12 Months</span>
+            <span><i class="fas fa-book"></i> Physics + Chem + Maths</span>
+            <span><i class="fas fa-users"></i> 1-on-1 Focused</span>
+          </div>
+          <p class="course-desc">Deep problem-solving, short tricks, and concept mastery for JEE Main and Advanced. Builds speed, accuracy, and unshakeable conceptual understanding.</p>
+          <ul class="course-outcomes">
+            <li><i class="fas fa-check-circle"></i> All three subjects — PCM</li>
+            <li><i class="fas fa-check-circle"></i> Advanced problem-solving techniques</li>
+            <li><i class="fas fa-check-circle"></i> Time management under exam conditions</li>
+            <li><i class="fas fa-check-circle"></i> Crash revision sessions pre-exam</li>
+            <li><i class="fas fa-check-circle"></i> JEE Advanced level problem sets</li>
+          </ul>
+        </div>
+        <div class="course-footer">
+          <button class="btn-primary btn-sm" onclick="openDemoPopup()">Book Free Demo</button>
+          <button class="btn-outline btn-sm" onclick="openEnrollPopup()">Enroll Now</button>
+        </div>
+      </div>
+
+      <!-- CUET -->
+      <div class="course-card" data-category="competitive">
+        <div class="course-header" style="background:linear-gradient(135deg,#5B21B6,#8B5CF6);">
+          <span class="course-level">Competitive Exam</span>
+          <h3>CUET-UG Preparation</h3>
+          <div class="course-icon"><i class="fas fa-university"></i></div>
+        </div>
+        <div class="course-body">
+          <div class="course-meta">
+            <span><i class="fas fa-clock"></i> 4–6 Months</span>
+            <span><i class="fas fa-book"></i> Domain + General Test</span>
+            <span><i class="fas fa-users"></i> Online / Offline</span>
+          </div>
+          <p class="course-desc">Prepare for top central university admission with domain-specific subject mastery and General Test strategy. Aligned with NTA CUET pattern and latest syllabus.</p>
+          <ul class="course-outcomes">
+            <li><i class="fas fa-check-circle"></i> PCM domain subject coverage</li>
+            <li><i class="fas fa-check-circle"></i> General Test — reasoning & English</li>
+            <li><i class="fas fa-check-circle"></i> NTA-pattern mock tests</li>
+            <li><i class="fas fa-check-circle"></i> Speed drills and accuracy training</li>
+            <li><i class="fas fa-check-circle"></i> University selection guidance</li>
+          </ul>
+        </div>
+        <div class="course-footer">
+          <button class="btn-primary btn-sm" onclick="openDemoPopup()">Book Free Demo</button>
+          <button class="btn-outline btn-sm" onclick="openEnrollPopup()">Enroll Now</button>
+        </div>
+      </div>
+
+      <!-- BOARD PREP -->
+      <div class="course-card" data-category="school">
+        <div class="course-header" style="background:linear-gradient(135deg,#065F46,#10B981);">
+          <span class="course-level">School Board</span>
+          <h3>Class 11 & 12 Board Prep</h3>
+          <div class="course-icon"><i class="fas fa-award"></i></div>
+        </div>
+        <div class="course-body">
+          <div class="course-meta">
+            <span><i class="fas fa-clock"></i> Full Academic Year</span>
+            <span><i class="fas fa-book"></i> PCM / PCB</span>
+            <span><i class="fas fa-users"></i> Batch / 1-on-1</span>
+          </div>
+          <p class="course-desc">CBSE and State Board complete preparation for Class 11 and 12. NCERT mastery, important question banks, previous year papers, and board-pattern practice.</p>
+          <ul class="course-outcomes">
+            <li><i class="fas fa-check-circle"></i> Full NCERT textbook coverage</li>
+            <li><i class="fas fa-check-circle"></i> Important questions — chapter-wise</li>
+            <li><i class="fas fa-check-circle"></i> Board pattern practice tests</li>
+            <li><i class="fas fa-check-circle"></i> Practical / numericals focus</li>
+            <li><i class="fas fa-check-circle"></i> Pre-board revision sessions</li>
+          </ul>
+        </div>
+        <div class="course-footer">
+          <button class="btn-primary btn-sm" onclick="openDemoPopup()">Book Free Demo</button>
+          <button class="btn-outline btn-sm" onclick="openEnrollPopup()">Enroll Now</button>
+        </div>
+      </div>
+
+      <!-- FOUNDATION -->
+      <div class="course-card" data-category="foundation">
+        <div class="course-header" style="background:linear-gradient(135deg,#92400E,#F59E0B);">
+          <span class="course-level">Foundation</span>
+          <h3>Foundation Program (Class 8–10)</h3>
+          <div class="course-icon"><i class="fas fa-seedling"></i></div>
+        </div>
+        <div class="course-body">
+          <div class="course-meta">
+            <span><i class="fas fa-clock"></i> Ongoing</span>
+            <span><i class="fas fa-book"></i> Science + Maths</span>
+            <span><i class="fas fa-users"></i> Small Group</span>
+          </div>
+          <p class="course-desc">Build an unbreakable academic foundation from Class 8–10. Strong base concepts make Class 11, 12, and competitive exams dramatically easier later.</p>
+          <ul class="course-outcomes">
+            <li><i class="fas fa-check-circle"></i> Core Science & Maths concepts</li>
+            <li><i class="fas fa-check-circle"></i> CBSE + State Board aligned</li>
+            <li><i class="fas fa-check-circle"></i> Problem-solving mindset building</li>
+            <li><i class="fas fa-check-circle"></i> Olympiad level challenges</li>
+            <li><i class="fas fa-check-circle"></i> Early competitive exam orientation</li>
+          </ul>
+        </div>
+        <div class="course-footer">
+          <button class="btn-primary btn-sm" onclick="openDemoPopup()">Book Free Demo</button>
+          <button class="btn-outline btn-sm" onclick="openEnrollPopup()">Enroll Now</button>
+        </div>
+      </div>
+
+      <!-- CRASH COURSE -->
+      <div class="course-card" data-category="competitive">
+        <div class="course-header" style="background:linear-gradient(135deg,#7C3AED,#EC4899);">
+          <span class="course-level">Crash Course</span>
+          <h3>60-Day Crash Course</h3>
+          <div class="course-icon"><i class="fas fa-rocket"></i></div>
+        </div>
+        <div class="course-body">
+          <div class="course-meta">
+            <span><i class="fas fa-clock"></i> 60 Days Intensive</span>
+            <span><i class="fas fa-book"></i> Targeted Subjects</span>
+            <span><i class="fas fa-users"></i> Online / Offline</span>
+          </div>
+          <p class="course-desc">60-day intensive revision program for students who need rapid improvement before exams. Focus on high-yield topics, speed, and exam strategy.</p>
+          <ul class="course-outcomes">
+            <li><i class="fas fa-check-circle"></i> High-yield topic prioritization</li>
+            <li><i class="fas fa-check-circle"></i> Daily practice sessions</li>
+            <li><i class="fas fa-check-circle"></i> Rapid revision techniques</li>
+            <li><i class="fas fa-check-circle"></i> Full-length mock tests</li>
+            <li><i class="fas fa-check-circle"></i> Exam-day strategy coaching</li>
+          </ul>
+        </div>
+        <div class="course-footer">
+          <button class="btn-primary btn-sm" onclick="openDemoPopup()">Book Free Demo</button>
+          <button class="btn-outline btn-sm" onclick="openEnrollPopup()">Enroll Now</button>
+        </div>
+      </div>
+
+      <!-- CONCEPT BUILDING -->
+      <div class="course-card" data-category="foundation">
+        <div class="course-header" style="background:linear-gradient(135deg,#0F766E,#14B8A6);">
+          <span class="course-level">Concept Program</span>
+          <h3>Concept Building Program</h3>
+          <div class="course-icon"><i class="fas fa-brain"></i></div>
+        </div>
+        <div class="course-body">
+          <div class="course-meta">
+            <span><i class="fas fa-clock"></i> 3–6 Months</span>
+            <span><i class="fas fa-book"></i> Choose Subject</span>
+            <span><i class="fas fa-users"></i> 1-on-1 Focused</span>
+          </div>
+          <p class="course-desc">For students struggling with concepts — this program rebuilds understanding from scratch. Slow, patient, and thorough — designed for genuine clarity.</p>
+          <ul class="course-outcomes">
+            <li><i class="fas fa-check-circle"></i> Starts from first principles</li>
+            <li><i class="fas fa-check-circle"></i> No concept left blurry</li>
+            <li><i class="fas fa-check-circle"></i> Confidence rebuilding</li>
+            <li><i class="fas fa-check-circle"></i> Daily doubt-solving</li>
+            <li><i class="fas fa-check-circle"></i> Custom pace learning</li>
+          </ul>
+        </div>
+        <div class="course-footer">
+          <button class="btn-primary btn-sm" onclick="openDemoPopup()">Book Free Demo</button>
+          <button class="btn-outline btn-sm" onclick="openEnrollPopup()">Enroll Now</button>
+        </div>
+      </div>
+
+      <!-- PERSONAL MENTORSHIP -->
+      <div class="course-card" data-category="mentorship">
+        <div class="course-header" style="background:linear-gradient(135deg,#1E1B4B,#4F46E5);">
+          <span class="course-level">Mentorship</span>
+          <h3>Personal Mentorship Program</h3>
+          <div class="course-icon"><i class="fas fa-user-tie"></i></div>
+        </div>
+        <div class="course-body">
+          <div class="course-meta">
+            <span><i class="fas fa-clock"></i> Ongoing</span>
+            <span><i class="fas fa-book"></i> Full Academic</span>
+            <span><i class="fas fa-users"></i> 1-on-1 Only</span>
+          </div>
+          <p class="course-desc">The premium one-to-one experience. Complete academic guidance, study planning, career counseling, and exam preparation — all personalized exclusively for you.</p>
+          <ul class="course-outcomes">
+            <li><i class="fas fa-check-circle"></i> 100% dedicated sessions</li>
+            <li><i class="fas fa-check-circle"></i> Study roadmap creation</li>
+            <li><i class="fas fa-check-circle"></i> Career pathway guidance</li>
+            <li><i class="fas fa-check-circle"></i> WhatsApp access to Sir</li>
+            <li><i class="fas fa-check-circle"></i> Parent progress updates</li>
+          </ul>
+        </div>
+        <div class="course-footer">
+          <button class="btn-primary btn-sm" onclick="openDemoPopup()">Book Free Demo</button>
+          <button class="btn-outline btn-sm" onclick="openEnrollPopup()">Enroll Now</button>
+        </div>
+      </div>
+
+      <!-- DROPPER BATCH -->
+      <div class="course-card" data-category="competitive">
+        <div class="course-header" style="background:linear-gradient(135deg,#831843,#EC4899);">
+          <span class="course-level">Dropper Special</span>
+          <h3>Dropper / Repeater Batch</h3>
+          <div class="course-icon"><i class="fas fa-redo-alt"></i></div>
+        </div>
+        <div class="course-body">
+          <div class="course-meta">
+            <span><i class="fas fa-clock"></i> 8–10 Months</span>
+            <span><i class="fas fa-book"></i> PCM / PCB</span>
+            <span><i class="fas fa-users"></i> Small Batch</span>
+          </div>
+          <p class="course-desc">Designed specifically for students repeating their exam attempt. Focuses on identifying past weaknesses, rebuilding confidence, and optimizing for success this time.</p>
+          <ul class="course-outcomes">
+            <li><i class="fas fa-check-circle"></i> Gap analysis from last attempt</li>
+            <li><i class="fas fa-check-circle"></i> Targeted weak-area improvement</li>
+            <li><i class="fas fa-check-circle"></i> Motivation & mental strategy</li>
+            <li><i class="fas fa-check-circle"></i> Intensive mock test schedule</li>
+            <li><i class="fas fa-check-circle"></i> Full syllabus revision</li>
+          </ul>
+        </div>
+        <div class="course-footer">
+          <button class="btn-primary btn-sm" onclick="openDemoPopup()">Book Free Demo</button>
+          <button class="btn-outline btn-sm" onclick="openEnrollPopup()">Enroll Now</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEACHING MODES BANNER -->
+<section class="section" style="background:var(--bg-alt);padding:64px 0;">
+  <div class="container">
+    <div class="section-header" data-aos="fade-up">
+      <span class="section-eyebrow">Flexibility</span>
+      <h2 class="section-title">All Courses Available in <span class="gradient-text">Every Mode</span></h2>
+    </div>
+    <div class="course-css" style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px;" data-aos="fade-up" data-aos-delay="100">
+      <div class="course-css-card" style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px;text-align:center;transition:var(--transition);" onmouseover="this.style.transform='translateY(-6px)';this.style.boxShadow='var(--shadow-lg)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+        <i class="fas fa-wifi" style="font-size:2rem;color:var(--primary);margin-bottom:14px;display:block;"></i>
+        <h3 style="font-family:var(--font-display);font-weight:700;margin-bottom:8px;">Online Live</h3>
+        <p style="font-size:0.85rem;color:var(--text-muted);">Interactive sessions via video — whiteboard, screen sharing, real-time Q&A.</p>
+      </div>
+      <div class="course-css-card" style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px;text-align:center;transition:var(--transition);" onmouseover="this.style.transform='translateY(-6px)';this.style.boxShadow='var(--shadow-lg)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+        <i class="fas fa-chalkboard-teacher" style="font-size:2rem;color:var(--success);margin-bottom:14px;display:block;"></i>
+        <h3 style="font-family:var(--font-display);font-weight:700;margin-bottom:8px;">Offline</h3>
+        <p style="font-size:0.85rem;color:var(--text-muted);">Face-to-face classroom sessions for students who prefer in-person learning.</p>
+      </div>
+      <div class="course-css-card" style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px;text-align:center;transition:var(--transition);" onmouseover="this.style.transform='translateY(-6px)';this.style.boxShadow='var(--shadow-lg)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+        <i class="fas fa-home" style="font-size:2rem;color:var(--accent);margin-bottom:14px;display:block;"></i>
+        <h3 style="font-family:var(--font-display);font-weight:700;margin-bottom:8px;">Home Tutoring</h3>
+        <p style="font-size:0.85rem;color:var(--text-muted);">Sir comes to your home. Maximum comfort, zero travel time, full focus.</p>
+      </div>
+      <div class="course-css-card" style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px;text-align:center;transition:var(--transition);" onmouseover="this.style.transform='translateY(-6px)';this.style.boxShadow='var(--shadow-lg)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+        <i class="fas fa-user-friends" style="font-size:2rem;color:#8B5CF6;margin-bottom:14px;display:block;"></i>
+        <h3 style="font-family:var(--font-display);font-weight:700;margin-bottom:8px;">One-to-One</h3>
+        <p style="font-size:0.85rem;color:var(--text-muted);">100% dedicated session — every minute focused exclusively on you.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-bg"><div class="orb orb-cta-1"></div><div class="orb orb-cta-2"></div></div>
+  <div class="container">
+    <div class="cta-content" data-aos="zoom-in">
+      <h2>Not Sure Which <span class="gradient-text-light">Course is Right?</span></h2>
+      <p>Book a free consultation. Sandeep Sir will personally help you choose the best program for your goals and current level.</p>
+      <div class="cta-buttons">
+        <button class="btn-white" onclick="openPopup('consultationPopup')"><i class="fas fa-phone"></i> Free Consultation</button>
+        <a href="https://wa.me/918427168892?text=Hello%20Sir%2C%20I%20need%20help%20choosing%20the%20right%20course." target="_blank" class="btn-whatsapp-cta"><i class="fab fa-whatsapp"></i> Ask on WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo" style="margin-bottom:14px;display:inline-flex;">
+          <div class="logo-icon"><i class="fas fa-bolt"></i></div>
+          <div class="logo-text"><span class="logo-brand">The Concept</span><span class="logo-sub">Warriors</span></div>
+        </a>
+        <p>Better Concepts. Better Confidence. Better Future.</p>
+        <div class="social-links">
+          <a href="https://wa.me/918427168892" target="_blank"><i class="fab fa-whatsapp"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
+          <a href="#"><i class="fab fa-telegram"></i></a>
+        </div>
+      </div>
+      <div class="footer-links"><h4>Quick Links</h4><ul><li><a href="../index.html">Home</a></li><li><a href="../pages/about.html">About</a></li><li><a href="../pages/courses.html">Courses</a></li><li><a href="../pages/exam-prep.html">Exam Prep</a></li><li><a href="../pages/contact.html">Contact</a></li></ul></div>
+      <div class="footer-links"><h4>Programs</h4><ul><li><a href="../pages/courses.html">NEET Preparation</a></li><li><a href="../pages/courses.html">JEE Preparation</a></li><li><a href="../pages/courses.html">CUET Preparation</a></li><li><a href="../pages/courses.html">Board Exam Prep</a></li><li><a href="../pages/mentorship.html">Mentorship</a></li></ul></div>
+      <div class="footer-contact"><h4>Get In Touch</h4>
+        <div class="contact-item"><i class="fab fa-whatsapp"></i><a href="https://wa.me/918427168892" target="_blank">+91 8427168892</a></div>
+        <div class="contact-item"><i class="fas fa-envelope"></i><a href="mailto:theconceptwarrior@gmail.com">theconceptwarrior@gmail.com</a></div>
+        <div class="contact-item"><i class="fas fa-map-marker-alt"></i><span>Punjab, India (Online Nationwide)</span></div>
+        <button class="btn-primary btn-sm" style="margin-top:1rem;" onclick="openDemoPopup()">Book Free Demo</button>
+      </div>
+    </div>
+     <div class="footer-bottom">
+      <p>© 2026 The Concept Warriors. All rights reserved.</p>
+      <div class="footer-bottom-links">
+        <a href="../pages/privacy.html">Privacy Policy</a>
+        <a href="../pages/terms.html">Terms of Service</a>
+        <a href="../pages/copyright.html">Copyright</a>
+        <a href="../pages/fees.html">Admin</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- FREE CONSULTATION POPUP -->
+<div id="consultationPopup" class="popup-overlay">
+
+  <div class="popup-box">
+
+    <button class="popup-close" onclick="closePopup('consultationPopup')" type="button">
+      ✕
+    </button>
+
+    <h2>Free <span class="gradient-text">Consultation</span></h2>
+    <p>Get expert guidance for your academic journey</p>
+
+    <form action="https://formspree.io/f/xbdvkdjp" method="POST">
+
+      <div class="form-group">
+        <input type="text" name="name" placeholder="Full Name *" required />
+      </div>
+
+      <div class="form-group">
+        <input type="tel" name="phone" placeholder="Phone Number *" required />
+      </div>
+
+      <div class="form-group">
+        <input type="email" name="email" placeholder="Email Address" />
+      </div>
+
+      <div class="form-group">
+        <select name="class" required>
+          <option value="">Current Class *</option>
+          <option>Class 8</option>
+          <option>Class 9</option>
+          <option>Class 10</option>
+          <option>Class 11</option>
+          <option>Class 12</option>
+          <option>Dropper/Repeater</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <select name="goal" required>
+          <option value="">Target Goal *</option>
+          <option>NEET</option>
+          <option>JEE Main</option>
+          <option>JEE Advanced</option>
+          <option>CUET</option>
+          <option>Board Exams</option>
+          <option>Career Guidance</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <textarea name="message" placeholder="Tell us your doubts or goals..."></textarea>
+      </div>
+
+      <button type="submit" class="btn-primary btn-full">
+        Get Free Consultation
+      </button>
+
+    </form>
+
+  </div>
+
+</div>
+
+<!-- <a href="https://wa.me/918427168892?text=Hello%20Sir%2C%20I%20would%20like%20to%20know%20more%20about%20The%20Concept%20Warriors." target="_blank" class="whatsapp-float"><i class="fab fa-whatsapp"></i><span class="wa-tooltip">Chat with Sir</span></a>
+<button class="back-to-top" id="backToTop" onclick="scrollToTop()"><i class="fas fa-chevron-up"></i></button> -->
+
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script src="../scripts/script.js"></script>
+<script>
+function filterCourses(cat) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  document.querySelectorAll('.course-card').forEach(card => {
+    if (cat === 'all' || card.dataset.category === cat) {
+      card.style.display = 'flex';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+</script>
+</body>
+</html>

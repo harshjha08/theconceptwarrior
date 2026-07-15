@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Academic Mentorship & Career Guidance | The Concept Warriors</title>
+
+  <meta name="description" content="Get personalized academic mentorship, study planning, career guidance, performance tracking and one-to-one support from Sandeep Kumar at The Concept Warriors." />
+
+  <meta name="keywords" content="Academic Mentorship, Student Mentorship, Career Guidance, Study Planning, Personal Mentor, NEET Mentorship, JEE Mentorship, CUET Guidance, Academic Coaching, The Concept Warriors" />
+
+  <meta name="author" content="Sandeep Kumar" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#0f172a" />
+
+  <link rel="canonical" href="https://theconceptwarrior.vercel.app/../pages/mentorship.html" />
+
+  <!-- Open Graph -->
+
+  <meta property="og:title" content="Academic Mentorship & Career Guidance | The Concept Warriors" />
+  <meta property="og:description" content="Personalized mentorship programs designed to help students achieve academic excellence and career clarity." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://theconceptwarrior.vercel.app/../pages/mentorship.html" />
+  <meta property="og:site_name" content="The Concept Warriors" />
+  <meta property="og:image" content="https://theconceptwarrior.vercel.app/../assets/web page Images/linkpreviewimg.jpeg" />
+
+  <!-- Twitter -->
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Academic Mentorship & Career Guidance" />
+  <meta name="twitter:description" content="One-to-one mentorship, study planning and career guidance for students." />
+  <meta name="twitter:image" content="https://theconceptwarrior.vercel.app/../assets/web page Images/linkpreviewimg.jpeg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
+
+  <link rel="icon" type="image/png" href="../assets/web page Images/idea.jpeg" />
+
+  <link rel="stylesheet" href="../CSS/common.css">
+  <link rel="stylesheet" href="../CSS/style.css" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Academic Mentorship Program",
+    "provider": {
+      "@type": "EducationalOrganization",
+      "name": "The Concept Warriors",
+      "url": "https://theconceptwarrior.vercel.app/"
+    },
+    "description": "Personalized mentorship, career guidance, study planning, academic performance improvement and exam strategy support.",
+    "url": "https://theconceptwarrior.vercel.app/../pages/mentorship.html"
+  }
+  </script>
+
+</head>
+
+<body>
+
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="../index.html" class="nav-logo">
+      <div class="logo-icon"><i class="fas fa-bolt"></i></div>
+      <div class="logo-text"><span class="logo-brand">The Concept</span><span class="logo-sub">Warriors</span></div>
+    </a>
+    <div class="nav-links" id="navLinks">
+      <a href="../index.html" class="nav-link">Home</a>
+      <a href="../pages/about.html" class="nav-link">About</a>
+      <a href="../pages/courses.html" class="nav-link">Courses</a>
+      <a href="../pages/mentorship.html" class="nav-link active">Mentorship</a>
+      <a href="../pages/exam-prep.html" class="nav-link">Exam Prep</a>
+      <a href="../pages/fees.html"        class="nav-link ">Fee Structure</a>
+      <a href="../pages/contact.html" class="nav-link">Contact</a>
+      <a href="../pages/lms-dashboard.html" class="nav-link nav-lms"><i class="fas fa-graduation-cap"></i> Student Resources</a>
+    </div>
+    <div class="nav-actions">
+      <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()"><i class="fas fa-moon" id="themeIcon"></i></button>
+      <button id="demo-book-btn" class="btn-primary btn-sm" onclick="openDemoPopup()">Free Demo</button>
+      <button class="hamburger" id="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+
+<!-- DEMO POPUP -->
+<form action=" https://formspree.io/f/xgojzvja" method="POST">
+
+  <div id="demoPopup" class="popup-overlay">
+    <div class="popup-box">
+
+      <button class="popup-close" onclick="closePopup('demoPopup')" type="button">
+        <i class="fas fa-times"></i>
+      </button>
+
+      <h2>Book Free <span class="gradient-text">Demo Class</span></h2>
+      <p>Fill in your details and we'll contact you within 24 hours.</p>
+
+      <div class="form-group">
+        <input type="text" name="Name" placeholder="Your Name" required />
+      </div>
+
+      <div class="form-group">
+        <input type="tel" name="Phone" placeholder="Phone Number" required />
+      </div>
+
+      <div class="form-group">
+        <input type="email" name="Email" placeholder="Email Address" required />
+      </div>
+
+      <div class="form-group">
+        <select name="Class" required>
+          <option value="">Select Your Class</option>
+          <option>Class 8</option>
+          <option>Class 9</option>
+          <option>Class 10</option>
+          <option>Class 11</option>
+          <option>Class 12</option>
+          <option>Dropper/Repeater</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <select name="Goal" required>
+          <option value="">Target Exam</option>
+          <option>NEET</option>
+          <option>JEE Main</option>
+          <option>JEE Advanced</option>
+          <option>CUET</option>
+          <option>Board Exams</option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn-primary btn-full">
+        Book Free Demo
+      </button>
+
+    </div>
+  </div>
+
+</form>
+<div id="successPopup" class="popup-overlay">
+  <div class="popup-box text-center">
+    <div class="success-icon">✅</div>
+    <h2>You're <span class="gradient-text">All Set!</span></h2>
+    <p>Your request has been received. Sandeep Sir will reach out within 24 hours.</p>
+    <button class="btn-primary" onclick="closePopup('successPopup')">Done</button>
+  </div>
+</div>
+
+<!-- MENTORSHIP HERO -->
+<section class="mentorship-hero">
+  <div class="container" style="position:relative;z-index:1;">
+    <span class="section-eyebrow" data-aos="fade-down">More Than Teaching</span>
+    <h1 class="section-title" data-aos="fade-up" data-aos-delay="100">We Don't Just Teach. <span class="gradient-text">We Mentor.</span></h1>
+    <p class="section-subtitle" data-aos="fade-up" data-aos-delay="200">Guidance beyond textbooks — helping students understand not just what to study, but how to study, why they're studying, and where they're heading.</p>
+    <div style="margin-top:32px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap;" data-aos="fade-up" data-aos-delay="300">
+      <button class="btn-primary btn-lg" onclick="openPopup('mentorshipPopup')"><i class="fas fa-user-tie"></i> Book a Mentorship Session</button>
+      <a href="../pages/contact.html" class="btn-outline btn-lg"><i class="fas fa-phone"></i> Talk to Sandeep Sir</a>
+    </div>
+  </div>
+</section>
+
+<!-- MENTORSHIP PROGRAMS -->
+<section class="section">
+  <div class="container">
+    <div class="section-header" data-aos="fade-up">
+      <span class="section-eyebrow">What We Offer</span>
+      <h2 class="section-title">Complete <span class="gradient-text">Mentorship Suite</span></h2>
+    </div>
+    <div class="mentorship-grid">
+      <div class="mentorship-card" data-aos="fade-up" data-aos-delay="0">
+        <div class="mentorship-icon"><i class="fas fa-road"></i></div>
+        <h3>Academic Roadmap Planning</h3>
+        <p>A clear, step-by-step study plan crafted specifically for your current level, target exam, and available time. No guesswork — just a proven path forward. Updated monthly based on your progress.</p>
+        <ul style="list-style:none;margin-top:12px;">
+          <li style="font-size:0.85rem;color:var(--text-muted);margin-bottom:6px;"><i class="fas fa-check" style="color:var(--success);margin-right:8px;"></i>Personalized syllabus breakdown</li>
+          <li style="font-size:0.85rem;color:var(--text-muted);margin-bottom:6px;"><i class="fas fa-check" style="color:var(--success);margin-right:8px;"></i>Weekly & monthly targets</li>
+          <li style="font-size:0.85rem;color:var(--text-muted);margin-bottom:6px;"><i class="fas fa-check" style="color:var(--success);margin-right:8px;"></i>Dynamic re-planning as you grow</li>
+        </ul>
+      </div>
+      <div class="mentorship-card" data-aos="fade-up" data-aos-delay="100">
+        <div class="mentorship-icon"><i class="fas fa-compass"></i></div>
+        <h3>Career Guidance</h3>
+        <p>Understanding what career to pursue after 12th is as important as performing well. Sandeep Sir guides students through medical, engineering, pure science, and alternative career paths with clarity.</p>
+        <ul style="list-style:none;margin-top:12px;">
+          <li style="font-size:0.85rem;color:var(--text-muted);margin-bottom:6px;"><i class="fas fa-check" style="color:var(--success);margin-right:8px;"></i>Stream & career clarity</li>
+          <li style="font-size:0.85rem;color:var(--text-muted);margin-bottom:6px;"><i class="fas fa-check" style="color:var(--success);margin-right:8px;"></i>University & college selection</li>
+          <li style="font-size:0.85rem;color:var(--text-muted);margin-bottom:6px;"><i class="fas fa-check" style="color:var(--success);margin-right:8px;"></i>Entrance exam strategy by career goal</li>
+        </ul>
+      </div>
+      <div class="mentorship-card" data-aos="fade-up" data-aos-delay="200">
+        <div class="mentorship-icon"><i class="fas fa-brain"></i></div>
+        <h3>Study Habit & Time Management</h3>
+        <p>The biggest differentiator between average and top performers isn't intelligence — it's how they study. Learn proven study techniques, time-blocking methods, and revision strategies that stick.</p>
+        <ul style="list-style:none;margin-top:12px;">
+          <li style="font-size:0.85rem;color:var(--text-muted);margin-bottom:6px;"><i class="fas fa-check" style="color:var(--success);margin-right:8px;"></i>Spaced repetition technique</li>
+          <li style="font-size:0.85rem;color:var(--text-muted);margin-bottom:6px;"><i class="fas fa-check" style="color:var(--success);margin-right:8px;"></i>Active recall methods</li>
+          <li style="font-size:0.85rem;color:var(--text-muted);margin-bottom:6px;"><i class="fas fa-check" style="color:var(--success);margin-right:8px;"></i>Distraction-free study routines</li>
+        </ul>
+      </div>
+      <div class="mentorship-card" data-aos="fade-up" data-aos-delay="300">
+        <div class="mentorship-icon"><i class="fas fa-heart"></i></div>
+        <h3>Emotional & Motivational Support</h3>
+        <p>Exam pressure, fear of failure, and burnout are real. Sandeep Sir doesn't just teach subjects — he listens, understands, and helps students rebuild confidence and motivation when it wavers.</p>
+        <ul style="list-style:none;margin-top:12px;">
+          <li style="font-size:0.85rem;color:var(--text-muted);margin-bottom:6px;"><i class="fas fa-check" style="color:var(--success);margin-right:8px;"></i>Stress management techniques</li>
+          <li style="font-size:0.85rem;color:var(--text-muted);margin-bottom:6px;"><i class="fas fa-check" style="color:var(--success);margin-right:8px;"></i>Rebuilding self-belief</li>
+          <li style="font-size:0.85rem;color:var(--text-muted);margin-bottom:6px;"><i class="fas fa-check" style="color:var(--success);margin-right:8px;"></i>Goal-setting with accountability</li>
+        </ul>
+      </div>
+      <div class="mentorship-card" data-aos="fade-up" data-aos-delay="400">
+        <div class="mentorship-icon"><i class="fas fa-industry"></i></div>
+        <h3>Industrial & Professional Mentorship</h3>
+        <p>For students exploring real-world career paths in science, chemistry, and allied fields — guidance on industry trends, higher education options, and what professional life actually looks like.</p>
+        <ul style="list-style:none;margin-top:12px;">
+          <li style="font-size:0.85rem;color:var(--text-muted);margin-bottom:6px;"><i class="fas fa-check" style="color:var(--success);margin-right:8px;"></i>Chemistry & pharma industry insights</li>
+          <li style="font-size:0.85rem;color:var(--text-muted);margin-bottom:6px;"><i class="fas fa-check" style="color:var(--success);margin-right:8px;"></i>Research & academia path guidance</li>
+          <li style="font-size:0.85rem;color:var(--text-muted);margin-bottom:6px;"><i class="fas fa-check" style="color:var(--success);margin-right:8px;"></i>Higher education roadmaps (M.Sc./MBA)</li>
+        </ul>
+      </div>
+      <div class="mentorship-card" data-aos="fade-up" data-aos-delay="500">
+        <div class="mentorship-icon"><i class="fas fa-chart-line"></i></div>
+        <h3>Performance Tracking & Parent Updates</h3>
+        <p>Regular written progress reports shared with both student and parents. Clear visibility into strengths, improvement areas, test scores, and upcoming targets.</p>
+        <ul style="list-style:none;margin-top:12px;">
+          <li style="font-size:0.85rem;color:var(--text-muted);margin-bottom:6px;"><i class="fas fa-check" style="color:var(--success);margin-right:8px;"></i>Monthly written progress reports</li>
+          <li style="font-size:0.85rem;color:var(--text-muted);margin-bottom:6px;"><i class="fas fa-check" style="color:var(--success);margin-right:8px;"></i>Parent feedback sessions</li>
+          <li style="font-size:0.85rem;color:var(--text-muted);margin-bottom:6px;"><i class="fas fa-check" style="color:var(--success);margin-right:8px;"></i>Transparent performance data</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENTORSHIP ROADMAP -->
+<section class="section" style="background:var(--bg-alt);">
+  <div class="container">
+    <div class="section-header" data-aos="fade-up">
+      <span class="section-eyebrow">How It Works</span>
+      <h2 class="section-title">Your Mentorship <span class="gradient-text">Journey</span></h2>
+    </div>
+    <div style="max-width:680px;margin:0 auto;" data-aos="fade-up" data-aos-delay="100">
+      <div class="roadmap-timeline">
+        <div class="roadmap-step">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <h4>Free Consultation Call</h4>
+            <p>A 30-minute call with Sandeep Sir to understand your current situation, goals, challenges, and aspirations. No obligations, completely free.</p>
+          </div>
+        </div>
+        <div class="roadmap-step">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <h4>Diagnostic Assessment</h4>
+            <p>A short assessment to identify your current knowledge level, learning style, and specific weak areas that need attention first.</p>
+          </div>
+        </div>
+        <div class="roadmap-step">
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <h4>Custom Learning Plan</h4>
+            <p>Sandeep Sir creates a personalized study roadmap — subject-wise, week-by-week, with clear milestones and achievable targets.</p>
+          </div>
+        </div>
+        <div class="roadmap-step">
+          <div class="step-number">4</div>
+          <div class="step-content">
+            <h4>Regular Sessions + Doubt Solving</h4>
+            <p>Scheduled learning sessions combined with ongoing WhatsApp doubt support. No concept is left unclear — ever.</p>
+          </div>
+        </div>
+        <div class="roadmap-step">
+          <div class="step-number">5</div>
+          <div class="step-content">
+            <h4>Tests, Feedback & Re-Calibration</h4>
+            <p>Monthly mock tests and performance reviews. The plan is updated based on results to keep you on the fastest path to your goal.</p>
+          </div>
+        </div>
+        <div class="roadmap-step">
+          <div class="step-number">6</div>
+          <div class="step-content">
+            <h4>Exam Day Strategy & Beyond</h4>
+            <p>Final week strategies, exam-day routines, and post-exam guidance on next steps — whether college admission, re-attempt planning, or career decisions.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-bg"><div class="orb orb-cta-1"></div><div class="orb orb-cta-2"></div></div>
+  <div class="container">
+    <div class="cta-content" data-aos="zoom-in">
+      <h2>Start Your Mentorship <span class="gradient-text-light">Journey Today</span></h2>
+      <p>A 30-minute free consultation is all it takes. Book yours now and take the first step toward your best academic year yet.</p>
+      <div class="cta-buttons">
+        <button class="btn-white" onclick="openPopup('consultationPopup')"><i class="fas fa-user-tie"></i> Book Free Consultation</button>
+        <a href="https://wa.me/918427168892?text=Hello%20Sir%2C%20I%20am%20interested%20in%20mentorship." target="_blank" class="btn-whatsapp-cta"><i class="fab fa-whatsapp"></i> WhatsApp Sir</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo" style="margin-bottom:14px;display:inline-flex;"><div class="logo-icon"><i class="fas fa-bolt"></i></div><div class="logo-text"><span class="logo-brand">The Concept</span><span class="logo-sub">Warriors</span></div></a>
+        <p>Better Concepts. Better Confidence. Better Future.</p>
+        <div class="social-links"><a href="https://wa.me/918427168892" target="_blank"><i class="fab fa-whatsapp"></i></a><a href="#"><i class="fab fa-instagram"></i></a><a href="#"><i class="fab fa-youtube"></i></a></div>
+      </div>
+      <div class="footer-links"><h4>Quick Links</h4><ul><li><a href="../index.html">Home</a></li><li><a href="../pages/about.html">About</a></li><li><a href="../pages/courses.html">Courses</a></li><li><a href="../pages/exam-prep.html">Exam Prep</a></li><li><a href="../pages/contact.html">Contact</a></li></ul></div>
+      <div class="footer-links"><h4>Programs</h4><ul><li><a href="../pages/courses.html">NEET Preparation</a></li><li><a href="../pages/courses.html">JEE Preparation</a></li><li><a href="../pages/courses.html">CUET Preparation</a></li><li><a href="../pages/courses.html">Board Exam Prep</a></li><li><a href="../pages/mentorship.html">Mentorship</a></li></ul></div>
+      <div class="footer-contact"><h4>Get In Touch</h4>
+        <div class="contact-item"><i class="fab fa-whatsapp"></i><a href="https://wa.me/918427168892" target="_blank">+91 8427168892</a></div>
+        <div class="contact-item"><i class="fas fa-envelope"></i><a href="mailto:theconceptwarrior@gmail.com">theconceptwarrior@gmail.com</a></div>
+        <div class="contact-item"><i class="fas fa-map-marker-alt"></i><span>Punjab, India (Online Nationwide)</span></div>
+      </div>
+    </div>
+     <div class="footer-bottom">
+      <p>© 2026 The Concept Warriors. All rights reserved.</p>
+      <div class="footer-bottom-links">
+        <a href="../pages/privacy.html">Privacy Policy</a>
+        <a href="../pages/terms.html">Terms of Service</a>
+        <a href="../pages/copyright.html">Copyright</a>
+        <a href="../pages/fees.html">Admin</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/918427168892?text=Hello%20Sir%2C%20I%20would%20like%20to%20know%20more%20about%20The%20Concept%20Warriors." target="_blank" class="whatsapp-float"><i class="fab fa-whatsapp"></i><span class="wa-tooltip">Chat with Sir</span></a>
+<button class="back-to-top" id="backToTop" onclick="scrollToTop()"><i class="fas fa-chevron-up"></i></button>
+
+
+
+<div id="mentorshipPopup" class="popup-overlay">
+  <div class="popup-box">
+
+    <button class="popup-close" onclick="closePopup('mentorshipPopup')" type="button">
+      ✕
+    </button>
+
+    <h2>Mentorship Request</h2>
+
+    
+  <form action="https://formspree.io/f/mrewlegy" method="POST">
+  <div class="form-row">
+    <div class="form-group">
+      <label>Full Name *</label>
+      <input type="text" name="name" placeholder="Your full name" required />
+    </div>
+
+    <div class="form-group">
+      <label>Phone Number *</label>
+      <input type="tel" name="phone" placeholder="+91 XXXXX XXXXX" required />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>Email Address *</label>
+    <input type="email" name="email" placeholder="your@email.com" required />
+  </div>
+
+  <div class="form-row">
+    <div class="form-group">
+      <label>Current Class *</label>
+      <select name="class" required>
+        <option value="">Select your class</option>
+        <option>Class 8</option>
+        <option>Class 9</option>
+        <option>Class 10</option>
+        <option>Class 11</option>
+        <option>Class 12</option>
+        <option>Dropper/Repeater</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Target Exam *</label>
+      <select name="goal" required>
+        <option value="">Select exam</option>
+        <option>NEET</option>
+        <option>JEE Main</option>
+        <option>JEE Advanced</option>
+        <option>CUET</option>
+        <option>Board Exams</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>Preferred Mentorship Type *</label>
+    <select name="mentorship_type" required>
+      <option value="">Choose type</option>
+      <option>1-on-1 Personal Mentorship</option>
+      <option>Weekly Guidance</option>
+      <option>Daily Study Plan</option>
+      <option>Doubt Solving Support</option>
+      <option>Full Academic Guidance</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label>Your Main Challenge</label>
+    <textarea name="message" placeholder="Tell us where you need help..."></textarea>
+  </div>
+
+  <button type="submit" class="btn-primary btn-full">
+    Request Mentorship
+  </button>
+
+</form>
+    
+  </div>
+</div>
+
+<!-- FREE CONSULTATION POPUP -->
+<div id="consultationPopup" class="popup-overlay">
+
+  <div class="popup-box">
+
+    <button class="popup-close" onclick="closePopup('consultationPopup')" type="button">
+      ✕
+    </button>
+
+    <h2>Free <span class="gradient-text">Consultation</span></h2>
+    <p>Get expert guidance for your academic journey</p>
+
+    <form action="https://formspree.io/f/xbdvkdjp" method="POST">
+
+      <div class="form-group">
+        <input type="text" name="name" placeholder="Full Name *" required />
+      </div>
+
+      <div class="form-group">
+        <input type="tel" name="phone" placeholder="Phone Number *" required />
+      </div>
+
+      <div class="form-group">
+        <input type="email" name="email" placeholder="Email Address" />
+      </div>
+
+      <div class="form-group">
+        <select name="class" required>
+          <option value="">Current Class *</option>
+          <option>Class 8</option>
+          <option>Class 9</option>
+          <option>Class 10</option>
+          <option>Class 11</option>
+          <option>Class 12</option>
+          <option>Dropper/Repeater</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <select name="goal" required>
+          <option value="">Target Goal *</option>
+          <option>NEET</option>
+          <option>JEE Main</option>
+          <option>JEE Advanced</option>
+          <option>CUET</option>
+          <option>Board Exams</option>
+          <option>Career Guidance</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <textarea name="message" placeholder="Tell us your doubts or goals..."></textarea>
+      </div>
+
+      <button type="submit" class="btn-primary btn-full">
+        Get Free Consultation
+      </button>
+
+    </form>
+
+  </div>
+
+</div>
+
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script src="../scripts/script.js"></script>
+</body>
+</html>

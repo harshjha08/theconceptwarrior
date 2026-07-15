@@ -1,0 +1,21 @@
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    height: 90vh;
+    display: flex;   
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+@media(max-width: 768px) {
+    #heading{
+        font-size: 1.5rem;
+       
+    }
+    img{
+        min-width: 300px;
+    }
+}

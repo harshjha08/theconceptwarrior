@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Contact The Concept Warriors | Book Demo, Callback & Enrollment</title>
+
+  <meta name="description" content="Get in touch with The Concept Warriors. Contact Sandeep Kumar for admissions, free demo classes, mentorship, NEET, JEE, CUET and Board Exam coaching." />
+
+  <meta name="keywords" content="Contact The Concept Warriors, Book Demo Class, NEET Coaching Contact, JEE Coaching Contact, Online Tutor Contact, Sandeep Kumar Contact, Coaching Admission" />
+
+  <meta name="author" content="Sandeep Kumar" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#0f172a" />
+
+  <link rel="canonical" href="https://theconceptwarrior.vercel.app/../pages/contact.html" />
+
+  <!-- Open Graph -->
+
+  <meta property="og:title" content="Contact The Concept Warriors" />
+  <meta property="og:description" content="Book a free demo class, request a callback, enroll in courses, or connect directly with Sandeep Kumar." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://the-concept-warrior.vercel.app/../pages/contact.html" />
+  <meta property="og:site_name" content="The Concept Warriors" />
+  <meta property="og:image" content="https://theconceptwarrior.vercel.app/../assets/web page Images/linkpreviewimg.jpeg" />
+
+  <!-- Twitter -->
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Contact The Concept Warriors" />
+  <meta name="twitter:description" content="Get expert academic guidance and connect with our admissions team." />
+  <meta name="twitter:image" content="https://theconceptwarrior.vercel.app/../assets/web page Images/linkpreviewimg.jpeg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
+
+  <link rel="icon" type="image/png" href="../assets/web page Images/idea.jpeg" />
+
+  <link rel="stylesheet" href="../CSS/style.css" />
+  <link rel="stylesheet" href="../CSS/common.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    "name": "Contact The Concept Warriors",
+    "url": "https://theconceptwarrior.vercel.app/../pages/contact.html",
+    "description": "Contact page for admissions, free demo classes, mentorship and academic guidance.",
+    "mainEntity": {
+      "@type": "EducationalOrganization",
+      "name": "The Concept Warriors",
+      "telephone": "+91-8427168892"
+    }
+  }
+  </script>
+
+</head>
+
+<body>
+
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="../index.html" class="nav-logo">
+      <div class="logo-icon"><i class="fas fa-bolt"></i></div>
+      <div class="logo-text"><span class="logo-brand">The Concept</span><span class="logo-sub">Warriors</span></div>
+    </a>
+    <div class="nav-links" id="navLinks">
+      <a href="../index.html" class="nav-link">Home</a>
+      <a href="../pages/about.html" class="nav-link">About</a>
+      <a href="../pages/courses.html" class="nav-link">Courses</a>
+      <a href="../pages/mentorship.html" class="nav-link">Mentorship</a>
+      <a href="../pages/exam-prep.html" class="nav-link">Exam Prep</a>
+      <a href="../pages/fees.html"        class="nav-link ">Fee Structure</a>
+      <a href="../pages/contact.html" class="nav-link active">Contact</a>
+      <a href="../pages/lms-dashboard.html" class="nav-link nav-lms"><i class="fas fa-graduation-cap"></i> Student Resources</a>
+    </div>
+    <div class="nav-actions">
+      <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()"><i class="fas fa-moon" id="themeIcon"></i></button>
+      <button id="demo-book-btn" class="btn-primary btn-sm" onclick="document.getElementById('demoForm').scrollIntoView({behavior:'smooth'})">Free Demo</button>
+      <button class="hamburger" id="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+
+<div id="successPopup" class="popup-overlay">
+  <div class="popup-box text-center">
+    <div class="success-icon">✅</div>
+    <h2>Message Received! <span class="gradient-text">Thank You!</span></h2>
+    <p>Sandeep Sir will reach out within 24 hours. For urgent queries, WhatsApp directly.</p>
+    <a href="https://wa.me/918427168892" target="_blank" class="btn-primary" style="margin-bottom:10px;"><i class="fab fa-whatsapp"></i> WhatsApp Now</a>
+    <button class="btn-ghost" onclick="closePopup('successPopup')">Close</button>
+  </div>
+</div>
+
+<!-- CONTACT HERO -->
+<section class="contact-hero">
+  <div class="container" style="position:relative;z-index:1;">
+    <span class="section-eyebrow" data-aos="fade-down">Let's Connect</span>
+    <h1 class="section-title" data-aos="fade-up" data-aos-delay="100">We're One Message <span class="gradient-text">Away</span></h1>
+    <p class="section-subtitle" data-aos="fade-up" data-aos-delay="200">Whether you have questions, want to book a demo, or are ready to enroll — reach out and Sandeep Sir will personally respond.</p>
+  </div>
+</section>
+
+<!-- CONTACT SECTION -->
+<section class="section">
+  <div class="container">
+    <div class="contact-grid" data-aos="fade-up">
+
+      <!-- LEFT: CONTACT INFO -->
+      <div>
+        <div class="contact-info-card">
+          <h2 style="font-family:var(--font-display);font-size:1.4rem;font-weight:700;margin-bottom:8px;">Talk to Sandeep Sir <span class="gradient-text">Directly</span></h2>
+          <p style="font-size:0.875rem;color:var(--text-muted);margin-bottom:24px;">The fastest way to reach us is always WhatsApp. We typically respond within 2 hours.</p>
+          <div class="contact-method">
+            <div class="contact-method-icon wa"><i class="fab fa-whatsapp"></i></div>
+            <div>
+              <h4>WhatsApp (Fastest)</h4>
+              <a href="https://wa.me/918427168892?text=Hello%20Sir%2C%20I%20would%20like%20to%20know%20more%20about%20The%20Concept%20Warriors." target="_blank">+91 8427168892</a>
+              <p style="font-size:0.75rem;margin-top:2px;color:var(--text-light);">Available 9 AM – 9 PM daily</p>
+            </div>
+          </div>
+          <div class="contact-method">
+            <div class="contact-method-icon email"><i class="fas fa-envelope"></i></div>
+            <div>
+              <h4>Email Us</h4>
+              <a href="mailto:theconceptwarrior@gmail.com">theconceptwarrior@gmail.com</a>
+              <p style="font-size:0.75rem;margin-top:2px;color:var(--text-light);">We reply within 24 hours</p>
+            </div>
+          </div>
+          <div class="contact-method">
+            <div class="contact-method-icon location"><i class="fas fa-map-marker-alt"></i></div>
+            <div>
+              <h4>Location</h4>
+              <p>Punjab, India</p>
+              <p style="font-size:0.75rem;margin-top:2px;color:var(--text-light);">Online classes available Pan-India</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- QUICK LINKS -->
+        <div style="background:linear-gradient(135deg,#1E1B4B,#4F46E5);border-radius:16px;padding:28px;margin-top:20px;">
+          <h3 style="color:#fff;font-family:var(--font-display);font-weight:700;margin-bottom:16px;">Quick Actions</h3>
+          <a href="https://wa.me/918427168892?text=Hello%20Sir%2C%20I%20would%20like%20to%20book%20a%20free%20demo%20class." target="_blank" class="btn-whatsapp-cta" style="width:100%;justify-content:center;margin-bottom:12px;"><i class="fab fa-whatsapp"></i> Book Demo via WhatsApp</a>
+          <a href="../pages/lms-login.html" class="btn-white" style="width:100%;justify-content:center;"><i class="fas fa-graduation-cap"></i> Student Login (LMS)</a>
+        </div>
+      </div>
+
+      <!-- RIGHT: FORMS -->
+      <div class="contact-forms">
+
+        <!-- REQUEST CALLBACK -->
+        <div class="form-card">
+          <h3>📞 Request a Callback</h3>
+          <p>Leave your details and Sandeep Sir will call you back within a few hours.</p>
+          <form action="https://formspree.io/f/mzdlvznb" method="POST">
+
+  <div class="form-row">
+    <div class="form-group">
+      <label>Full Name *</label>
+      <input type="text" name="name" required />
+    </div>
+
+    <div class="form-group">
+      <label>Phone Number *</label>
+      <input type="tel" name="phone" required />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>Email Address</label>
+    <input type="email" name="email" />
+  </div>
+
+  <div class="form-group">
+    <label>Best Time to Call</label>
+    <select name="timeSlot">
+      <option value="">Select preferred time</option>
+      <option>Morning (9 AM – 12 PM)</option>
+      <option>Afternoon (12 PM – 4 PM)</option>
+      <option>Evening (4 PM – 8 PM)</option>
+    </select>
+  </div>
+
+  <button type="submit" class="btn-primary btn-full">
+    Request Callback
+  </button>
+
+</form>
+        </div>
+
+        <!-- DEMO CLASS -->
+        <div class="form-card" id="demoForm">
+          <h3>🎯 Register for Free Demo Class</h3>
+          <p>Experience Sandeep Sir's teaching before enrolling — completely free, no obligations.</p>
+          <form action="https://formspree.io/f/xvzjqgjq" method="POST">
+
+  <div class="form-row">
+    <div class="form-group">
+      <label>Full Name *</label>
+      <input type="text" name="name" required />
+    </div>
+
+    <div class="form-group">
+      <label>Phone Number *</label>
+      <input type="tel" name="phone" required />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>Email Address</label>
+    <input type="email" name="email" />
+  </div>
+
+  <div class="form-row">
+    <div class="form-group">
+      <label>Current Class *</label>
+      <select name="class" required>
+        <option value="">Select class</option>
+        <option>Class 8</option>
+        <option>Class 9</option>
+        <option>Class 10</option>
+        <option>Class 11</option>
+        <option>Class 12</option>
+        <option>Dropper/Repeater</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Target Exam</label>
+      <select name="goal">
+        <option value="">Select goal</option>
+        <option>NEET</option>
+        <option>JEE Main</option>
+        <option>JEE Advanced</option>
+        <option>CUET</option>
+        <option>Board Exams</option>
+        <option>Foundation</option>
+      </select>
+    </div>
+  </div>
+
+  <button type="submit" class="btn-primary btn-full">
+    Register for Free Demo
+  </button>
+
+</form>
+        </div>
+
+        <!-- ENROLL NOW -->
+        <div class="form-card">
+          <h3>✅ Enroll Now</h3>
+          <p>Ready to join? Fill this form and we'll process your enrollment within 24 hours.</p>
+          <form action="https://formspree.io/f/mvzjqgeq" method="POST">
+
+  <div class="form-row">
+    <div class="form-group">
+      <label>Full Name *</label>
+      <input type="text" name="name" required />
+    </div>
+
+    <div class="form-group">
+      <label>Phone Number *</label>
+      <input type="tel" name="phone" required />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>Email Address *</label>
+    <input type="email" name="email" required />
+  </div>
+
+  <div class="form-row">
+    <div class="form-group">
+      <label>Select Course *</label>
+      <select name="course" required>
+        <option value="">Choose a program</option>
+        <option>Foundation Program (8–10)</option>
+        <option>NEET Preparation</option>
+        <option>JEE Main & Advanced</option>
+        <option>CUET Preparation</option>
+        <option>Board Exam Prep (11–12)</option>
+        <option>Crash Course</option>
+        <option>Personal Mentorship</option>
+        <option>Concept Building</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Preferred Mode *</label>
+      <select name="mode" required>
+        <option value="">Choose mode</option>
+        <option>Online Live</option>
+        <option>Offline / In-Person</option>
+        <option>Home Tutoring</option>
+        <option>One-to-One</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>Any specific requirements or questions?</label>
+    <textarea name="message"></textarea>
+  </div>
+
+  <button type="submit" class="btn-primary btn-full">
+    Submit Enrollment Request
+  </button>
+
+</form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MAP PLACEHOLDER -->
+<section style="padding:0 0 64px;">
+  <div class="container">
+    <div style="background:var(--bg-alt);border:1px solid var(--border);border-radius:16px;padding:40px;text-align:center;">
+      <i class="fas fa-map-marker-alt" style="font-size:2rem;color:var(--primary);margin-bottom:12px;display:block;"></i>
+      <h3 style="font-family:var(--font-display);font-weight:700;margin-bottom:8px;">Based in Punjab — Teaching Nationwide</h3>
+      <p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:20px;">Physical classes available in Punjab. Online classes for students across India — no location barrier to learning!</p>
+      <a href="https://wa.me/918427168892?text=Hello%20Sir%2C%20I%20want%20to%20know%20about%20your%20location%20and%20offline%20classes." target="_blank" class="btn-primary"><i class="fab fa-whatsapp"></i> Ask About Offline Location</a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo" style="margin-bottom:14px;display:inline-flex;"><div class="logo-icon"><i class="fas fa-bolt"></i></div><div class="logo-text"><span class="logo-brand">The Concept</span><span class="logo-sub">Warriors</span></div></a>
+        <p>Better Concepts. Better Confidence. Better Future.</p>
+        <div class="social-links"><a href="https://wa.me/918427168892" target="_blank"><i class="fab fa-whatsapp"></i></a><a href="#"><i class="fab fa-instagram"></i></a><a href="#"><i class="fab fa-youtube"></i></a></div>
+      </div>
+      <div class="footer-links"><h4>Quick Links</h4><ul><li><a href="../index.html">Home</a></li><li><a href="../pages/about.html">About</a></li><li><a href="../pages/courses.html">Courses</a></li><li><a href="../pages/exam-prep.html">Exam Prep</a></li><li><a href="../pages/contact.html">Contact</a></li></ul></div>
+      <div class="footer-links"><h4>Programs</h4><ul><li><a href="../pages/courses.html">NEET Preparation</a></li><li><a href="../pages/courses.html">JEE Preparation</a></li><li><a href="../pages/courses.html">CUET Preparation</a></li><li><a href="../pages/courses.html">Board Exam Prep</a></li><li><a href="../pages/mentorship.html">Mentorship</a></li></ul></div>
+      <div class="footer-contact"><h4>Get In Touch</h4>
+        <div class="contact-item"><i class="fab fa-whatsapp"></i><a href="https://wa.me/918427168892" target="_blank">+91 8427168892</a></div>
+        <div class="contact-item"><i class="fas fa-envelope"></i><a href="mailto:theconceptwarrior@gmail.com">theconceptwarrior@gmail.com</a></div>
+        <div class="contact-item"><i class="fas fa-map-marker-alt"></i><span>Punjab, India (Online Nationwide)</span></div>
+      </div>
+    </div>
+     <div class="footer-bottom">
+      <p>© 2026 The Concept Warriors. All rights reserved.</p>
+      <div class="footer-bottom-links">
+        <a href="../pages/privacy.html">Privacy Policy</a>
+        <a href="../pages/terms.html">Terms of Service</a>
+        <a href="../pages/copyright.html">Copyright</a>
+        <a href="../pages/fees.html">Admin</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/918427168892?text=Hello%20Sir%2C%20I%20would%20like%20to%20know%20more%20about%20The%20Concept%20Warriors." target="_blank" class="whatsapp-float"><i class="fab fa-whatsapp"></i><span class="wa-tooltip">Chat with Sir</span></a>
+<button class="back-to-top" id="backToTop" onclick="scrollToTop()"><i class="fas fa-chevron-up"></i></button>
+
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script src="../scripts/script.js"></script>
+<script>
+function submitContactForm(e, formId, storageKey) {
+  e.preventDefault();
+  const form = document.getElementById(formId);
+  const data = {};
+  new FormData(form).forEach((val, key) => { data[key] = val; });
+  data.timestamp = new Date().toISOString();
+  data.status = 'New';
+  const existing = JSON.parse(localStorage.getItem(storageKey) || '[]');
+  existing.push(data);
+  localStorage.setItem(storageKey, JSON.stringify(existing));
+  form.reset();
+  document.getElementById('successPopup').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+</script>
+</body>
+</html>
