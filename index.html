@@ -45,6 +45,7 @@
 
   <link rel="stylesheet" href="CSS/common.css" />
   <link rel="stylesheet" href="CSS/style.css" />
+  <link rel="stylesheet" href="CSS/preloader.css" />
 
   <script type="application/ld+json">
   {
@@ -68,7 +69,23 @@
 
 </head>
 
-<body>
+<body class="preloading">
+<div id="preloader" class="preloader" aria-live="polite" aria-label="Loading The Concept Warriors">
+  <div class="preloader-shell">
+    <div class="preloader-core">
+      <div class="preloader-icon"><i class="fas fa-bolt"></i></div>
+    </div>
+    <div class="preloader-brand">
+      <span class="brand">The Concept Warriors</span>
+      <span class="sub">Premium Learning</span>
+    </div>
+    <p class="preloader-copy">Crafting your concept-first learning experience…</p>
+    <div class="preloader-progress"><span></span></div>
+    <div class="preloader-dots">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</div>
 
 <!-- WELCOME POPUP -->
 <div id="welcomePopup" class="popup-overlay">

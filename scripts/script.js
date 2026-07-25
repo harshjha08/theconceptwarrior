@@ -1,6 +1,20 @@
 /* ============================================================
    THE CONCEPT WARRIORS — MAIN SCRIPT
    ============================================================ */
+// ── PRELOADER ───────────────────────────────────────────────
+function hidePreloader() {
+  const preloader = document.getElementById('preloader');
+  if (!preloader) return;
+  preloader.classList.add('is-hidden');
+  document.body.classList.remove('preloading');
+}
+
+window.addEventListener('load', () => {
+  const preloader = document.getElementById('preloader');
+  if (!preloader) return;
+  setTimeout(hidePreloader, 4000);
+});
+
 // ── THEME MANAGEMENT ─────────────────────────────────────────
 function applyTheme(theme) {
   document.documentElement.setAttribute('data-theme', theme);
@@ -489,3 +503,5 @@ function handleHash() {
 }
 window.addEventListener('hashchange', handleHash);
 document.addEventListener('DOMContentLoaded', handleHash);
+
+
