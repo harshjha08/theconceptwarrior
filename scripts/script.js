@@ -503,5 +503,3 @@ function handleHash() {
 }
 window.addEventListener('hashchange', handleHash);
 document.addEventListener('DOMContentLoaded', handleHash);
-
-
