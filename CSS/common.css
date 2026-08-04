@@ -84,8 +84,9 @@
     --nav-h: 72px;
     --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
+/* Originall dark mode variables: */
  
-[data-theme="dark"] {
+/* [data-theme="dark"] {
     --bg: #0B0F1A;
     --bg-alt: #111827;
     --surface: #1E2536;
@@ -96,6 +97,27 @@
     --text-light: #64748B;
     --shadow: 0 4px 20px rgba(0,0,0,.3);
     --shadow-lg: 0 20px 60px rgba(0,0,0,.4);
+} */
+
+/* Bold Magenta Theme - Dark Mode */
+[data-theme="dark"] {
+    --bg: #0B0F1A;
+    --bg-alt: #111827;
+    --surface: #1E2536;
+    --surface-glass: rgba(30, 37, 54, 0.85);
+    --border: #2D3748;
+    --text: #F1F5F9;
+    --text-muted: #94A3B8;
+    --text-light: #64748B;
+    
+    --shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.4);
+    
+    /* Magenta glow for dark mode - creates cohesive visual identity */
+    --shadow-glow: 0 0 40px rgba(233, 30, 99, 0.15);
+    
+    /* Optional: Enhanced borders for better contrast with bright magenta/cyan */
+    --border-enhanced: #3D4A5C;
 }
 
 /* Mobile */
