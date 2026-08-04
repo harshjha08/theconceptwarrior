@@ -4,60 +4,8 @@
      Fully self-contained, matches main design system exactly
   ============================================================ */
 
-  /* ── DESIGN TOKENS (mirrored from style.css) ─────────────── */
-  :root {
-    --primary:       #4F46E5;
-    --primary-dark:  #3730A3;
-    --primary-light: #818CF8;
-    --accent:        #F59E0B;
-    --accent-dark:   #D97706;
-    --success:       #10B981;
-    --danger:        #EF4444;
-    --physics:       #3B82F6;
-    --chemistry:     #10B981;
-    --maths:         #F59E0B;
-    --neet:          #EF4444;
-    --jee:           #3B82F6;
-    --cuet:          #8B5CF6;
-    --boards:        #10B981;
-
-    --bg:            #FAFAFA;
-    --bg-alt:        #F1F5F9;
-    --surface:       #FFFFFF;
-    --surface-glass: rgba(255,255,255,0.72);
-    --border:        #E2E8F0;
-    --text:          #0F172A;
-    --text-muted:    #64748B;
-    --text-light:    #94A3B8;
-
-    --shadow-sm: 0 1px 3px rgba(0,0,0,.08);
-    --shadow:    0 4px 20px rgba(0,0,0,.08), 0 2px 8px rgba(0,0,0,.04);
-    --shadow-lg: 0 20px 60px rgba(0,0,0,.12), 0 8px 24px rgba(0,0,0,.06);
-    --shadow-glow: 0 0 40px rgba(79,70,229,.25);
-
-    --radius:      16px;
-    --radius-sm:   8px;
-    --radius-lg:   24px;
-    --radius-full: 999px;
-
-    --font-display: 'Space Grotesk', sans-serif;
-    --font-body:    'Inter', sans-serif;
-    --nav-h:        72px;
-    --transition:   all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  [data-theme="dark"] {
-    --bg:            #0B0F1A;
-    --bg-alt:        #111827;
-    --surface:       #1E2536;
-    --surface-glass: rgba(30,37,54,0.85);
-    --border:        #2D3748;
-    --text:          #F1F5F9;
-    --text-muted:    #94A3B8;
-    --text-light:    #64748B;
-    --shadow:        0 4px 20px rgba(0,0,0,.3);
-    --shadow-lg:     0 20px 60px rgba(0,0,0,.4);
-  }
+  /* ── DESIGN TOKENS ───────────────────────────────────────── */
+  /* Theme tokens are centralized in CSS/common.css */
 
   /* ── RESET ───────────────────────────────────────────────── */
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }

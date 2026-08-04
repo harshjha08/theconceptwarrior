@@ -6,23 +6,6 @@
     box-sizing:border-box;
 }
 
-:root{
-
-    --primary:#2563eb;
-    --secondary:#7c3aed;
-
-    --text:#1e293b;
-    --text-light:#64748b;
-
-    --border:#e2e8f0;
-
-    --bg:#f8fafc;
-
-    --white:#ffffff;
-
-    --radius:20px;
-}
-
 body{
 
     font-family:'Inter',sans-serif;
