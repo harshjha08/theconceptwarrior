@@ -167,7 +167,7 @@
     background: linear-gradient(135deg, #EEF2FF 0%, #F3E8FF 50%, #FDFCFB 100%);
   }
   [data-theme="dark"] .fee-hero {
-    background: linear-gradient(135deg, #0F0A2E 0%, #1A0A3E 50%, #0B0F1A 100%);
+    background: var(--gradient-hero);
   }
   .fee-hero .orb {
     position: absolute; border-radius: 50%;
@@ -351,7 +351,7 @@
     border-radius: var(--radius-lg); overflow: hidden;
   }
   .subject-table th {
-    background: linear-gradient(135deg, #1E1B4B, #4F46E5);
+    background: var(--gradient-card);
     color: #fff; padding: 16px 20px;
     font-family: var(--font-display); font-size: 0.82rem; font-weight: 700;
     letter-spacing: 0.06em; text-align: left; white-space: nowrap;
@@ -544,7 +544,7 @@
   /* ── CTA SECTION ─────────────────────────────────────────── */
   .fee-cta {
     padding: 96px 0;
-    background: linear-gradient(135deg, #312E81 0%, #1E1B4B 100%);
+    background: var(--gradient-stats);
     position: relative; overflow: hidden; text-align: center;
   }
   .cta-orb-1 {

@@ -83,6 +83,15 @@
     --font-body: 'Inter', sans-serif;
     --nav-h: 72px;
     --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    
+    /* Hero Section: Vibrant magenta to cyan with light pink glow 
+    --gradient-hero: linear-gradient(135deg, #FF1493 0%, #E91E63 45%, #00BCD4 85%, #4DD0E1 100%);
+    */
+    --gradient-stats: linear-gradient(135deg, #F06292 0%, #E91E63 50%, #EC407A 100%);
+    --gradient-card: linear-gradient(135deg, rgba(255, 240, 245, 0.95), rgba(248, 250, 252, 0.97));
+    --gradient-cta: linear-gradient(90deg, #E91E63 0%, #F06292 40%, #00BCD4 85%, #26C6DA 100%);
+    
 }
 /* Originall dark mode variables: */
  
@@ -118,6 +127,18 @@
     
     /* Optional: Enhanced borders for better contrast with bright magenta/cyan */
     --border-enhanced: #3D4A5C;
+
+    /* Hero Section: Brighter magenta to vibrant cyan - pops on dark bg 
+    --gradient-hero: linear-gradient(135deg, #FF69B4 0%, #F06292 35%, #00BCD4 75%, #26C6DA 100%);
+    */
+    /* Stats Section: Bright hot pink to vibrant magenta to cyan */
+    --gradient-stats: linear-gradient(135deg, #FF69B4 0%, #F06292 50%, #00BCD4 100%);
+    
+    /* Card Background: Dark surface with subtle magenta/cyan glow */
+    --gradient-card: linear-gradient(135deg, rgba(240, 98, 146, 0.12), rgba(0, 188, 212, 0.12));
+    
+    /* CTA Button: Super bright magenta to cyan - maximum contrast and pop */
+    --gradient-cta: linear-gradient(90deg, #FF69B4 0%, #F06292 30%, #00BCD4 75%, #4DD0E1 100%);
 }
 
 /* Mobile */

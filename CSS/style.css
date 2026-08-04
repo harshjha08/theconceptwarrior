@@ -196,7 +196,7 @@ input, select, textarea { font-family: inherit; }
   overflow: hidden;
   background: linear-gradient(135deg, #EEF2FF 0%, #F3E8FF 50%, #FDFCFB 100%);
 }
-[data-theme="dark"] .hero { background: linear-gradient(135deg, #0F0A2E 0%, #1A0A3E 50%, #0B0F1A 100%); }
+[data-theme="dark"] .hero { background: var(--gradient-hero); }
 .hero-bg-animation { position: absolute; inset: 0; pointer-events: none; }
 .orb {
   position: absolute; border-radius: 50%;
@@ -204,18 +204,18 @@ input, select, textarea { font-family: inherit; }
 }
 .orb-1 {
   width: 500px; height: 500px;
-  background: radial-gradient(circle, rgba(79,70,229,.3), transparent);
+  background: radial-gradient(circle, var(--gradient-orb-1), transparent);
   top: -100px; left: -100px;
 }
 .orb-2 {
   width: 400px; height: 400px;
-  background: radial-gradient(circle, rgba(139,92,246,.25), transparent);
+  background: radial-gradient(circle, var(--gradient-orb-2), transparent);
   bottom: -50px; right: 200px;
   animation-delay: -3s;
 }
 .orb-3 {
   width: 300px; height: 300px;
-  background: radial-gradient(circle, rgba(245,158,11,.2), transparent);
+  background: radial-gradient(circle, var(--gradient-orb-3), transparent);
   top: 50%; right: -50px;
   animation-delay: -6s;
 }
@@ -474,7 +474,7 @@ input, select, textarea { font-family: inherit; }
 /* --- STATS ------------------------------------------------ */
 .stats-section {
   padding: 80px 0;
-  background: linear-gradient(135deg, #1E1B4B 0%, #312E81 100%);
+  background: var(--gradient-stats);
   position: relative; overflow: hidden;
 }
 .orb-stats-1 {
@@ -627,7 +627,7 @@ input, select, textarea { font-family: inherit; }
 /* --- CTA -------------------------------------------------- */
 .cta-section {
   padding: 96px 0;
-  background: linear-gradient(135deg, #312E81 0%, #1E1B4B 100%);
+  background: var(--gradient-cta);
   position: relative; overflow: hidden; text-align: center;
 }
 .orb-cta-1 {
@@ -881,10 +881,12 @@ input, select, textarea { font-family: inherit; }
   background: linear-gradient(135deg, #EEF2FF 0%, #F3E8FF 100%);
   position: relative; overflow: hidden;
 }
-[data-theme="dark"] .about-hero { background: linear-gradient(135deg, #0F0A2E 0%, #1A0A3E 100%); }
+[data-theme="dark"] .about-hero { background: var(--gradient-hero); }
 .about-hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
 .about-hero-content .section-eyebrow { display: block; margin-bottom: 12px; }
 .tutor-profile-card {
+  position: relative;
+  isolation: isolate;
   background: var(--surface-glass);
   backdrop-filter: blur(20px);
   border: 1px solid rgba(255,255,255,.6);
@@ -893,8 +895,27 @@ input, select, textarea { font-family: inherit; }
   overflow: hidden; 
   text-align: center;
   box-shadow: var(--shadow-lg);
+  transition: transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s ease;
 }
 [data-theme="dark"] .tutor-profile-card { border-color: rgba(255,255,255,.1); }
+.tutor-profile-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-image: url(../assets/web\ page\ Images/teacherIMG.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  opacity: 0;
+  transform: scale(1.04);
+  transition: opacity .35s cubic-bezier(.2,.8,.2,1), transform .35s cubic-bezier(.2,.8,.2,1);
+  z-index: 0;
+}
+.tutor-profile-card > * {
+  position: relative;
+  z-index: 1;
+}
 .tutor-avatar-lg {
   width: 120px; height: 120px; border-radius: 50%;
   background-image: url(../assets/web\ page\ Images/teacherIMG.png);
@@ -905,12 +926,33 @@ input, select, textarea { font-family: inherit; }
   color: #fff; font-size: 2.5rem; font-weight: 800;
   margin: 0 auto 20px;
   box-shadow: 0 8px 30px rgba(79,70,229,.3);
-  transition: all .2s ease-in;
+  transition: transform .3s cubic-bezier(.2,.8,.2,1), background-size .3s cubic-bezier(.2,.8,.2,1), box-shadow .3s ease, opacity .3s ease;
+  position: relative;
+  z-index: 2;
 }
-
-.tutor-avatar-lg:hover{
-  transform: scale(1.1);
+.tutor-avatar-lg:hover {
+  transform: scale(1.08);
   background-size: 120%;
+  box-shadow: 0 12px 36px rgba(79,70,229,.35);
+}
+.tutor-card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: opacity .35s cubic-bezier(.2,.8,.2,1), transform .35s cubic-bezier(.2,.8,.2,1);
+}
+.tutor-profile-card:has(.tutor-avatar-lg:hover)::before {
+  opacity: 1;
+  transform: scale(1);
+}
+.tutor-profile-card:has(.tutor-avatar-lg:hover) .tutor-avatar-lg {
+  opacity: 0;
+  transform: scale(0.95);
+}
+.tutor-profile-card:has(.tutor-avatar-lg:hover) .tutor-card-content {
+  opacity: 0;
+  transform: translateY(12px);
+  pointer-events: none;
 }
 .tutor-profile-card h2 { font-family: var(--font-display); font-size: 1.6rem; font-weight: 700; margin-bottom: 6px; }
 .tutor-title { color: var(--primary); font-weight: 600; margin-bottom: 16px; }
@@ -972,7 +1014,7 @@ input, select, textarea { font-family: inherit; }
   background: linear-gradient(135deg, #EEF2FF 0%, #FDF4FF 100%);
   text-align: center; position: relative; overflow: hidden;
 }
-[data-theme="dark"] .courses-hero { background: linear-gradient(135deg, #0F0A2E 0%, #1A0A3E 100%); }
+[data-theme="dark"] .courses-hero { background: var(--gradient-hero); }
 .course-filter { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-bottom: 48px; }
 .filter-btn {
   padding: 8px 20px; border-radius: var(--radius-full);
@@ -1092,7 +1134,7 @@ input, select, textarea { font-family: inherit; }
   background: linear-gradient(135deg, #EEF2FF 0%, #F0FDF4 100%);
   text-align: center;
 }
-[data-theme="dark"] .contact-hero { background: linear-gradient(135deg, #0F0A2E 0%, #0A2E1A 100%); }
+[data-theme="dark"] .contact-hero { background: linear-gradient(135deg, var(--gradient-hero) 0%, #0A2E1A 100%); }
 .contact-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 48px; align-items: start; }
 .contact-info-card {
   background: var(--surface); border: 1px solid var(--border);
@@ -1138,7 +1180,7 @@ input, select, textarea { font-family: inherit; }
 /* --- LMS LOGIN ------------------------------------------- */
 .lms-page {
   min-height: 100vh; display: flex; align-items: center; justify-content: center;
-  background: linear-gradient(135deg, #0F0A2E 0%, #1E1B4B 100%);
+  background: var(--gradient-card);
   padding: 24px; position: relative; overflow: hidden;
 }
 .lms-orb-1 {
@@ -1316,7 +1358,7 @@ input, select, textarea { font-family: inherit; }
 /* --- ADMIN PAGES ----------------------------------------- */
 .admin-page {
   min-height: 100vh;
-  background: linear-gradient(135deg, #0F172A 0%, #1E1B4B 100%);
+  background: var(--gradient-card);
   display: flex; align-items: center; justify-content: center;
   padding: 24px;
 }
