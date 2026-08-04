@@ -253,6 +253,116 @@ button{
     0 12px 25px
     rgba(37,99,235,.25);
 }
+
+.feedback-preview-section{
+    padding:0 0 100px;
+}
+
+.preview-card{
+    padding:32px;
+}
+
+.preview-header{
+    text-align:center;
+    margin-bottom:24px;
+}
+
+.preview-header h2{
+    margin-bottom:8px;
+}
+
+.preview-header p{
+    color:var(--text-light);
+    max-width:680px;
+    margin:0 auto;
+}
+
+.form-status{
+    display:none;
+    padding:12px 14px;
+    border-radius:12px;
+    margin-bottom:18px;
+    font-size:0.95rem;
+    background:#ecfdf3;
+    color:#166534;
+    border:1px solid #a7f3d0;
+}
+
+.form-status.success{
+    display:block;
+}
+
+.form-status.error{
+    display:block;
+    background:#fef2f2;
+    color:#991b1b;
+    border-color:#fecaca;
+}
+
+.local-feedback-list{
+    display:grid;
+    gap:16px;
+}
+
+.local-feedback-card{
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:18px;
+    background:#f8fafc;
+}
+
+.local-feedback-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:12px;
+    margin-bottom:10px;
+}
+
+.local-feedback-top h3{
+    font-size:1rem;
+    margin:0;
+}
+
+.local-feedback-top p,
+.local-feedback-impact,
+.local-feedback-achievement,
+.local-feedback-card small{
+    color:var(--text-light);
+    font-size:0.92rem;
+}
+
+.local-feedback-rating{
+    display:inline-block;
+    white-space:nowrap;
+    background:#dbeafe;
+    color:var(--primary);
+    padding:6px 10px;
+    border-radius:999px;
+    font-size:0.9rem;
+    font-weight:600;
+}
+
+.local-feedback-quote{
+    font-style:italic;
+    margin-bottom:8px;
+    color:var(--text);
+}
+
+.empty-state{
+    text-align:center;
+    color:var(--text-light);
+    padding:24px 10px;
+    border:1px dashed var(--border);
+    border-radius:14px;
+    background:#fff;
+}
+
+.submit-btn:disabled{
+    opacity:0.75;
+    cursor:wait;
+}
+
 @media (max-width:768px){
 
     .feedback-hero{
@@ -278,5 +388,13 @@ button{
     .submit-btn{
 
         padding:15px;
+    }
+
+    .preview-card{
+        padding:22px;
+    }
+
+    .local-feedback-top{
+        flex-direction:column;
     }
 }

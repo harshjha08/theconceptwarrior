@@ -99,6 +99,7 @@
     <div class="feedback-card">
 
       <form
+        id="feedbackForm"
         action="https://formspree.io/f/xnjkznkl"
         method="POST">
 
@@ -201,24 +202,24 @@
                 Select Rating
               </option>
 
-              <option>
-                ⭐⭐⭐⭐⭐ Excellent
+              <option value="★★★★★">
+                ★★★★★
               </option>
 
-              <option>
-                ⭐⭐⭐⭐ Very Good
+              <option value="★★★★☆">
+                ★★★★
               </option>
 
-              <option>
-                ⭐⭐⭐ Good
+              <option value="★★★☆☆">
+                ★★★
               </option>
 
-              <option>
-                ⭐⭐ Fair
+              <option value="★★☆☆☆">
+                ★★
               </option>
 
-              <option>
-                ⭐ Poor
+              <option value="★☆☆☆☆">
+                ★
               </option>
 
             </select>
@@ -283,6 +284,21 @@
 
 </section>
 
+<section class="feedback-preview-section">
+  <div class="feedback-container">
+    <div class="feedback-card preview-card">
+      <div class="preview-header">
+        <h2>Your Recent Feedback</h2>
+        <p>This section shows the latest feedback saved on this device for a short time, so your submission appears instantly.</p>
+      </div>
+      <div id="formStatus" class="form-status" aria-live="polite"></div>
+      <div id="localFeedbackList" class="local-feedback-list"></div>
+    </div>
+  </div>
+</section>
+
+<script src="../scripts/feedback-utils.js"></script>
+<script src="../scripts/feedback-page.js"></script>
 </body>
 </html>
 

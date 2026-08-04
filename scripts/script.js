@@ -164,13 +164,13 @@ function toggleFaq(btn) {
 // ── TESTIMONIALS CAROUSEL ────────────────────────────────────
 let testimonialIndex = 0;
 const testimonialTrack = document.getElementById('testimonialTrack');
-const cards = testimonialTrack ? testimonialTrack.querySelectorAll('.testimonial-card') : [];
+let cards = testimonialTrack ? Array.from(testimonialTrack.querySelectorAll('.testimonial-card')) : [];
 let cardsPerView = window.innerWidth < 768 ? 1 : window.innerWidth < 1024 ? 2 : 3;
 
 function buildDots() {
   const dotsContainer = document.getElementById('carouselDots');
-  if (!dotsContainer || !cards.length) return;
-  const totalSlides = Math.ceil(cards.length / cardsPerView);
+  if (!dotsContainer) return;
+  const totalSlides = Math.max(1, Math.ceil(cards.length / cardsPerView));
   dotsContainer.innerHTML = '';
   for (let i = 0; i < totalSlides; i++) {
     const dot = document.createElement('div');
@@ -180,7 +180,7 @@ function buildDots() {
   }
 }
 function goToSlide(idx) {
-  const totalSlides = Math.ceil(cards.length / cardsPerView);
+  const totalSlides = Math.max(1, Math.ceil(cards.length / cardsPerView));
   testimonialIndex = (idx + totalSlides) % totalSlides;
   if (testimonialTrack) {
     const cardWidth = cards[0] ? cards[0].offsetWidth + 24 : 0;
@@ -191,12 +191,51 @@ function goToSlide(idx) {
   });
 }
 function slideTestimonial(dir) { goToSlide(testimonialIndex + dir); }
+function prependLocalFeedbackCard(item) {
+  if (!testimonialTrack) return;
+  const card = document.createElement('div');
+  card.className = 'testimonial-card local-feedback-card-home';
+  const initials = (item.name || 'U').split(' ').map((word) => word[0]).join('').slice(0, 2).toUpperCase();
+  const role = item.role || 'Student';
+  const rating = item.rating || '★★★★★';
+  const feedback = item.feedback || 'Thank you for being a part of our journey.';
+  const detail = item.location ? `${role} • ${item.location}` : role;
+  const starText = String(rating).replace(/\s*Excellent|\s*Very Good|\s*Good|\s*Fair|\s*Poor/g, '').trim() || '★★★★★';
+  card.innerHTML = `
+    <div class="t-quote"><i class="fas fa-quote-left"></i></div>
+    <p>"${feedback}"</p>
+    <div class="t-author">
+      <div class="t-avatar blue">${initials}</div>
+      <div>
+        <strong>${item.name || 'Recent Student'}</strong>
+        <p>${detail}</p>
+      </div>
+      <div class="t-stars">${starText}</div>
+    </div>
+  `;
+  testimonialTrack.insertBefore(card, testimonialTrack.firstChild);
+}
+function renderLocalTestimonials() {
+  if (!testimonialTrack || !window.CWFeedbackUtils) return;
+  testimonialTrack.querySelectorAll('.local-feedback-card-home').forEach((card) => card.remove());
+  const items = window.CWFeedbackUtils.getActiveFeedbacks();
+  items.forEach((item) => prependLocalFeedbackCard(item));
+  cards = Array.from(testimonialTrack.querySelectorAll('.testimonial-card'));
+  buildDots();
+  goToSlide(0);
+}
+window.addEventListener('storage', (event) => {
+  if (event.key === window.CWFeedbackUtils?.STORAGE_KEY) {
+    renderLocalTestimonials();
+  }
+});
 window.addEventListener('resize', () => {
   cardsPerView = window.innerWidth < 768 ? 1 : window.innerWidth < 1024 ? 2 : 3;
   goToSlide(0);
   buildDots();
 });
 buildDots();
+renderLocalTestimonials();
 setInterval(() => slideTestimonial(1), 5000);
 
 // ── CHATBOT ──────────────────────────────────────────────────

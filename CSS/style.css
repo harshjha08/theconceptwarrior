@@ -611,6 +611,15 @@ input, select, textarea { font-family: inherit; }
   transition: var(--transition);
 }
 .testimonial-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-4px); }
+.local-feedback-card-home {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  box-shadow: none;
+}
+.local-feedback-card-home:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-4px);
+}
 .t-quote { font-size: 1.5rem; color: var(--primary); opacity: 0.4; margin-bottom: 12px; }
 .testimonial-card p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 20px; font-style: italic; }
 .t-author { display: flex; align-items: center; gap: 12px; }
