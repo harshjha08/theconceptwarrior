@@ -89,12 +89,11 @@
     --gradient-hero: linear-gradient(135deg, #FF1493 0%, #E91E63 45%, #00BCD4 85%, #4DD0E1 100%);
     */
     --gradient-stats: linear-gradient(135deg, #F06292 0%, #E91E63 50%, #EC407A 100%);
-    --gradient-card: linear-gradient(135deg, rgba(255, 240, 245, 0.95), rgba(248, 250, 252, 0.97));
-    --gradient-cta: linear-gradient(90deg, #E91E63 0%, #F06292 40%, #00BCD4 85%, #26C6DA 100%);
+    --gradient-card: linear-gradient(135deg, #F06292 0%, #E91E63 50%, #EC407A 100%);
+    --gradient-cta: linear-gradient(135deg, #F06292 0%, #E91E63 50%, #EC407A 100%);
     
 }
 /* Originall dark mode variables: */
- 
 /* [data-theme="dark"] {
     --bg: #0B0F1A;
     --bg-alt: #111827;
