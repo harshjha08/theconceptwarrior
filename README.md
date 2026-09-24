@@ -54,10 +54,6 @@ The website serves as a digital front door for the coaching institute. It allows
 - Structured content for coaching and academic support
 - SEO meta tags and social sharing metadata
 
-### Documentation Feature
-- A Python-based PDF documentation generator is included to build a professional project documentation file.
-
----
 
 ## 4. Project Description
 
@@ -88,11 +84,6 @@ The site is designed to be lightweight, easy to host, and simple to maintain.
 ### Backend / Form Handling
 - Formspree for form submission handling
 
-### Documentation Generation
-- Python
-- ReportLab
-
----
 
 ## 6. Project Structure
 
@@ -159,10 +150,6 @@ Handles website interactivity such as:
 - testimonial carousel
 - chatbot interactions
 
-### generate_pdf.py
-Generates a detailed PDF documentation file for the project using ReportLab.
-
----
 
 ## 8. How to Run the Project Locally
 
@@ -185,23 +172,6 @@ Then open:
 ```text
 http://localhost:8000
 ```
-
-### Option 3: Generate the documentation PDF
-Install ReportLab if needed:
-
-```bash
-pip install reportlab
-```
-
-Then run:
-
-```bash
-python generate_pdf.py
-```
-
-The script will generate a PDF documentation file for the project.
-
----
 
 ## 9. Pages Included
 
