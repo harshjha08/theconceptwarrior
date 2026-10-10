@@ -125,6 +125,32 @@ function submitForm(formId, storageKey) {
   showSuccess();
 }
 
+document.querySelectorAll('form[action*="formspree.io"]').forEach(form => {
+  const names = new Set(Array.from(form.elements, element => element.name.toLowerCase()));
+  if (!names.has('name') || !names.has('phone')) return;
+
+  const type = names.has('course') ? 'enroll' : names.has('class') || names.has('goal') ? 'demo' : 'callback';
+  form.addEventListener('submit', async event => {
+    event.preventDefault();
+    if (form.dataset.lmsSyncing === 'true') return;
+    form.dataset.lmsSyncing = 'true';
+
+    const data = Object.fromEntries(Array.from(new FormData(form), ([key, value]) => [key, String(value)]));
+    try {
+      const response = await fetch('/api/lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type, data })
+      });
+      if (!response.ok) throw new Error(`LMS lead storage returned HTTP ${response.status}`);
+    } catch (error) {
+      console.error('Could not save this lead to the LMS; continuing with the existing form handler.', error);
+    }
+
+    form.submit();
+  });
+});
+
 // ── COUNTERS ─────────────────────────────────────────────────
 function animateCounter(el) {
   const target = parseInt(el.dataset.target, 10);

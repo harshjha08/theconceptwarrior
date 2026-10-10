@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Admin Console | The Concept Warriors</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+<!-- ============ LOGIN ============ -->
+<section id="login">
+  <div class="login-card">
+    <div class="login-brand"><span class="ic">⚔️</span><div><b>The Concept Warriors</b><small>Admin Console</small></div></div>
+    <p class="login-sub">Sign in to manage students, leads, content and live tests.</p>
+    <div class="login-err" id="loginErr"></div>
+    <form id="lf">
+      <div class="field"><label for="lu">Username</label><input class="inp" id="lu" autocomplete="username" required></div>
+      <div class="field"><label for="lp">Password</label>
+        <div class="wrap"><input class="inp" id="lp" type="password" autocomplete="current-password" required>
+          <button type="button" class="eye" id="lpEye" aria-label="Show password"><i class="fas fa-eye"></i></button></div>
+      </div>
+      <button class="btn btn-main btn-block" id="lBtn" style="margin-top:8px">Sign In</button>
+    </form>
+    <div class="login-note"><i class="fas fa-shield-halved"></i><span>Sessions expire automatically and failed sign-ins are rate-limited. This console is not indexed by search engines.</span></div>
+  </div>
+</section>
+
+<!-- ============ APP SHELL ============ -->
+<div id="app">
+  <header class="topbar">
+    <button class="burger" id="burger" aria-label="Menu"><i class="fas fa-bars"></i></button>
+    <div class="tb-brand"><span class="ic">⚔️</span><div>Concept Warriors<small>Admin Console</small></div></div>
+    <div class="tb-search"><i class="fas fa-search"></i><input id="gsearch" placeholder="Search students… (Enter)"></div>
+    <div class="tb-right">
+      <div class="live-pill" id="livePill"><span class="live-dot"></span><span id="livePillTxt">Connecting</span></div>
+      <button class="theme-btn" id="themeBtn" aria-label="Toggle theme"><i class="fas fa-moon"></i></button>
+      <div class="avatar-menu">
+        <button class="avatar-btn" id="avBtn"><span class="av">A</span><span>Admin</span><i class="fas fa-chevron-down" style="font-size:.7rem;color:var(--mut)"></i></button>
+        <div class="dropdown" id="avMenu">
+          <button id="mSecurity"><i class="fas fa-shield-halved"></i> Security &amp; password</button>
+          <hr>
+          <button id="mLogout"><i class="fas fa-right-from-bracket"></i> Log out</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="scrim" id="scrim"></div>
+  <div class="shell">
+    <aside class="side" id="side">
+      <nav id="nav"></nav>
+    </aside>
+    <main id="main"></main>
+  </div>
+</div>
+
+<div id="toastHost"></div>
+<div id="modalHost"><div class="modal-backdrop" id="modalBackdrop"></div><div id="modalBody"></div></div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="admin.js"></script>
+</body>
+</html>

@@ -16,7 +16,7 @@ The Concept Warriors is an educational platform created to help students and par
 - Capture student inquiries for admissions
 - Provide a formal online presence for a tutoring business
 
-This project is developed for a specific client and is intended for private, authorized use only.
+The public site remains in the repository root. `backend/` contains the Express + Socket.IO server and database-backed LMS/admin console; it serves the existing website and LMS from one origin.
 
 ---
 
@@ -86,7 +86,9 @@ The site is designed to be lightweight, easy to host, and simple to maintain.
 - AOS (Animate On Scroll)
 
 ### Backend / Form Handling
-- Formspree for form submission handling
+- Node.js, Express, and Socket.IO for LMS APIs and live updates
+- Local development uses `backend/db.json`; hosted deployments use PostgreSQL for durable LMS records
+- Formspree remains the website form-delivery fallback; lead forms are also saved in the LMS database when served by the Node app
 
 ### Documentation Generation
 - Python
@@ -125,15 +127,16 @@ The Concept Warriors/
 │   ├── exam-prep.html
 │   ├── feedback.html
 │   ├── fees.html
-│   ├── feesextra.html
-│   ├── lms-dashboard.html
-│   ├── lms-dashboardOriginal.html
 │   ├── lms-login.html
 │   ├── mentorship.html
 │   ├── privacy.html
 │   ├── terms.html
-└── scripts/
-    └── script.js
+├── scripts/
+│   └── script.js
+└── backend/
+    ├── server.js
+    ├── package.json
+    └── lms/          student portal and admin console
 ```
 
 ---
@@ -156,8 +159,12 @@ Handles website interactivity such as:
 - navbar menu interaction
 - popup opening and closing
 - demo and enrollment form logic
+- syncing demo, enrollment, and callback leads to the LMS
 - testimonial carousel
 - chatbot interactions
+
+### backend/server.js
+Runs the Express and Socket.IO backend, serves the existing root website and LMS on one origin, and stores LMS data in `db.json`.
 
 ### generate_pdf.py
 Generates a detailed PDF documentation file for the project using ReportLab.
@@ -166,27 +173,28 @@ Generates a detailed PDF documentation file for the project using ReportLab.
 
 ## 8. How to Run the Project Locally
 
-### Option 1: Open directly in the browser
-You can open the project by launching the main file:
-
-- Open index.html in your browser
-
-This is suitable for a static website and does not require a server.
-
-### Option 2: Run a local server
-If you want to serve the site locally, use Python:
+### Run the full-stack application
 
 ```bash
-python -m http.server 8000
+npm install --prefix backend
+npm start --prefix backend
 ```
 
-Then open:
+Open the website and portals at:
 
 ```text
-http://localhost:8000
+http://localhost:3000
+http://localhost:3000/lms/
+http://localhost:3000/lms/admin.html
 ```
 
-### Option 3: Generate the documentation PDF
+The LMS creates `backend/db.json` on first startup. Local development credentials are documented in `backend/README.md`.
+
+### Free cloud deployment
+
+`render.yaml` configures a free Render web service. It serves the existing root website, student portal, admin console, APIs, and Socket.IO from one origin. Set `DATABASE_URL` to a Neon PostgreSQL connection string and `ADMIN_PASSWORD` to a new password of at least 12 characters in Render's environment settings. Import existing local LMS data to Neon before the first service deployment, if needed. The free Render service can sleep when idle and may take about a minute to wake; a restart disconnects live sessions/tests, while saved LMS records remain in PostgreSQL. Follow the complete setup in `backend/README.md`.
+
+### Generate the documentation PDF
 Install ReportLab if needed:
 
 ```bash
@@ -279,13 +287,14 @@ The website includes:
 
 ## 13. Deployment Notes
 
-This website is a static project and can be deployed on platforms such as:
-- Vercel
-- Netlify
-- GitHub Pages
-- Any simple static hosting service
+The public site can still be deployed as a static website. The complete LMS application needs a Node.js host that supports Express, WebSockets, and persistent storage. For a combined deployment from the repository root, use:
 
-For deployment, upload the project root contents to the hosting platform and ensure the relative links remain intact.
+- Build command: `npm install --prefix backend`
+- Start command: `npm start --prefix backend`
+- Set `ADMIN_PASSWORD` (12+ characters) on first production startup.
+- Set `CW_DATA_FILE` to a path on the host's persistent disk.
+
+Static hosting such as GitHub Pages cannot run the LMS backend. Keep the existing static deployment unchanged until the combined Node application has been deployed and tested.
 
 ---
 

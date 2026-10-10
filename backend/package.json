@@ -1,0 +1,1 @@
+{"name":"concept-warriors-lms","version":"1.0.0","main":"server.js","scripts":{"start":"node server.js","import:db":"node import-db.js"},"engines":{"node":">=20 <25"},"dependencies":{"express":"^4.19.2","pg":"^8.16.3","socket.io":"^4.7.5"}}
