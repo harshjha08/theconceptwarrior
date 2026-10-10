@@ -54,10 +54,6 @@ The website serves as a digital front door for the coaching institute. It allows
 - Structured content for coaching and academic support
 - SEO meta tags and social sharing metadata
 
-### Documentation Feature
-- A Python-based PDF documentation generator is included to build a professional project documentation file.
-
----
 
 ## 4. Project Description
 
@@ -90,11 +86,6 @@ The site is designed to be lightweight, easy to host, and simple to maintain.
 - Local development uses `backend/db.json`; hosted deployments use PostgreSQL for durable LMS records
 - Formspree remains the website form-delivery fallback; lead forms are also saved in the LMS database when served by the Node app
 
-### Documentation Generation
-- Python
-- ReportLab
-
----
 
 ## 6. Project Structure
 
