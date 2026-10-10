@@ -1,47 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-
-<url>
-<loc>https://theconceptwarrior.vercel.app/</loc>
-</url>
-
-<url>
-<loc>https://theconceptwarrior.vercel.app/../pages/about.html</loc>
-</url>
-
-<url>
-<loc>https://theconceptwarrior.vercel.app/../pages/contact.html</loc>
-</url>
-
-<url>
-<loc>https://theconceptwarrior.vercel.app/../pages/courses.html</loc>
-</url>
-
-<url>
-<loc>https://theconceptwarrior.vercel.app/../pages/exam-prep.html</loc>
-</url>
-
-<url>
-<loc>https://theconceptwarrior.vercel.app/../pages/mentorship.html</loc>
-</url>
-
-<url>
-<loc>https://theconceptwarrior.vercel.app/../pages/admin-login.html</loc>
-</url>
-
-<url>
-<loc>https://theconceptwarrior.vercel.app/../pages/admin.html</loc>
-</url>
-
-<url>
-<loc>https://theconceptwarrior.vercel.app/../pages/lms-dashboard.html</loc>
-</url>
-
-<url>
-<loc>https://theconceptwarrior.vercel.app/../pages/lms-dashboardOriginal.html</loc>
-</url>
-
-<url>
-<loc>https://theconceptwarrior.vercel.app/../pages/lms-login.html</loc>
-</url>
+  <url><loc>https://theconceptwarrior.vercel.app/</loc></url>
+  <url><loc>https://theconceptwarrior.vercel.app/pages/about.html</loc></url>
+  <url><loc>https://theconceptwarrior.vercel.app/pages/contact.html</loc></url>
+  <url><loc>https://theconceptwarrior.vercel.app/pages/copyright.html</loc></url>
+  <url><loc>https://theconceptwarrior.vercel.app/pages/courses.html</loc></url>
+  <url><loc>https://theconceptwarrior.vercel.app/pages/exam-prep.html</loc></url>
+  <url><loc>https://theconceptwarrior.vercel.app/pages/feedback.html</loc></url>
+  <url><loc>https://theconceptwarrior.vercel.app/pages/fees.html</loc></url>
+  <url><loc>https://theconceptwarrior.vercel.app/pages/mentorship.html</loc></url>
+  <url><loc>https://theconceptwarrior.vercel.app/pages/privacy.html</loc></url>
+  <url><loc>https://theconceptwarrior.vercel.app/pages/terms.html</loc></url>
 </urlset>

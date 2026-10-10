@@ -137,7 +137,10 @@ document.querySelectorAll('form[action*="formspree.io"]').forEach(form => {
 
     const data = Object.fromEntries(Array.from(new FormData(form), ([key, value]) => [key, String(value)]));
     try {
-      const response = await fetch('/api/lead', {
+      const apiOrigin = window.location.hostname === 'theconceptwarrior.vercel.app'
+        ? 'https://theconceptwarriors.onrender.com'
+        : '';
+      const response = await fetch(`${apiOrigin}/api/lead`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ type, data })

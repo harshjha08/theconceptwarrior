@@ -183,7 +183,7 @@ The LMS creates `backend/db.json` on first startup. Local development credential
 
 ### Free cloud deployment
 
-`render.yaml` configures a free Render web service. It serves the existing root website, student portal, admin console, APIs, and Socket.IO from one origin. Set `DATABASE_URL` to a Neon PostgreSQL connection string and `ADMIN_PASSWORD` to a new password of at least 12 characters in Render's environment settings. Import existing local LMS data to Neon before the first service deployment, if needed. The free Render service can sleep when idle and may take about a minute to wake; a restart disconnects live sessions/tests, while saved LMS records remain in PostgreSQL. Follow the complete setup in `backend/README.md`.
+Vercel serves the public, indexable website. Student LMS links and legacy portal routes redirect to the Render service, which runs the LMS/admin, APIs and Socket.IO; website leads submitted on Vercel are saved in Neon through a restricted cross-origin API. Render's free service can sleep when idle and may take about a minute to wake; a restart disconnects live sessions/tests, while saved LMS records remain in PostgreSQL. Follow the complete setup in `backend/README.md`.
 
 ### Generate the documentation PDF
 Install ReportLab if needed:
@@ -278,14 +278,15 @@ The website includes:
 
 ## 13. Deployment Notes
 
-The public site can still be deployed as a static website. The complete LMS application needs a Node.js host that supports Express, WebSockets, and persistent storage. For a combined deployment from the repository root, use:
+The public site is deployed to Vercel as a static website. The LMS application runs on Render with Express, WebSockets, and PostgreSQL. The Render Blueprint uses:
 
 - Build command: `npm install --prefix backend`
 - Start command: `npm start --prefix backend`
-- Set `ADMIN_PASSWORD` (12+ characters) on first production startup.
-- Set `CW_DATA_FILE` to a path on the host's persistent disk.
+- `DATABASE_URL`: Neon PostgreSQL connection string
+- `ADMIN_PASSWORD`: unique password (12+ characters)
+- `FRONTEND_ORIGIN`: exact public Vercel site origin for website-lead API requests
 
-Static hosting such as GitHub Pages cannot run the LMS backend. Keep the existing static deployment unchanged until the combined Node application has been deployed and tested.
+Do not put database credentials or admin passwords in GitHub. Static hosting cannot run the LMS backend; deploy that service separately.
 
 ---
 

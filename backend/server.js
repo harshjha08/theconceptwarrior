@@ -25,8 +25,20 @@ app.use((q,r,n)=>{
  n();
 });
 app.use((q,r,n)=>{r.set({'X-Content-Type-Options':'nosniff','X-Frame-Options':'DENY','Referrer-Policy':'no-referrer'});n()});
+app.use((q,r,n)=>{r.set('X-Robots-Tag','noindex, nofollow');n()});
 app.use('/lms/admin.html',(q,r,n)=>{r.set('X-Robots-Tag','noindex, nofollow');n()});
 app.get('/api/health',(_q,r)=>r.json({ok:true}));
+app.use('/api/lead',(q,r,n)=>{
+ const origin=q.get('Origin');
+ if(origin===process.env.FRONTEND_ORIGIN){
+  r.set('Access-Control-Allow-Origin',origin);
+  r.set('Access-Control-Allow-Methods','POST, OPTIONS');
+  r.set('Access-Control-Allow-Headers','Content-Type');
+  r.vary('Origin');
+ }
+ if(q.method==='OPTIONS')return r.sendStatus(origin===process.env.FRONTEND_ORIGIN?204:403);
+ n();
+});
 app.get('/pages/lms-login.html',(_q,r)=>r.redirect(302,'/lms/'));
 app.get('/pages/lms-dashboard.html',(_q,r)=>r.redirect(302,'/lms/'));
 app.get(['/pages/admin-login.html','/pages/admin.html'],(_q,r)=>r.redirect(302,'/lms/admin.html'));

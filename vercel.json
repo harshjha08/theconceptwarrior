@@ -1,0 +1,24 @@
+{
+  "redirects": [
+    {
+      "source": "/pages/lms-login.html",
+      "destination": "https://theconceptwarriors.onrender.com/lms/",
+      "permanent": true
+    },
+    {
+      "source": "/pages/lms-dashboard.html",
+      "destination": "https://theconceptwarriors.onrender.com/lms/",
+      "permanent": true
+    },
+    {
+      "source": "/pages/admin-login.html",
+      "destination": "https://theconceptwarriors.onrender.com/lms/admin.html",
+      "permanent": true
+    },
+    {
+      "source": "/pages/admin.html",
+      "destination": "https://theconceptwarriors.onrender.com/lms/admin.html",
+      "permanent": true
+    }
+  ]
+}

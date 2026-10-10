@@ -40,18 +40,21 @@ Students receive instant in-app popups for live tests, announcements, messages, 
 - Security headers (nosniff, frame-deny, no-referrer), `x-powered-by` removed, admin page marked noindex
 - Audit trail of logins, enrollments, password changes, test start/end in the activity feed
 
-## Free deployment (Render + Neon)
+## Free deployment (Vercel + Render + Neon)
 
-The repository includes a `render.yaml` Blueprint for a $0 Render web service. It serves the existing website, LMS, admin console, APIs, and Socket.IO from the same origin. LMS records are stored as one JSON document in PostgreSQL, so content and accounts survive web-service restarts.
+The public website is intended to be indexed at `https://theconceptwarrior.vercel.app/`. The repository's `vercel.json` sends student/admin legacy URLs to Render, and the public Student LMS links point to the Render portal. Render continues to serve the same static pages as a fallback, plus the LMS, admin console, APIs, and Socket.IO; its HTML responses are marked `noindex` to avoid duplicate search results. LMS records are stored as one JSON document in PostgreSQL, so content and accounts survive web-service restarts.
 
 1. Push the repository to GitHub and create a free PostgreSQL project at [Neon](https://neon.tech/). Copy its pooled connection string (the URL must include the SSL settings Neon provides).
 2. If you need existing local LMS data, import it now, before creating the Render service. See “Moving local data” below. Skip this if you want a clean production database.
-3. In [Render](https://render.com/), create a new Blueprint and select this GitHub repository. Render reads `render.yaml` and creates the web service.
-4. In the Render service's Environment settings, add `DATABASE_URL` with the Neon connection string and `ADMIN_PASSWORD` with a new, unique password of at least 12 characters. Do not put either secret in GitHub.
-5. Wait for deployment to finish, then open the service's `onrender.com` URL. The website, student portal (`/lms/`), and admin console (`/lms/admin.html`) are all served from that URL.
-6. If you did not import local data, sign in as `admin` with the `ADMIN_PASSWORD` value you set. If you imported `db.json`, its existing admin password is preserved; sign in with that password and change it in the Security screen if needed. A local demo student exists only when importing local data; create other accounts from the Students screen.
+3. In [Render](https://render.com/), create a new Blueprint and select this GitHub repository. Render reads `render.yaml` and creates the web service. The Blueprint also configures the public Vercel origin for the website-lead API.
+4. In the Render service's Environment settings, add `DATABASE_URL` with the Neon connection string and `ADMIN_PASSWORD` with a new, unique password of at least 12 characters. Confirm `FRONTEND_ORIGIN` is set to `https://theconceptwarrior.vercel.app`. Do not put either secret in GitHub.
+5. In [Vercel](https://vercel.com/), import the same GitHub repository with the project root as the root directory. Vercel detects the static website and applies the redirects from `vercel.json`. Git pushes to `main` trigger deployment on both providers.
+6. Wait for deployment to finish. The Vercel URL is the public website; its Student LMS links open the Render portal. The admin console is at `https://theconceptwarriors.onrender.com/lms/admin.html`; keep it bookmarked privately rather than linking it from the public site.
+7. If you did not import local data, sign in as `admin` with the `ADMIN_PASSWORD` value you set. If you imported `db.json`, its existing admin password is preserved; sign in with that password and change it in the Security screen if needed. A local demo student exists only when importing local data; create other accounts from the Students screen.
 
 This stays within the providers' free tiers, subject to their current quotas and policies. Render's free web service sleeps after inactivity and can take about a minute to wake. It has an ephemeral filesystem, so hosted records are saved to Neon, not `db.json`. When the backend restarts, active logins and a running live test are interrupted; users may need to sign in again and the admin may need to restart the test. Live notifications work while the service and clients are connected, but free hosting does not guarantee uninterrupted 24/7 availability. Neon Free can also scale its database compute to zero while idle.
+
+Submit only the Vercel public sitemap (`https://theconceptwarrior.vercel.app/sitemap.xml`) in Google Search Console. Student sign-in and admin pages should stay out of search results; the Render HTML pages send `noindex` and the LMS login page includes a `noindex` meta tag.
 
 The local `backend/db.json` is git-ignored and is not uploaded to Render. To move existing local accounts/content, import it once from your computer while the destination Neon database is empty, **before the first Render deployment starts**. Importing preserves the current admin password hash; the Render `ADMIN_PASSWORD` value only creates credentials for a fresh database.
 
