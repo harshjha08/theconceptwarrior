@@ -1,7 +1,92 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex, nofollow"><title>Concept Warriors LMS</title><link rel="stylesheet" href="style.css"></head><body>
-<section id="login"><div class="card lg"><h1>⚔️ Concept Warriors</h1><p class="mut">Student Learning Portal · Login with the ID & password given at enrollment</p>
-<form id="lf"><input id="id" placeholder="Student ID (e.g. CW2601)" required><input id="pw" type="password" placeholder="Password" required><button>Login</button></form>
-<a href="#" id="fgl">Forgot password?</a>
-<form id="fg" hidden><input id="fid" placeholder="Your Student ID"><button type="button" id="gc">Request reset code</button><input id="fc" placeholder="6-digit code from your tutor"><input id="fp" type="password" placeholder="New password (min 6 chars)"><button>Reset password</button></form></div></section>
-<div id="app" hidden><aside><h2>⚔️ CW LMS</h2><nav id="nav"></nav><button id="out">Logout</button></aside><main id="main"></main></div>
-<script src="/socket.io/socket.io.js"></script><script src="app.js"></script></body></html>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta
+      name="description"
+      content="Sign in to The Concept Warriors Student LMS for courses, video lectures, study materials, assignments, and learning progress."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="The Concept Warriors" />
+    <meta property="og:title" content="The Concept Warriors Student LMS" />
+    <meta
+      property="og:description"
+      content="Your learning journey starts here. Access courses, lectures, study materials, assignments, and progress in one place."
+    />
+    <meta
+      property="og:url"
+      content="https://theconceptwarriors.onrender.com/lms/"
+    />
+    <meta
+      property="og:image"
+      content="https://theconceptwarriors.onrender.com/assets/web%20page%20Images/Your%20Learning%20Journey%20Starts%20Here.png"
+    />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1672" />
+    <meta property="og:image:height" content="941" />
+    <meta
+      property="og:image:alt"
+      content="The Concept Warriors — Your Learning Journey Starts Here"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="The Concept Warriors Student LMS" />
+    <meta
+      name="twitter:description"
+      content="Your learning journey starts here. Access courses, lectures, study materials, assignments, and progress in one place."
+    />
+    <meta
+      name="twitter:image"
+      content="https://theconceptwarriors.onrender.com/assets/web%20page%20Images/Your%20Learning%20Journey%20Starts%20Here.png"
+    />
+    <title>The Concept Warriors Student LMS</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <section id="login">
+      <div class="card lg">
+        <h1>⚔️ Concept Warriors</h1>
+        <p class="mut">
+          Student Learning Portal · Login with the ID & password given at
+          enrollment
+        </p>
+        <form id="lf">
+          <input
+            id="id"
+            placeholder="Student ID (e.g. CW2601)"
+            required
+          /><input
+            id="pw"
+            type="password"
+            placeholder="Password"
+            required
+          /><button>Login</button>
+        </form>
+        <a href="#" id="fgl">Forgot password?</a>
+        <form id="fg" hidden>
+          <input id="fid" placeholder="Your Student ID" /><button
+            type="button"
+            id="gc"
+          >
+            Request reset code</button
+          ><input id="fc" placeholder="6-digit code from your tutor" /><input
+            id="fp"
+            type="password"
+            placeholder="New password (min 6 chars)"
+          /><button>Reset password</button>
+        </form>
+      </div>
+    </section>
+    <div id="app" hidden>
+      <aside>
+        <h2>⚔️ CW LMS</h2>
+        <nav id="nav"></nav>
+        <button id="out">Logout</button>
+      </aside>
+      <main id="main"></main>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
