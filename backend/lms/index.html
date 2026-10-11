@@ -1,91 +1,108 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="light">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="robots" content="noindex, nofollow" />
-    <meta
-      name="description"
-      content="Sign in to The Concept Warriors Student LMS for courses, video lectures, study materials, assignments, and learning progress."
-    />
+    <meta name="description" content="Sign in to The Concept Warriors Student LMS for courses, lectures, study materials, assignments, and learning progress." />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="The Concept Warriors" />
     <meta property="og:title" content="The Concept Warriors Student LMS" />
-    <meta
-      property="og:description"
-      content="Your learning journey starts here. Access courses, lectures, study materials, assignments, and progress in one place."
-    />
-    <meta
-      property="og:url"
-      content="https://theconceptwarriors.onrender.com/lms/"
-    />
-    <meta
-      property="og:image"
-      content="https://theconceptwarriors.onrender.com/assets/web%20page%20Images/Your%20Learning%20Journey%20Starts%20Here.png"
-    />
+    <meta property="og:description" content="Your learning journey starts here. Access courses, lectures, study materials, assignments, and progress in one place." />
+    <meta property="og:url" content="https://theconceptwarriors.onrender.com/lms/" />
+    <meta property="og:image" content="https://theconceptwarriors.onrender.com/assets/web%20page%20Images/Your%20Learning%20Journey%20Starts%20Here.png" />
     <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="1672" />
     <meta property="og:image:height" content="941" />
-    <meta
-      property="og:image:alt"
-      content="The Concept Warriors — Your Learning Journey Starts Here"
-    />
+    <meta property="og:image:alt" content="The Concept Warriors — Your Learning Journey Starts Here" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="The Concept Warriors Student LMS" />
-    <meta
-      name="twitter:description"
-      content="Your learning journey starts here. Access courses, lectures, study materials, assignments, and progress in one place."
-    />
-    <meta
-      name="twitter:image"
-      content="https://theconceptwarriors.onrender.com/assets/web%20page%20Images/Your%20Learning%20Journey%20Starts%20Here.png"
-    />
-    <title>The Concept Warriors Student LMS</title>
+    <meta name="twitter:description" content="Your learning journey starts here. Access courses, lectures, study materials, assignments, and learning progress in one place." />
+    <meta name="twitter:image" content="https://theconceptwarriors.onrender.com/assets/web%20page%20Images/Your%20Learning%20Journey%20Starts%20Here.png" />
+    <title>Student Portal | The Concept Warriors</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <section id="login">
-      <div class="card lg">
-        <h1>⚔️ Concept Warriors</h1>
-        <p class="mut">
-          Student Learning Portal · Login with the ID & password given at
-          enrollment
-        </p>
-        <form id="lf">
-          <input
-            id="id"
-            placeholder="Student ID (e.g. CW2601)"
-            required
-          /><input
-            id="pw"
-            type="password"
-            placeholder="Password"
-            required
-          /><button>Login</button>
-        </form>
-        <a href="#" id="fgl">Forgot password?</a>
-        <form id="fg" hidden>
-          <input id="fid" placeholder="Your Student ID" /><button
-            type="button"
-            id="gc"
-          >
-            Request reset code</button
-          ><input id="fc" placeholder="6-digit code from your tutor" /><input
-            id="fp"
-            type="password"
-            placeholder="New password (min 6 chars)"
-          /><button>Reset password</button>
-        </form>
+    <section id="login" aria-labelledby="loginHeading">
+      <div class="login-wrap">
+        <div class="login-story">
+          <a class="brand-lockup" href="/" aria-label="The Concept Warriors home">
+            <span class="brand-mark"><i class="fas fa-bolt"></i></span>
+            <span><strong>The Concept Warriors</strong><small>LEARN WITH CONFIDENCE</small></span>
+          </a>
+          <div class="story-copy">
+            <span class="eyebrow"><i class="fas fa-sparkles"></i> YOUR LEARNING JOURNEY</span>
+            <h1>Big goals begin<br />with <span>strong concepts.</span></h1>
+            <p>Pick up where you left off. Your classes, practice, and progress — all in one place.</p>
+            <div class="story-points">
+              <div><i class="fas fa-circle-play"></i><span>Learn at your own pace<small>Lessons and notes, ready when you are</small></span></div>
+              <div><i class="fas fa-chart-line"></i><span>See your progress<small>Track every quiz and achievement</small></span></div>
+              <div><i class="fas fa-bolt"></i><span>Stay in the loop<small>Get announcements from your tutor</small></span></div>
+            </div>
+          </div>
+          <div class="story-footer"><i class="fas fa-shield-halved"></i> A focused, secure space to do your best.</div>
+          <span class="decor decor-one"></span><span class="decor decor-two"></span>
+        </div>
+
+        <div class="login-panel">
+          <div class="mobile-brand brand-lockup">
+            <span class="brand-mark"><i class="fas fa-bolt"></i></span>
+            <span><strong>The Concept Warriors</strong><small>STUDENT LEARNING PORTAL</small></span>
+          </div>
+          <div class="login-heading"><span class="eyebrow">STUDENT PORTAL</span><h2 id="loginHeading">Welcome back</h2>
+            <p>Sign in with the student ID and password shared at enrollment.</p></div>
+          <div id="loginErr" class="form-alert" role="alert" aria-live="polite"></div>
+          <form id="lf" class="auth-form">
+            <label for="id">Student ID</label>
+            <div class="login-field"><i class="fas fa-id-card"></i><input id="id" autocomplete="username" placeholder="e.g. CW2601" required /></div>
+            <label for="pw">Password</label>
+            <div class="login-field"><i class="fas fa-lock"></i><input id="pw" type="password" autocomplete="current-password" placeholder="Enter your password" required />
+              <button type="button" class="password-toggle" id="pwEye" aria-label="Show password"><i class="fas fa-eye"></i></button>
+            </div>
+            <button class="login-submit" id="loginSubmit"><span>Sign in to your classroom</span><i class="fas fa-arrow-right"></i></button>
+          </form>
+          <button class="forgot-link" id="fgl"><i class="fas fa-key"></i> Forgot your password?</button>
+          <form id="fg" class="reset-form" hidden>
+            <div class="reset-intro"><b>Reset your password</b><span>Request a code, then enter the code shared by your tutor.</span></div>
+            <label for="fid">Student ID</label><input id="fid" placeholder="e.g. CW2601" autocomplete="username" />
+            <button type="button" class="secondary-btn" id="gc">Request reset code</button>
+            <label for="fc">Reset code</label><input id="fc" inputmode="numeric" maxlength="6" placeholder="6-digit code from your tutor" />
+            <label for="fp">New password</label><input id="fp" type="password" minlength="6" placeholder="At least 6 characters" />
+            <button type="submit" class="login-submit"><span>Reset password</span><i class="fas fa-arrow-right"></i></button>
+            <p id="resetMessage" class="reset-message" role="status" aria-live="polite"></p>
+          </form>
+          <div class="login-assist"><i class="fas fa-circle-info"></i><span>Need access? Contact your tutor to confirm your enrollment and fee status.</span></div>
+          <div class="login-bottom"><i class="fas fa-graduation-cap"></i> The Concept Warriors <span>·</span> Learn. Practice. Rise.</div>
+        </div>
       </div>
     </section>
+
     <div id="app" hidden>
-      <aside>
-        <h2>⚔️ CW LMS</h2>
-        <nav id="nav"></nav>
-        <button id="out">Logout</button>
+      <aside class="sidebar">
+        <a class="side-brand" href="/" aria-label="The Concept Warriors home">
+          <span class="brand-mark"><i class="fas fa-bolt"></i></span>
+          <span><strong>Concept Warriors</strong><small>STUDENT PORTAL</small></span>
+        </a>
+        <div class="nav-caption">YOUR CLASSROOM</div>
+        <nav id="nav" aria-label="Student navigation"></nav>
+        <div class="sidebar-help"><i class="fas fa-heart"></i><div><b>Keep going!</b><span>Every question brings you closer.</span></div></div>
       </aside>
-      <main id="main"></main>
+      <div class="portal-content">
+        <header class="topbar">
+          <div class="topbar-label"><span class="online-dot"></span><span>YOUR LEARNING SPACE</span></div>
+          <div class="topbar-actions">
+            <button class="icon-action" id="soundBtn" aria-label="Mute notification sounds" title="Toggle notification sounds" aria-pressed="true"><i class="fas fa-volume-high"></i></button>
+            <button class="logout-btn" id="out"><i class="fas fa-arrow-right-from-bracket"></i><span>Log out</span></button>
+          </div>
+        </header>
+        <main id="main" tabindex="-1"></main>
+      </div>
     </div>
+
     <script src="/socket.io/socket.io.js"></script>
     <script src="app.js"></script>
   </body>

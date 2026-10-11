@@ -19,16 +19,18 @@
 |---------------|-----------------|
 | Overview      | KPI tiles, live activity feed (new leads, messages, submissions, resets appear instantly), quick actions |
 | Leads         | Every Callback / Demo / Enroll form from the website. Filter, search, set status (New → Contacted → Converted), tap-to-call / tap-to-email, delete, export CSV |
-| Students      | Enroll (generates ID + one-time password), search, disable/enable access, delete, export CSV, last-login tracking |
+| Students      | Record student/guardian contact information, course/class, fees and payments; generate an ID + one-time password; automatically lock accounts with a fee balance; search, manage access and payment history, and export student and fee records |
 | Content       | Recorded lectures, notes and assignments; grade student submissions with marks + feedback |
-| Question Bank | Add / delete questions (feeds daily quiz, practice and live tests); filter by subject |
-| Live Test     | Start a timed test, watch students join and answer in real time, see tab-switch warnings, end it, get a leaderboard |
+| Question Bank | Add MCQ or written questions across common subjects; choose “Other” to enter an exact subject name; add / delete questions used for quizzes, practice and live tests |
+| Live Test     | Choose specific questions or keep random selection, mix MCQs and manually graded written answers, optionally show/hide a live objective-score leaderboard, configure tab-switch auto-submission, monitor students, and review written answers |
 | Messages      | Message one student or everyone; read and reply to student messages |
 | Announcements | Publish / delete; students are notified instantly |
 | Security      | Session info, change admin password, password-reset requests (share the code by phone/WhatsApp) |
 
 "Live" means Socket.IO: the admin screens update without refreshing. The green **Live** pill in the top bar shows the connection state.
-Students receive instant in-app popups for live tests, announcements, messages, and learning updates. The matching student navigation tab shows its unread count; opening that tab clears the count.
+Students receive instant in-app notifications and optional sound effects for live tests, announcements, messages, and learning updates. The matching student navigation tab shows its unread count; opening that tab clears the count. The student portal includes a responsive mobile navigation and exam layout.
+
+Students with an outstanding enrollment fee cannot sign in or access authenticated LMS actions. Record a payment from **Students → fee icon** to update the payment history; LMS access becomes available automatically once the remaining balance reaches zero. A live leaderboard is opt-in per test and can be switched on or off by the admin while it is running. Written answers count toward the final score after the tutor reviews and grades them.
 
 ## Security measures built in
 - Passwords (admin and students) stored as salted scrypt hashes, compared in constant time

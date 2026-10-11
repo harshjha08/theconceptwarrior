@@ -10,6 +10,7 @@ const debounce=(fn,ms)=>{let t;return(...a)=>{clearTimeout(t);t=setTimeout(()=>f
 
 let TOK=sessionStorage.cwAdminTok||'', SOCK=null, DATA=null, VIEW='overview', PRESET_Q='';
 let LIVE_STATE={phase:'idle'};
+let audioContext=null;
 
 /* ---------------- API ---------------- */
 async function rawApi(path,body){
@@ -68,14 +69,22 @@ function confirmModal(title,msg,okLabel,danger){
 }
 function formModal({title,fields,okLabel,wide,onSubmit}){
  const row=f=>{
-  if(f.type==='select')return`<div><label>${esc(f.label)}</label><select class="inp" name="${f.name}" ${f.req?'required':''}>${f.opts.map(o=>`<option value="${esc(o.v??o)}">${esc(o.t??o)}</option>`).join('')}</select>${f.help?`<div class="help">${esc(f.help)}</div>`:''}</div>`;
-  if(f.type==='textarea')return`<div><label>${esc(f.label)}</label><textarea class="inp" name="${f.name}" ${f.req?'required':''} placeholder="${esc(f.ph||'')}">${esc(f.val||'')}</textarea>${f.help?`<div class="help">${esc(f.help)}</div>`:''}</div>`;
-  return`<div><label>${esc(f.label)}</label><input class="inp" name="${f.name}" type="${f.inType||'text'}" ${f.req?'required':''} placeholder="${esc(f.ph||'')}" value="${esc(f.val||'')}" ${f.attrs||''}>${f.help?`<div class="help">${esc(f.help)}</div>`:''}</div>`;
+  const condition=f.when?` data-show-when="${esc(f.when)}" hidden`:'';
+  if(f.type==='select')return`<div${condition}><label>${esc(f.label)}</label><select class="inp" name="${f.name}" ${f.req?'required':''}>${f.opts.map(o=>`<option value="${esc(o.v??o)}">${esc(o.t??o)}</option>`).join('')}</select>${f.help?`<div class="help">${esc(f.help)}</div>`:''}</div>`;
+  if(f.type==='textarea')return`<div${condition}><label>${esc(f.label)}</label><textarea class="inp" name="${f.name}" ${f.req?'required':''} placeholder="${esc(f.ph||'')}">${esc(f.val||'')}</textarea>${f.help?`<div class="help">${esc(f.help)}</div>`:''}</div>`;
+  return`<div${condition}><label>${esc(f.label)}</label><input class="inp" name="${f.name}" type="${f.inType||'text'}" ${f.req?'required':''} placeholder="${esc(f.ph||'')}" value="${esc(f.val||'')}" ${f.attrs||''}>${f.help?`<div class="help">${esc(f.help)}</div>`:''}</div>`;
  };
  openModal(`<div class="modal-h"><h3>${esc(title)}</h3><button class="mx">&times;</button></div>
   <form id="mForm"><div class="modal-b frm">${fields.map(row).join('')}</div>
   <div class="modal-f"><button type="button" class="btn btn-ghost" id="mCancel">Cancel</button><button class="btn btn-main" id="mSubmit">${esc(okLabel||'Save')}</button></div></form>`,{wide});
  $('.mx').onclick=closeModal; $('#mCancel').onclick=closeModal;
+ const updateConditionalFields=()=>$$('#mForm [data-show-when]').forEach(w=>{
+  const [name,value]=w.dataset.showWhen.split(':');
+  const visible=$(`#mForm [name="${name}"]`)?.value===value;
+  w.hidden=!visible;const input=w.querySelector('input,select,textarea');if(input)input.required=visible;
+ });
+ $$('#mForm [data-show-when]').forEach(w=>{const [name]=w.dataset.showWhen.split(':');$(`#mForm [name="${name}"]`)?.addEventListener('change',updateConditionalFields)});
+ updateConditionalFields();
  $('#mForm').onsubmit=async e=>{
   e.preventDefault();
   const f=new FormData(e.target),vals={}; fields.forEach(x=>vals[x.name]=f.get(x.name));
@@ -92,6 +101,24 @@ function formModal({title,fields,okLabel,wide,onSubmit}){
 function setTheme(t){ document.documentElement.dataset.theme=t; localStorage.cwAdminTheme=t; $('#themeBtn').innerHTML=`<i class="fas fa-${t==='dark'?'sun':'moon'}"></i>`; }
 setTheme(localStorage.cwAdminTheme||'dark');
 $('#themeBtn').onclick=()=>setTheme(document.documentElement.dataset.theme==='dark'?'light':'dark');
+function playNotificationSound(){
+ if(localStorage.cwAdminSound==='off')return;
+ const Audio=window.AudioContext||window.webkitAudioContext;if(!Audio)return;
+ audioContext=audioContext||new Audio();
+ if(audioContext.state==='suspended')audioContext.resume();
+ const oscillator=audioContext.createOscillator(),gain=audioContext.createGain();
+ oscillator.type='sine';oscillator.frequency.value=740;gain.gain.setValueAtTime(.0001,audioContext.currentTime);
+ gain.gain.exponentialRampToValueAtTime(.09,audioContext.currentTime+.025);gain.gain.exponentialRampToValueAtTime(.0001,audioContext.currentTime+.2);
+ oscillator.connect(gain);gain.connect(audioContext.destination);oscillator.start();oscillator.stop(audioContext.currentTime+.21);
+}
+function prepareNotificationAudio(){
+ const Audio=window.AudioContext||window.webkitAudioContext;if(!Audio)return;
+ audioContext=audioContext||new Audio();
+ if(audioContext.state==='suspended')audioContext.resume();
+}
+function updateSoundButton(){const muted=localStorage.cwAdminSound==='off';$('#soundBtn').innerHTML=`<i class="fas fa-volume-${muted?'xmark':'high'}"></i>`;$('#soundBtn').title=muted?'Enable notification sound':'Mute notification sound';$('#soundBtn').setAttribute('aria-pressed',String(!muted))}
+updateSoundButton();
+$('#soundBtn').onclick=()=>{localStorage.cwAdminSound=localStorage.cwAdminSound==='off'?'on':'off';updateSoundButton();if(localStorage.cwAdminSound==='on')playNotificationSound()};
 $('#avBtn').onclick=e=>{e.stopPropagation();$('#avMenu').classList.toggle('open')};
 document.addEventListener('click',()=>$('#avMenu').classList.remove('open'));
 $('#mSecurity').onclick=()=>{$('#avMenu').classList.remove('open');go('security')};
@@ -108,6 +135,7 @@ $('#lf').onsubmit=async e=>{
  e.preventDefault();
  $('#loginErr').classList.remove('show');
  $('#lBtn').disabled=true; $('#lBtn').textContent='Signing in…';
+ prepareNotificationAudio();
  try{
   const j=await rawApi('admin/login',{user:$('#lu').value.trim(),password:$('#lp').value});
   TOK=j.t; sessionStorage.cwAdminTok=TOK;
@@ -169,11 +197,13 @@ function connectSocket(){
   if(!DATA)return;
   DATA.log.unshift(e);
   if(VIEW==='overview'){ const led=$('#ledger'); if(led) led.innerHTML=renderLedger(DATA.log); }
-  if(['lead','reset','submission','message'].includes(e.type)){ toast('info',e.msg); silentRefresh(); }
+  if(['lead','reset','submission','message','fee','enroll'].includes(e.type)){ playNotificationSound();toast('info',e.msg); silentRefresh(); }
  });
- SOCK.on('test:open',d=>{ LIVE_STATE={phase:'running',title:d.title,end:d.end,n:d.n,roster:[]}; if(VIEW==='live')renderLiveView(); toast('info','Live test started: '+d.title); });
+ SOCK.on('test:open',d=>{ LIVE_STATE={phase:'running',title:d.title,end:d.end,n:d.n,tabLimit:d.tabLimit,showRanks:d.showRanks,board:[],roster:[]};playNotificationSound();if(VIEW==='live')renderLiveView();toast('info','Live test started: '+d.title); });
  SOCK.on('test:live',roster=>{ if(LIVE_STATE.phase==='running'){ LIVE_STATE.roster=roster; if(VIEW==='live')renderLiveView(); } });
- SOCK.on('test:result',d=>{ LIVE_STATE={phase:'ended',title:d.title,board:d.board}; if(VIEW==='live')renderLiveView(); toast('ok','Live test ended'); });
+ SOCK.on('test:rank',board=>{if(LIVE_STATE.phase==='running'){LIVE_STATE.board=board;if(VIEW==='live'){const panel=$('#liveLeaderboard');if(panel)panel.innerHTML=board.length?`<div class="tblwrap" style="margin-top:14px"><table><thead><tr><th>Rank</th><th>Student</th><th>MCQ score</th><th>Tab switches</th></tr></thead><tbody>${board.map((p,i)=>`<tr><td data-label="Rank">${i+1}</td><td data-label="Student">${esc(p.name)}</td><td data-label="MCQ score" class="num">${p.score}/${p.total}</td><td data-label="Tab switches">${p.warn}</td></tr>`).join('')}</tbody></table></div>`:'<div class="help" style="padding-top:12px">Waiting for students to join…</div>'}}});
+ SOCK.on('test:error',d=>toast('err',d.e||'Could not start the test'));
+ SOCK.on('test:result',d=>{ LIVE_STATE={phase:'ended',title:d.title,board:d.board};playNotificationSound();if(VIEW==='live')renderLiveView();toast('ok','Live test ended'); });
 }
 
 /* ================= VIEW: Overview ================= */
@@ -266,16 +296,17 @@ function students(){
   <div class="vh-actions"><button class="btn btn-ghost" id="expStu"><i class="fas fa-download"></i> Export CSV</button><button class="btn btn-main" id="addStu"><i class="fas fa-user-plus"></i> Enroll student</button></div></div>
  <div class="panel">
   <input class="inp" id="stuQ" placeholder="Search by name, ID or course…" style="margin-bottom:16px" value="${esc(STU_Q)}">
-  ${list.length?`<div class="tblwrap"><table><thead><tr><th>ID</th><th>Name</th><th>Course</th><th>Joined</th><th>Last login</th><th>Status</th><th></th></tr></thead><tbody>
+  ${list.length?`<div class="tblwrap"><table><thead><tr><th>ID</th><th>Student &amp; contact</th><th>Course / class</th><th>Fee record</th><th>Joined</th><th>Access</th><th></th></tr></thead><tbody>
   ${list.map(s=>`<tr>
    <td data-label="ID" class="mono">${esc(s.id)}</td>
-   <td data-label="Name">${esc(s.name)}</td>
-   <td data-label="Course">${esc(s.course||'—')}</td>
+   <td data-label="Student & contact"><div><b>${esc(s.name)}</b><div class="cv" style="color:var(--mut);font-size:.76rem">${esc(s.phone||'Phone not recorded')}${s.guardian?` · Guardian: ${esc(s.guardian)}`:''}</div>${s.email?`<div style="color:var(--mut2);font-size:.74rem">${esc(s.email)}</div>`:''}</div></td>
+   <td data-label="Course / class">${esc(s.course||'—')}${s.className?`<div style="color:var(--mut);font-size:.76rem">${esc(s.className)}</div>`:''}</td>
+   <td data-label="Fee record"><div><span class="badge ${s.feeBalance>0?'pending':'converted'}">${s.feeBalance>0?'Due ₹'+Number(s.feeBalance).toLocaleString('en-IN'):'Paid in full'}</span><div style="color:var(--mut);font-size:.74rem;margin-top:4px">₹${Number(s.fees?.paid||0).toLocaleString('en-IN')} / ₹${Number(s.fees?.total||0).toLocaleString('en-IN')}</div></div></td>
    <td data-label="Joined">${new Date(s.joined).toLocaleDateString()}</td>
-   <td data-label="Last login">${s.last?relTime(s.last):'Never'}</td>
-   <td data-label="Status"><span class="badge ${s.disabled?'off':'on'}">${s.disabled?'Disabled':'Active'}</span></td>
+   <td data-label="Access"><span class="badge ${s.feeBalance>0?'pending':s.disabled?'off':'on'}">${s.feeBalance>0?'Fee pending':s.disabled?'Disabled':'Active'}</span>${s.last?`<div style="color:var(--mut2);font-size:.72rem;margin-top:4px">Last seen ${relTime(s.last)}</div>`:''}</td>
    <td data-label=""><div class="rowbtns">
-    <button class="iconbtn" title="${s.disabled?'Enable':'Disable'} access" onclick="toggleStu('${s.id}',${!s.disabled})"><i class="fas fa-${s.disabled?'lock-open':'lock'}"></i></button>
+    <button class="iconbtn" title="${s.feeBalance>0?'Record payment':'View payment history'}" aria-label="${s.feeBalance>0?'Record payment':'View payment history'} for ${esc(s.name)}" onclick="recordFee('${s.id}')"><i class="fas fa-indian-rupee-sign"></i></button>
+    <button class="iconbtn" title="${s.disabled?'Enable':'Disable'} access" aria-label="${s.disabled?'Enable':'Disable'} access for ${esc(s.name)}" ${s.feeBalance>0&&!s.disabled?'disabled':''} onclick="toggleStu('${s.id}',${!s.disabled})"><i class="fas fa-${s.disabled?'lock-open':'lock'}"></i></button>
     <button class="iconbtn danger" title="Delete" onclick="delStu('${s.id}')"><i class="fas fa-trash"></i></button>
    </div></td>
   </tr>`).join('')}
@@ -286,19 +317,46 @@ function students(){
  $('#expStu').onclick=()=>dl('admin/export/students','students.csv');
 }
 function openEnrollModal(){
- formModal({title:'Enroll a new student',okLabel:'Create login',fields:[
-  {name:'name',label:'Full name',req:true,ph:'e.g. Ananya Verma'},
-  {name:'course',label:'Course / Program',type:'select',opts:['NEET','JEE','CUET','School Boards','Foundation','Crash Course','Personal Mentorship','General']}
+ formModal({title:'Enroll a new student',okLabel:'Create student account',wide:true,fields:[
+  {name:'name',label:'Student full name',req:true,ph:'e.g. Ananya Verma'},
+  {name:'phone',label:'Student / family phone',inType:'tel',req:true,ph:'+91'},
+  {name:'email',label:'Email address',inType:'email',ph:'student@example.com'},
+  {name:'guardian',label:'Parent / guardian name',req:true,ph:'Parent or guardian full name'},
+  {name:'className',label:'Class / academic year',req:true,ph:'e.g. Class 11 · 2026–27'},
+  {name:'course',label:'Course / program',type:'select',opts:['NEET','JEE Main','JEE Advanced','CUET','School Boards','Foundation (Classes 8–10)','Crash Course','Personal Mentorship','Other']},
+  {name:'feeTotal',label:'Total course fee (₹)',inType:'number',req:true,val:'0',attrs:'min="0" step="0.01"',help:'Enter 0 only when no tuition fee applies.'},
+  {name:'feePaid',label:'Fee paid today (₹)',inType:'number',req:true,val:'0',attrs:'min="0" step="0.01"',help:'Any remaining balance keeps the student account locked until payment is recorded.'}
  ],onSubmit:async v=>{
-  if(!v.name||!v.name.trim())throw new Error('Name is required');
-  const r=await api('admin/enroll',{name:v.name,course:v.course});
+  if(!v.name||!v.phone||!v.guardian||!v.className)throw new Error('Student name, phone, guardian and class are required');
+  if(Number(v.feeTotal)<0||Number(v.feePaid)<0||Number(v.feePaid)>Number(v.feeTotal))throw new Error('Check the total fee and amount paid');
+  const r=await api('admin/enroll',{name:v.name,phone:v.phone,email:v.email,guardian:v.guardian,className:v.className,course:v.course,feeTotal:Number(v.feeTotal),feePaid:Number(v.feePaid)});
   await refresh(); students();
   openModal(`<div class="modal-h"><h3>Student enrolled</h3><button class="mx">&times;</button></div>
-   <div class="modal-b"><p style="color:var(--mut);font-size:.86rem;margin-bottom:14px">Share these credentials with ${esc(v.name)} now — the password is shown only once.</p>
+   <div class="modal-b"><p style="color:var(--mut);font-size:.86rem;margin-bottom:14px">Share these credentials with ${esc(v.name)} now — the password is shown only once. ${r.feeBalance>0?`LMS access stays locked until the outstanding ₹${Number(r.feeBalance).toLocaleString('en-IN')} is paid.`:'The account is ready to use.'}</p>
     <div class="cred-box"><div><span>Student ID</span><b>${esc(r.id)}</b></div><button class="btn btn-sm btn-ghost" onclick="navigator.clipboard.writeText('${r.id}');toast('ok','ID copied')">Copy</button></div>
     <div class="cred-box"><div><span>Password</span><b>${esc(r.password)}</b></div><button class="btn btn-sm btn-ghost" onclick="navigator.clipboard.writeText('${r.password}');toast('ok','Password copied')">Copy</button></div>
    </div><div class="modal-f"><button class="btn btn-main" id="credDone">Done</button></div>`);
   $('.mx').onclick=closeModal; $('#credDone').onclick=closeModal;
+ }});
+}
+function recordFee(id){
+ const student=DATA.students.find(s=>s.id===id);if(!student)return;
+ const balance=Number(student.feeBalance)||0;
+ const payments=student.fees?.payments||[];
+ if(!balance){
+  openModal(`<div class="modal-h"><h3>Fee payment history</h3><button class="mx">&times;</button></div>
+   <div class="modal-b"><p class="help">Total fee: ₹${Number(student.fees?.total||0).toLocaleString('en-IN')} · Paid: ₹${Number(student.fees?.paid||0).toLocaleString('en-IN')}</p>
+   ${payments.length?payments.map(p=>`<div style="display:flex;justify-content:space-between;gap:10px;padding:12px 0;border-bottom:1px solid var(--line)"><div><b>₹${Number(p.amount).toLocaleString('en-IN')}</b><div class="help">${esc(p.note||'Payment')}</div></div><span class="help">${fd(p.date)}</span></div>`).join(''):'<p class="help" style="padding:14px 0">No payments recorded.</p>'}</div>
+   <div class="modal-f"><button class="btn btn-main" id="historyDone">Done</button></div>`);
+  $('.mx').onclick=closeModal;$('#historyDone').onclick=closeModal;return;
+ }
+ const paymentHistory=payments.length?`Previous payments: ${payments.map(p=>`₹${Number(p.amount).toLocaleString('en-IN')} (${new Date(p.date).toLocaleDateString()})`).join(', ')}`:'No payments recorded yet.';
+ formModal({title:'Record student fee payment',okLabel:'Record payment',fields:[
+  {name:'amount',label:`Outstanding balance: ₹${balance.toLocaleString('en-IN')}`,inType:'number',req:true,val:String(balance),attrs:`min="0.01" max="${balance}" step="0.01"`,help:paymentHistory},
+  {name:'note',label:'Payment note (optional)',ph:'e.g. UPI · monthly installment'}
+ ],onSubmit:async v=>{
+  const amount=Number(v.amount);if(!Number.isFinite(amount)||amount<=0||amount>balance)throw new Error('Payment must be greater than zero and no more than the outstanding balance');
+  await api('admin/fee',{id,amount,note:v.note});closeModal();await refresh();students();toast('ok',amount===balance?'Fee paid in full — LMS access restored':'Payment recorded');
  }});
 }
 async function toggleStu(id,disabled){ try{ await api('admin/sdisable',{id,disabled}); await refresh(); students(); toast('ok',disabled?'Access disabled':'Access re-enabled'); }catch(x){toast('err',x.message)} }
@@ -364,21 +422,19 @@ async function gradeSub(e,rid,id){
 let BANK_SUBJ='all',BANK_Q='';
 function bank(){
  const list=DATA.bank.map((q,i)=>({...q,i})).filter(x=>(BANK_SUBJ==='all'||x.s===BANK_SUBJ)&&(!BANK_Q||x.q.toLowerCase().includes(BANK_Q.toLowerCase())));
- const counts={Physics:0,Chemistry:0,Maths:0}; DATA.bank.forEach(x=>counts[x.s]=(counts[x.s]||0)+1);
+ const subjects=[...new Set(DATA.bank.map(x=>x.s))].sort((a,b)=>a.localeCompare(b)),counts={}; DATA.bank.forEach(x=>counts[x.s]=(counts[x.s]||0)+1);
  $('main').innerHTML=`
  <div class="vh"><div><h2>Question Bank</h2><p>${DATA.bank.length} questions power the daily quiz, practice and live tests.</p></div>
   <div class="vh-actions"><button class="btn btn-main" id="addQ"><i class="fas fa-plus"></i> Add question</button></div></div>
  <div class="chips">
   <button class="chip ${BANK_SUBJ==='all'?'on':''}" data-s="all">All <span class="n">${DATA.bank.length}</span></button>
-  <button class="chip ${BANK_SUBJ==='Physics'?'on':''}" data-s="Physics">Physics <span class="n">${counts.Physics||0}</span></button>
-  <button class="chip ${BANK_SUBJ==='Chemistry'?'on':''}" data-s="Chemistry">Chemistry <span class="n">${counts.Chemistry||0}</span></button>
-  <button class="chip ${BANK_SUBJ==='Maths'?'on':''}" data-s="Maths">Maths <span class="n">${counts.Maths||0}</span></button>
+  ${subjects.map(s=>`<button class="chip ${BANK_SUBJ===s?'on':''}" data-s="${esc(s)}">${esc(s)} <span class="n">${counts[s]}</span></button>`).join('')}
  </div>
  <div class="panel"><input class="inp" id="bankQ" placeholder="Search questions…" style="margin-bottom:14px" value="${esc(BANK_Q)}">
   ${list.length?list.map(x=>`
    <div style="display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-top:1px solid var(--line)">
-    <div><span class="badge callback" style="margin-bottom:6px;display:inline-block">${esc(x.s)}</span><div style="font-size:.88rem">${esc(x.q)}</div>
-     <div style="font-size:.78rem;color:var(--mut);margin-top:4px">${x.o.map((o,k)=>k===x.a?`<b style="color:var(--green)">${esc(o)}</b>`:esc(o)).join(' · ')}</div></div>
+    <div><span class="badge callback" style="margin-bottom:6px;display:inline-block">${esc(x.s)}</span> <span class="badge ${x.type==='subjective'?'pending':'on'}">${x.type==='subjective'?'Written answer':'Multiple choice'}</span><div style="font-size:.88rem">${esc(x.q)}</div>
+     <div style="font-size:.78rem;color:var(--mut);margin-top:4px">${x.type==='subjective'?`${Number(x.points)||1} point(s) · Tutor reviews the answer`:x.o.map((o,k)=>k===x.a?`<b style="color:var(--green)">${esc(o)}</b>`:esc(o)).join(' · ')}</div></div>
     <button class="iconbtn danger" title="Delete" onclick="delQ(${x.i})"><i class="fas fa-trash"></i></button>
    </div>`).join(''):`<div class="empty"><i class="fas fa-circle-question"></i><b>No questions match</b></div>`}
  </div>`;
@@ -388,14 +444,18 @@ function bank(){
 }
 function openQModal(){
  formModal({title:'Add a question',okLabel:'Add question',wide:true,fields:[
-  {name:'q',label:'Question',req:true,ph:'e.g. SI unit of power?'},
-  {name:'o1',label:'Option 1',req:true},{name:'o2',label:'Option 2',req:true},
-  {name:'o3',label:'Option 3',req:true},{name:'o4',label:'Option 4',req:true},
-  {name:'a',label:'Correct option',type:'select',opts:[{v:0,t:'Option 1'},{v:1,t:'Option 2'},{v:2,t:'Option 3'},{v:3,t:'Option 4'}]},
-  {name:'s',label:'Subject',type:'select',opts:['Physics','Chemistry','Maths']}
+  {name:'q',label:'Question / prompt',type:'textarea',req:true,ph:'Write the question clearly…'},
+  {name:'type',label:'Answer format',type:'select',opts:[{v:'mcq',t:'Multiple choice'},{v:'subjective',t:'Written / subjective answer'}]},
+  {name:'o1',label:'Option 1',req:true,when:'type:mcq'},{name:'o2',label:'Option 2',req:true,when:'type:mcq'},
+  {name:'o3',label:'Option 3',req:true,when:'type:mcq'},{name:'o4',label:'Option 4',req:true,when:'type:mcq'},
+  {name:'a',label:'Correct option',type:'select',when:'type:mcq',opts:[{v:0,t:'Option 1'},{v:1,t:'Option 2'},{v:2,t:'Option 3'},{v:3,t:'Option 4'}]},
+  {name:'s',label:'Subject',type:'select',req:true,opts:['Physics','Chemistry','Mathematics','Biology','English','Computer Science','Social Science','Economics','Accountancy','Business Studies','General Knowledge','Other']},
+  {name:'subjectName',label:'Enter the subject name',req:true,when:'s:Other',ph:'e.g. Environmental Science'},
+  {name:'points',label:'Marks for this question',inType:'number',req:true,val:'1',attrs:'min="0.01" max="100" step="0.01"'}
  ],onSubmit:async v=>{
-  if(![v.q,v.o1,v.o2,v.o3,v.o4].every(x=>x&&x.trim()))throw new Error('Question and all 4 options are required');
-  await api('admin/q',{q:v.q,o:[v.o1,v.o2,v.o3,v.o4],a:+v.a,s:v.s}); closeModal(); await refresh(); bank(); toast('ok','Question added');
+  if(v.type==='mcq'&&![v.o1,v.o2,v.o3,v.o4].every(x=>x&&x.trim()))throw new Error('Fill in all four multiple-choice options');
+  const subject=v.s==='Other'?v.subjectName.trim():v.s;if(!subject)throw new Error('Enter the exact subject name');
+  await api('admin/q',{q:v.q,type:v.type,points:Number(v.points),o:v.type==='mcq'?[v.o1,v.o2,v.o3,v.o4]:undefined,a:v.type==='mcq'?Number(v.a):undefined,s:subject});closeModal();await refresh();bank();toast('ok','Question added');
  }});
 }
 async function delQ(i){ if(!(await confirmModal('Delete question','This removes it from quizzes, practice and future live tests.')))return;
@@ -406,38 +466,52 @@ function live(){ renderLiveView(); }
 let liveTickHandle=null;
 function renderLiveView(){
  if(LIVE_STATE.phase==='idle'){
+  const maxQuestions=Math.min(100,DATA.bank.length);
   $('main').innerHTML=`
   <div class="vh"><div><h2>Live Test</h2><p>Start a timed, proctored test — every enrolled student is notified instantly.</p></div></div>
-  <div class="panel" style="max-width:480px">
-   <h3>Start a new live test</h3><div class="ph-sub">Questions are drawn randomly from your question bank (${DATA.bank.length} available).</div>
+  <div class="panel" style="max-width:700px">
+   <h3>Build a live test</h3><div class="ph-sub">${DATA.bank.length} questions available — pick specific questions or let the system select them at random.</div>
    <form class="frm" id="liveForm">
     <div><label>Test title</label><input class="inp" name="title" value="Weekly Live Test" required></div>
     <div class="frow">
-     <div><label>Duration (minutes)</label><input class="inp" name="dur" type="number" min="1" max="120" value="5" required></div>
-     <div><label>Number of questions</label><input class="inp" name="n" type="number" min="1" max="${Math.min(20,DATA.bank.length)}" value="${Math.min(5,DATA.bank.length)}" required></div>
+     <div><label>Duration (minutes)</label><input class="inp" name="dur" type="number" min="1" max="180" value="30" required></div>
+     <div><label>Question selection</label><select class="inp" name="mode" id="testMode"><option value="selected">Choose questions</option><option value="random">Random selection</option></select></div>
     </div>
+    <div id="selectedQuestionFields"><label>Select questions for this test</label><div class="question-pick">${DATA.bank.map(q=>`<label><input type="checkbox" name="questionIds" value="${esc(q.id)}"><span><b>${q.type==='subjective'?'Written':'MCQ'} · ${esc(q.s)}</b> — ${esc(q.q)}<small>${Number(q.points)||1} point(s)</small></span></label>`).join('')}</div></div>
+    <div id="randomQuestionFields" hidden><label>Number of questions</label><input class="inp" name="n" type="number" min="1" max="${maxQuestions}" value="${Math.min(5,maxQuestions)}"></div>
+    <label class="score-toggle"><input type="checkbox" name="showRanks"><span><b>Show live leaderboard</b>Students can see their current rank during this test. You can also switch it on or off while the test is running. Off by default.</span></label>
+    <div><label>Automatic submission after tab switches</label><input class="inp" name="tabLimit" type="number" min="0" max="50" value="0"><div class="help">Set to 0 to turn off. Otherwise, the test submits automatically as soon as a student reaches this many tab switches, even if some questions are unanswered.</div></div>
     <button class="btn btn-main" style="margin-top:4px"><i class="fas fa-satellite-dish"></i> Start live test</button>
    </form>
   </div>`;
+  const syncQuestionMode=()=>{const selected=$('#testMode').value==='selected';$('#selectedQuestionFields').hidden=!selected;$('#randomQuestionFields').hidden=selected;$('#liveForm [name="n"]').required=!selected};
+  $('#testMode').onchange=syncQuestionMode;syncQuestionMode();
   $('#liveForm').onsubmit=e=>{ e.preventDefault(); const f=new FormData(e.target);
-   SOCK.emit('admin:start',{title:f.get('title'),dur:f.get('dur'),n:f.get('n')}); toast('info','Starting live test…'); };
+   const questionIds=f.getAll('questionIds');
+   if(f.get('mode')==='selected'&&!questionIds.length){toast('err','Select at least one question for this test');return}
+   SOCK.emit('admin:start',{title:f.get('title'),dur:Number(f.get('dur')),mode:f.get('mode'),n:Number(f.get('n')),questionIds,showRanks:f.get('showRanks')==='on',tabLimit:Number(f.get('tabLimit'))||0});toast('info','Starting live test…');};
   return;
  }
  if(LIVE_STATE.phase==='running'){
-  const roster=LIVE_STATE.roster;
+  const roster=LIVE_STATE.roster||[],board=LIVE_STATE.board||[];
   $('main').innerHTML=`
   <div class="vh"><div><h2>Live Test</h2><p>Monitoring in real time.</p></div>
    <div class="vh-actions"><button class="btn btn-danger" id="endTest"><i class="fas fa-stop"></i> End test now</button></div></div>
-  <div class="live-banner"><span class="lb-dot"></span><b>${esc(LIVE_STATE.title)}</b><span style="color:var(--mut);font-size:.85rem">${LIVE_STATE.n} questions</span><span class="timer num" id="liveTimer">--:--</span></div>
+  <div class="live-banner"><span class="lb-dot"></span><b>${esc(LIVE_STATE.title)}</b><span style="color:var(--mut);font-size:.85rem">${LIVE_STATE.n} questions</span>${LIVE_STATE.tabLimit?`<span style="color:var(--mut);font-size:.8rem">Auto-submit: ${LIVE_STATE.tabLimit} tab switches</span>`:''}<span class="timer num" id="liveTimer">--:--</span></div>
+  <div class="panel"><div class="vh" style="margin-bottom:0"><div><h3>Student leaderboard</h3><div class="ph-sub">${LIVE_STATE.showRanks?'Live scores are visible to students.':'Live scores are visible only to you.'} Written answers are excluded until graded.</div></div>
+   <button class="btn ${LIVE_STATE.showRanks?'btn-ghost':'btn-main'} btn-sm" id="rankToggle">${LIVE_STATE.showRanks?'Hide from students':'Show to students'}</button></div>
+   <div id="liveLeaderboard">${LIVE_STATE.showRanks&&board.length?`<div class="tblwrap" style="margin-top:14px"><table><thead><tr><th>Rank</th><th>Student</th><th>MCQ score</th><th>Tab switches</th></tr></thead><tbody>${board.map((p,i)=>`<tr><td data-label="Rank">${i+1}</td><td data-label="Student">${esc(p.name)}</td><td data-label="MCQ score" class="num">${p.score}/${p.total}</td><td data-label="Tab switches">${p.warn}</td></tr>`).join('')}</tbody></table></div>`:`<div class="help" style="padding-top:12px">${LIVE_STATE.showRanks?'Waiting for students to join…':'Turn on the leaderboard whenever you are ready.'}</div>`}</div>
+  </div>
   <div class="panel"><h3>Live roster</h3><div class="ph-sub">${roster.length} student(s) joined</div>
    ${roster.length?`<div class="tblwrap"><table><thead><tr><th>Student</th><th>Progress</th><th>Tab warnings</th><th>Submitted</th></tr></thead><tbody>
     ${roster.map(p=>`<tr><td data-label="Student"><div class="cv">${esc(p.name)} <span class="mono" style="color:var(--mut);font-size:.76rem">${esc(p.id)}</span></div></td>
      <td data-label="Progress"><div class="cv"><div class="progwrap" style="display:inline-block;vertical-align:middle"><i style="width:${Math.round(p.answered/LIVE_STATE.n*100)}%"></i></div> <span style="font-size:.76rem;color:var(--mut)">${p.answered}/${LIVE_STATE.n}</span></div></td>
-     <td data-label="Warnings">${p.warn>0?`<span class="badge off">${p.warn}</span>`:'—'}</td>
+     <td data-label="Warnings">${p.warn>0?`<span class="badge ${p.autoSubmitted?'off':'pending'}">${p.warn}${p.autoSubmitted?' · auto-submitted':''}</span>`:'—'}</td>
      <td data-label="Submitted">${p.sub?'<i class="fas fa-circle-check" style="color:var(--green)"></i>':'…'}</td></tr>`).join('')}
    </tbody></table></div>`:`<div class="empty"><i class="fas fa-user-clock"></i><b>Waiting for students to join…</b></div>`}
   </div>`;
   $('#endTest').onclick=async()=>{ if(await confirmModal('End test now','Scoring will be finalised for everyone currently taking the test.','End test')) SOCK.emit('admin:end'); };
+  $('#rankToggle').onclick=()=>{const enabled=!LIVE_STATE.showRanks;LIVE_STATE.showRanks=enabled;if(!enabled)LIVE_STATE.board=[];SOCK.emit('admin:rank-control',enabled);renderLiveView()};
   clearInterval(liveTickHandle);
   const upd=()=>{ const el=$('#liveTimer'); if(!el)return clearInterval(liveTickHandle);
    const s=Math.max(0,Math.round((LIVE_STATE.end-Date.now())/1000)); el.textContent=`${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`; };
@@ -454,11 +528,37 @@ function renderLiveView(){
   </div></div>`:''}
   <div class="panel"><h3>Full leaderboard</h3>
    ${board.length?`<div class="tblwrap"><table><thead><tr><th>#</th><th>Student</th><th>Score</th><th>Warnings</th></tr></thead><tbody>
-    ${board.map((p,i)=>`<tr><td data-label="#">${i+1}</td><td data-label="Student">${esc(p.name)}</td><td data-label="Score" class="num">${p.score}/${p.total}</td><td data-label="Warnings">${p.warn||0}</td></tr>`).join('')}
+    ${board.map((p,i)=>`<tr><td data-label="#">${i+1}</td><td data-label="Student">${esc(p.name)}</td><td data-label="Score" class="num">${p.score}/${p.total}${p.pending?`<div class="help">${p.pending} written answer(s) awaiting review</div>`:''}</td><td data-label="Warnings">${p.warn||0}</td></tr>`).join('')}
    </tbody></table></div>`:`<div class="empty"><i class="fas fa-ghost"></i><b>No one took part this time</b></div>`}
   </div>`;
+  const reviews=board.filter(p=>p.pending);
+  if(reviews.length){
+   const panel=document.createElement('div');panel.className='panel';
+   panel.innerHTML=`<h3>Written answers awaiting review</h3><div class="ph-sub">Review and grade each student's subjective answers to update their final score.</div>${reviews.map(p=>`<div style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--line)"><span>${esc(p.name)} · ${p.pending} answer(s)</span><button class="btn btn-ghost btn-sm" onclick="reviewTest('${esc(p.rid)}')">Review answers</button></div>`).join('')}`;
+   $('main').append(panel);
+  }
   $('#newTest').onclick=()=>{ LIVE_STATE={phase:'idle'}; live(); };
  }
+}
+async function reviewTest(rid){
+ try{
+  const data=await api('admin/data'),result=data.tests.find(x=>x.rid===rid);
+  if(!result)throw new Error('Test submission not found');
+  const written=(result.responses||[]).filter(x=>x.type==='subjective'&&x.answer);
+  if(!written.length)throw new Error('This test has no written answers to review');
+  formModal({title:`Review written answers · ${result.id}`,okLabel:'Save marks',wide:true,fields:[
+   ...written.map((answer,i)=>({name:`marks${i}`,label:`Question ${i+1} · up to ${answer.points} mark(s)`,inType:'number',req:true,val:String(answer.marks??0),attrs:`min="0" max="${answer.points}" step="0.01"`,help:`${answer.question} — Student answer: ${answer.answer}`})),
+   {name:'feedback',label:'Feedback for the student (optional)',type:'textarea',ph:'Share guidance or suggestions…'}
+  ],onSubmit:async values=>{
+   const marks=written.map((_,i)=>Number(values[`marks${i}`]));
+   if(marks.some((mark,i)=>!Number.isFinite(mark)||mark<0||mark>written[i].points))throw new Error('Check each mark against the question maximum');
+   await api('admin/test-grade',{rid,marks,feedback:values.feedback});closeModal();
+   const updated=await api('admin/data');DATA=updated;
+   const resultNow=updated.tests.find(x=>x.rid===rid),row=LIVE_STATE.board.find(x=>x.rid===rid);
+   if(row&&resultNow){row.score=resultNow.score;row.pending=0}
+   LIVE_STATE.board.sort((a,b)=>b.score-a.score||a.name.localeCompare(b.name));renderLiveView();toast('ok','Written answers graded — student notified');
+  }});
+ }catch(error){toast('err',error.message)}
 }
 
 /* ================= VIEW: Messages ================= */

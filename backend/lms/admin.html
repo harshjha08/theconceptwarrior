@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex, nofollow">
 <title>Admin Console | The Concept Warriors</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <link rel="stylesheet" href="admin.css">
 </head>
@@ -15,18 +15,22 @@
 <!-- ============ LOGIN ============ -->
 <section id="login">
   <div class="login-card">
-    <div class="login-brand"><span class="ic">⚔️</span><div><b>The Concept Warriors</b><small>Admin Console</small></div></div>
-    <p class="login-sub">Sign in to manage students, leads, content and live tests.</p>
+    <div class="login-emblem"><i class="fas fa-bolt"></i></div>
+    <div class="login-brand"><div><b>The Concept Warriors</b><small>LEARNING MANAGEMENT</small></div></div>
+    <div class="login-welcome"><span class="login-kicker">ADMINISTRATOR PORTAL</span><h1>Welcome back.</h1>
+      <p class="login-sub">Sign in to manage students, courses, fees and live assessments.</p>
+    </div>
     <div class="login-err" id="loginErr"></div>
     <form id="lf">
-      <div class="field"><label for="lu">Username</label><input class="inp" id="lu" autocomplete="username" required></div>
+      <div class="field"><label for="lu">Username</label><div class="login-input"><i class="fas fa-user"></i><input class="inp" id="lu" autocomplete="username" placeholder="Enter your username" required></div></div>
       <div class="field"><label for="lp">Password</label>
-        <div class="wrap"><input class="inp" id="lp" type="password" autocomplete="current-password" required>
+        <div class="wrap login-input"><i class="fas fa-lock"></i><input class="inp" id="lp" type="password" autocomplete="current-password" placeholder="Enter your password" required>
           <button type="button" class="eye" id="lpEye" aria-label="Show password"><i class="fas fa-eye"></i></button></div>
       </div>
-      <button class="btn btn-main btn-block" id="lBtn" style="margin-top:8px">Sign In</button>
+      <button class="btn btn-main btn-block" id="lBtn" style="margin-top:8px"><span>Sign in securely</span><i class="fas fa-arrow-right"></i></button>
     </form>
-    <div class="login-note"><i class="fas fa-shield-halved"></i><span>Sessions expire automatically and failed sign-ins are rate-limited. This console is not indexed by search engines.</span></div>
+    <div class="login-note"><i class="fas fa-shield-halved"></i><span>Your session is encrypted, rate-limited and automatically expires when inactive.</span></div>
+    <div class="login-footer"><i class="fas fa-graduation-cap"></i> The Concept Warriors <span>·</span> Secure admin access</div>
   </div>
 </section>
 
@@ -38,6 +42,7 @@
     <div class="tb-search"><i class="fas fa-search"></i><input id="gsearch" placeholder="Search students… (Enter)"></div>
     <div class="tb-right">
       <div class="live-pill" id="livePill"><span class="live-dot"></span><span id="livePillTxt">Connecting</span></div>
+      <button class="theme-btn" id="soundBtn" aria-label="Toggle notification sound" title="Toggle notification sound"><i class="fas fa-volume-high"></i></button>
       <button class="theme-btn" id="themeBtn" aria-label="Toggle theme"><i class="fas fa-moon"></i></button>
       <div class="avatar-menu">
         <button class="avatar-btn" id="avBtn"><span class="av">A</span><span>Admin</span><i class="fas fa-chevron-down" style="font-size:.7rem;color:var(--mut)"></i></button>

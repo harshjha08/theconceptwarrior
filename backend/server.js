@@ -49,7 +49,8 @@ app.use(express.static(SITE_ROOT,{dotfiles:'deny'}));
 const rnd=n=>crypto.randomBytes(n).toString('hex');
 const hash=(p,s)=>crypto.scryptSync(String(p),s,32).toString('hex');
 const checkHash=(pw,salt,hex)=>{const a=Buffer.from(hash(pw,salt),'hex'),b=Buffer.from(hex,'hex');return a.length===b.length&&crypto.timingSafeEqual(a,b)};
-const mk=(id,name,course,pw)=>{const salt=rnd(8);return{id,name,course,salt,hash:hash(pw,salt),joined:Date.now(),disabled:false}};
+const mk=(id,name,course,pw,details={})=>{const salt=rnd(8);return{id,name,course,salt,hash:hash(pw,salt),joined:Date.now(),disabled:false,...details}};
+const feeBalance=s=>Math.max(0,Math.round((Number(s.fees?.total||0)-Number(s.fees?.paid||0)+Number.EPSILON)*100)/100);
 
 // ---- question bank seed (admins can add more from the Question Bank screen) ----
 const BANK0=[
@@ -73,7 +74,9 @@ async function start(){
  db.bank=db.bank||BANK0;db.res=db.res||[];db.subs=db.subs||[];db.leads=db.leads||[];db.log=db.log||[];
  db.ann=(db.ann||[]).map(a=>a.id?a:{...a,id:rnd(4)});
  db.leads=(db.leads||[]).map(l=>l.id?l:{...l,id:rnd(4),status:l.status||'new'});
- db.students=(db.students||[]).map(s=>('disabled'in s)?s:{...s,disabled:false});
+ db.students=(db.students||[]).map(s=>({...s,disabled:!!s.disabled,phone:s.phone||'',email:s.email||'',guardian:s.guardian||'',className:s.className||'',fees:s.fees||{total:0,paid:0,payments:[]}}));
+ db.bank=db.bank.map(x=>({...x,id:x.id||rnd(8),type:x.type||'mcq',points:Number(x.points)||1,s:x.s||'Physics'}));
+ db.results=(db.results||[]).map(x=>x.type==='test'&&!x.rid?{...x,rid:rnd(8),objectiveScore:x.score,pending:0,responses:[],subjectiveGraded:true}:x);
  if(!db.admin){
   const initialPassword=process.env.ADMIN_PASSWORD||(process.env.NODE_ENV==='production'?null:'admin123');
   if(!initialPassword)throw new Error('Set ADMIN_PASSWORD before the first production start.');
@@ -92,7 +95,12 @@ function log(type,msg){const e={id:rnd(4),type,msg,d:Date.now()};db.log.push(e);
 // ---- sessions (in-memory, sliding expiry) ----
 const sess={},TTL_ADMIN=2*60*60e3,TTL_STUDENT=12*60*60e3;
 function liveSess(t){if(!t)return null;const s=sess[t];if(!s)return null;if(s.exp<Date.now()){delete sess[t];return null}s.exp=Date.now()+(s.admin?TTL_ADMIN:TTL_STUDENT);return s}
-const auth=(q,r,n)=>{const s=liveSess(q.headers.authorization);if(!s||s.admin)return r.status(401).json({e:'Please login again'});q.u=s;n()};
+const auth=(q,r,n)=>{
+ const s=liveSess(q.headers.authorization);if(!s||s.admin)return r.status(401).json({e:'Please login again'});
+ const student=db.students.find(x=>x.id===s.id);
+ if(!student||student.disabled||feeBalance(student)>0)return r.status(403).json({e:'LMS access is unavailable. Please contact your tutor about your account or outstanding fees.'});
+ q.u=s;n();
+};
 const adm=(q,r,n)=>{const s=liveSess(q.headers.authorization);if(!s||!s.admin)return r.status(401).json({e:'Please login again'});q.u=s;n()};
 
 // ---- brute-force protection (per key sliding window + lockout) ----
@@ -107,6 +115,7 @@ app.post('/api/login',(q,r)=>{
  const{id,password}=q.body||{},s=db.students.find(x=>x.id===id);
  if(!s||!checkHash(password||'',s.salt,s.hash)){recordFail(key,8,15);return r.status(401).json({e:'Invalid ID or password'})}
  if(s.disabled)return r.status(403).json({e:'This account has been disabled. Please contact your tutor.'});
+ if(feeBalance(s)>0)return r.status(403).json({e:'Your account is awaiting fee payment. Please contact your tutor to restore LMS access.'});
  recordOk(key);s.last=Date.now();save();
  const t=rnd(16);sess[t]={id,exp:Date.now()+TTL_STUDENT};r.json({t,id,name:s.name,exp:sess[t].exp})});
 app.post('/api/logout',(q,r)=>{delete sess[q.headers.authorization];r.json({ok:1})});
@@ -121,7 +130,7 @@ app.post('/api/reset',(q,r)=>{const{id,code,password}=q.body,x=db.resets.find(y=
 app.get('/api/home',auth,(q,r)=>r.json({ann:db.ann.slice(-20).reverse(),results:db.results.filter(x=>x.id===q.u.id),name:db.students.find(x=>x.id===q.u.id).name}));
 app.get('/api/msgs',auth,(q,r)=>r.json(db.msgs.filter(m=>m.to==='all'||m.to===q.u.id||m.from===q.u.id).slice(-50)));
 app.post('/api/msgs',auth,(q,r)=>{if(!q.body.b)return r.status(400).json({e:'Empty message'});db.msgs.push({from:q.u.id,to:'tutor',b:String(q.body.b).slice(0,500),d:Date.now()});save();log('message',`${q.u.id} sent a message`);r.json({ok:1})});
-const dq=()=>{const n=db.bank.length,d=Math.floor(Date.now()/864e5);return Array.from({length:Math.min(5,n)},(_,i)=>(d*5+i)%n)};
+const dq=()=>{const eligible=db.bank.map((x,i)=>x.type==='subjective'?null:i).filter(i=>i!==null),n=eligible.length,d=Math.floor(Date.now()/864e5);return Array.from({length:Math.min(5,n)},(_,i)=>eligible[(d*5+i)%n])};
 const did=u=>db.results.find(x=>x.id===u&&x.type==='quiz'&&x.day===today());
 app.get('/api/quiz',auth,(q,r)=>{const done=did(q.u.id);r.json(done?{done}:{qs:dq().map(i=>({q:db.bank[i].q,o:db.bank[i].o}))})});
 app.post('/api/quiz',auth,(q,r)=>{if(did(q.u.id))return r.status(400).json({e:'Already attempted today'});
@@ -157,17 +166,45 @@ app.post('/api/admin/password',adm,(q,r)=>{const{current,next}=q.body||{};
 
 // ========================= ADMIN DATA =========================
 app.get('/api/admin/data',adm,(q,r)=>r.json({
- students:db.students.map(({salt,hash,...s})=>s),
+ students:db.students.map(({salt,hash,...s})=>({...s,feeBalance:feeBalance(s)})),
  resets:db.resets, leads:db.leads.slice().reverse(), res:db.res, bank:db.bank, subs:db.subs,
+ tests:db.results.filter(x=>x.type==='test').slice().reverse(),
  ann:db.ann.slice().reverse(), msgs:db.msgs.slice(-150).reverse(), log:db.log.slice().reverse()
 }));
 
 // ---- students ----
-app.post('/api/admin/enroll',adm,(q,r)=>{const{name,course}=q.body;if(!name)return r.status(400).json({e:'Name required'});
- const id='CW'+(Math.max(2600,...db.students.map(x=>+x.id.slice(2)))+1),pw=rnd(3);db.students.push(mk(id,name,course||'General',pw));save();
- log('enroll',`Enrolled ${name} as ${id}`);r.json({id,password:pw})});
+app.post('/api/admin/enroll',adm,(q,r)=>{const{name,course,phone,email,guardian,className,feeTotal,feePaid}=q.body||{};
+ if(!String(name||'').trim())return r.status(400).json({e:'Student name is required'});
+ const total=Math.round(Number(feeTotal||0)*100)/100,paid=Math.round(Number(feePaid||0)*100)/100;
+ if(!Number.isFinite(total)||!Number.isFinite(paid)||total<0||paid<0||paid>total)return r.status(400).json({e:'Fee amounts must be non-negative, and amount paid cannot exceed the total fee'});
+ const id='CW'+(Math.max(2600,...db.students.map(x=>+x.id.slice(2)))+1),pw=rnd(3),payment=paid?{amount:paid,date:Date.now(),note:'Initial enrollment payment'}:null;
+ const s=mk(id,String(name).trim().slice(0,100),String(course||'General').slice(0,100),pw,{
+  phone:String(phone||'').trim().slice(0,30),email:String(email||'').trim().slice(0,120),
+  guardian:String(guardian||'').trim().slice(0,100),className:String(className||'').trim().slice(0,50),
+  fees:{total,paid,payments:payment?[payment]:[]},disabled:false
+ });
+ db.students.push(s);save();
+ log('enroll',`Enrolled ${s.name} as ${id}${feeBalance(s)>0?' — fee payment pending':''}`);r.json({id,password:pw,feeBalance:feeBalance(s)})});
 app.post('/api/admin/sdel',adm,(q,r)=>{db.students=db.students.filter(x=>x.id!==q.body.id);db.results=db.results.filter(x=>x.id!==q.body.id);save();r.json({ok:1})});
-app.post('/api/admin/sdisable',adm,(q,r)=>{const s=db.students.find(x=>x.id===q.body.id);if(!s)return r.status(404).json({e:'Not found'});s.disabled=!!q.body.disabled;save();log('security',`${s.id} ${s.disabled?'disabled':'re-enabled'}`);r.json({ok:1})});
+app.post('/api/admin/sdisable',adm,(q,r)=>{const s=db.students.find(x=>x.id===q.body.id);if(!s)return r.status(404).json({e:'Not found'});
+ if(!q.body.disabled&&feeBalance(s)>0)return r.status(400).json({e:'Record the outstanding fee payment before restoring LMS access'});
+ s.disabled=!!q.body.disabled;save();log('security',`${s.id} ${s.disabled?'disabled':'re-enabled'}`);r.json({ok:1})});
+app.post('/api/admin/fee',adm,(q,r)=>{const s=db.students.find(x=>x.id===q.body.id);if(!s)return r.status(404).json({e:'Student not found'});
+ const amount=Math.round(Number(q.body.amount)*100)/100;if(!Number.isFinite(amount)||amount<=0)return r.status(400).json({e:'Enter a payment amount greater than zero'});
+ s.fees=s.fees||{total:0,paid:0,payments:[]};if(s.fees.paid+amount>s.fees.total)return r.status(400).json({e:'Payment cannot exceed the remaining balance'});
+ s.fees.paid+=amount;s.fees.payments.push({amount,date:Date.now(),note:String(q.body.note||'').trim().slice(0,160)});
+ save();const balance=feeBalance(s);log('fee',`${s.id} payment recorded — ${balance?'balance remaining':'fees paid in full'}`);
+ if(!balance)emitAfterSave('notify',{to:s.id,tab:'Dashboard',t:'Your fee payment is complete. LMS access is now available.'});
+ r.json({ok:1,feeBalance:balance})});
+app.post('/api/admin/test-grade',adm,(q,r)=>{const result=db.results.find(x=>x.type==='test'&&x.rid===q.body.rid);if(!result)return r.status(404).json({e:'Test result not found'});
+ const responses=result.responses||[],written=responses.filter(x=>x.type==='subjective'&&x.answer),marks=q.body.marks,feedback=String(q.body.feedback||'').trim().slice(0,500);
+ if(!Array.isArray(marks)||marks.length!==written.length)return r.status(400).json({e:'A mark is required for every written answer'});
+ for(let i=0;i<marks.length;i++)if(!Number.isFinite(Number(marks[i]))||Number(marks[i])<0||Number(marks[i])>written[i].points)return r.status(400).json({e:'Each mark must be between zero and the question points'});
+ written.forEach((answer,i)=>{answer.marks=Number(marks[i]);answer.feedback=feedback});
+ result.score=result.objectiveScore+marks.reduce((sum,value)=>sum+Number(value),0);result.pending=0;result.subjectiveGraded=true;result.feedback=feedback;save();
+ emitAfterSave('test:graded',{id:result.id,title:result.title,score:result.score,total:result.total});
+ emitAfterSave('notify',{to:result.id,tab:'Progress',t:`Your written answers for "${result.title}" have been graded.`});
+ log('test',`Written answers for ${result.id}'s "${result.title}" graded`);r.json({ok:1,score:result.score,total:result.total})});
 
 // ---- leads ----
 app.post('/api/admin/lead',adm,(q,r)=>{const l=db.leads.find(x=>x.id===q.body.id);if(!l)return r.status(404).json({e:'Not found'});
@@ -194,9 +231,14 @@ app.post('/api/admin/grade',adm,(q,r)=>{const x=db.subs.find(y=>y.rid===q.body.r
  if(q.body.marks===undefined||q.body.marks==='')return r.status(400).json({e:'Marks required'});x.marks=q.body.marks;x.fb=q.body.fb||'';save();emitAfterSave('notify',{to:x.id,tab:'Library',t:'Your assignment was graded'});r.json({ok:1})});
 
 // ---- question bank ----
-app.post('/api/admin/q',adm,(q,r)=>{const{q:t,o,a,s}=q.body;if(!t||!Array.isArray(o)||o.length!==4||o.some(x=>!String(x).trim())||!(a>=0&&a<4))return r.status(400).json({e:'Question, 4 filled options and a correct option (1-4) are needed'});
- db.bank.push({q:t,o:o.map(String),a:+a,s:s||'Physics'});save();r.json({ok:1})});
-app.post('/api/admin/qdel',adm,(q,r)=>{if(db.bank.length<=5)return r.status(400).json({e:'Keep at least 5 questions so quizzes keep working'});db.bank.splice(+q.body.i,1);save();r.json({ok:1})});
+app.post('/api/admin/q',adm,(q,r)=>{const{q:t,o,a,s,type,subject,points}=q.body||{},kind=type==='subjective'?'subjective':'mcq',score=points===undefined?1:Number(points);
+ if(!String(t||'').trim()||!String(subject||s||'').trim()||!Number.isFinite(score)||score<=0||score>100)return r.status(400).json({e:'A question, subject, and positive point value are required'});
+ if(kind==='mcq'&&(!Array.isArray(o)||o.length!==4||o.some(x=>!String(x).trim())||!Number.isInteger(+a)||!(a>=0&&a<4)))return r.status(400).json({e:'MCQ questions need four filled options and one correct answer'});
+ db.bank.push({id:rnd(8),q:String(t).trim().slice(0,2000),type:kind,points:score,s:String(subject||s).trim().slice(0,80),...(kind==='mcq'?{o:o.map(x=>String(x).trim().slice(0,500)),a:+a}:{})});save();r.json({ok:1})});
+app.post('/api/admin/qdel',adm,(q,r)=>{const i=Number(q.body.i);if(!Number.isInteger(i)||i<0||i>=db.bank.length)return r.status(400).json({e:'Question not found'});
+ if(db.bank.length<=5)return r.status(400).json({e:'Keep at least 5 questions so quizzes keep working'});
+ if(db.bank[i].type!=='subjective'&&db.bank.filter(x=>x.type!=='subjective').length<=1)return r.status(400).json({e:'Keep at least one multiple-choice question for the daily quiz'});
+ db.bank.splice(i,1);save();r.json({ok:1})});
 
 // ---- CSV export ----
 const csvEsc=v=>'"'+String(v??'').replace(/"/g,'""')+'"';
@@ -205,30 +247,63 @@ app.get('/api/admin/export/leads',adm,(q,r)=>{
  const rows=[['Type','Status','Date',...keys],...db.leads.map(l=>[l.type,l.status,new Date(l.d).toISOString(),...keys.map(k=>l.data[k]||'')])];
  r.set('Content-Type','text/csv').set('Content-Disposition','attachment; filename="leads.csv"').send(rows.map(x=>x.map(csvEsc).join(',')).join('\r\n'))});
 app.get('/api/admin/export/students',adm,(q,r)=>{
- const rows=[['ID','Name','Course','Joined','Last Login','Disabled'],...db.students.map(s=>[s.id,s.name,s.course,new Date(s.joined).toISOString(),s.last?new Date(s.last).toISOString():'',s.disabled?'yes':'no'])];
+ const rows=[['ID','Name','Phone','Email','Guardian','Class','Course','Total Fee','Paid','Balance','Joined','Last Login','Disabled'],...db.students.map(s=>[s.id,s.name,s.phone||'',s.email||'',s.guardian||'',s.className||'',s.course,new Intl.NumberFormat('en-IN',{maximumFractionDigits:2}).format(Number(s.fees?.total||0)),new Intl.NumberFormat('en-IN',{maximumFractionDigits:2}).format(Number(s.fees?.paid||0)),new Intl.NumberFormat('en-IN',{maximumFractionDigits:2}).format(feeBalance(s)),new Date(s.joined).toISOString(),s.last?new Date(s.last).toISOString():'',s.disabled?'yes':'no'])];
  r.set('Content-Type','text/csv').set('Content-Disposition','attachment; filename="students.csv"').send(rows.map(x=>x.map(csvEsc).join(',')).join('\r\n'))});
 
 // ========================= LIVE TEST (Socket.IO) =========================
 let live=null,timer=null;
-const pub=()=>({title:live.title,end:live.end,n:live.qs.length});
-const updLive=()=>io.to('adm').emit('test:live',Object.entries(live.p).map(([id,p])=>({id,name:p.name,answered:Object.keys(p.ans).length,warn:p.warn,sub:!!p.sub})));
+const pub=()=>({title:live.title,end:live.end,n:live.qs.length,showRanks:live.showRanks,tabLimit:live.tabLimit});
+const currentBoard=()=>Object.entries(live.p).map(([id,p])=>{
+ let score=0,total=0;live.qs.forEach((x,i)=>{if(x.type!=='subjective'){const points=Number(x.points)||1;total+=points;if(p.ans[i]===x.a)score+=points}});
+ return{id,name:p.name,score,total,warn:p.warn,sub:!!p.sub,pending:live.qs.some((x,i)=>x.type==='subjective'&&p.ans[i])};
+}).sort((a,b)=>b.score-a.score||a.name.localeCompare(b.name));
+const updLive=()=>{
+ const roster=Object.entries(live.p).map(([id,p])=>({id,name:p.name,answered:Object.values(p.ans).filter(x=>x!==undefined&&x!==null&&x!=='').length,warn:p.warn,sub:!!p.sub,autoSubmitted:!!p.autoSubmitted}));
+ io.to('adm').emit('test:live',roster);
+ io.to('adm').emit('test:rank',currentBoard());
+ if(live.showRanks)io.to('test-students').emit('test:rank',currentBoard());
+};
 async function finish(){if(!live||live.done)return;live.done=true;clearTimeout(timer);
- const board=Object.entries(live.p).map(([id,p])=>{let sc=0;live.qs.forEach((x,i)=>{if(p.ans[i]===x.a)sc++});
-  db.results.push({id,type:'test',title:live.title,score:sc,total:live.qs.length,d:Date.now()});return{id,name:p.name,score:sc,total:live.qs.length,warn:p.warn}}).sort((a,b)=>b.score-a.score);
+ const board=Object.entries(live.p).map(([id,p])=>{
+  let objectiveScore=0,total=0,pending=0;
+  const responses=live.qs.map((x,i)=>{
+   const points=Number(x.points)||1;total+=points;
+   if(x.type==='subjective'){if(p.ans[i])pending++;return{type:'subjective',question:x.q,answer:String(p.ans[i]||''),points,marks:null}}
+   if(p.ans[i]===x.a)objectiveScore+=points;
+   return{type:'mcq',question:x.q,answer:p.ans[i]===undefined?'':x.o[p.ans[i]],points}
+  });
+  const rid=rnd(8);db.results.push({rid,id,type:'test',title:live.title,score:objectiveScore,objectiveScore,total,pending,subjectiveGraded:pending===0,responses,d:Date.now()});
+  return{id,rid,name:p.name,score:objectiveScore,total,warn:p.warn,pending};
+ }).sort((a,b)=>b.score-a.score||a.name.localeCompare(b.name));
  await save();log('test',`Live test "${live.title}" ended — ${board.length} participant(s)`);io.emit('test:result',{board,title:live.title})}
 io.on('connection',s=>{
- s.on('auth',t=>{const u=liveSess(t);if(!u)return;s.u=u;if(u.admin)s.join('adm');if(live&&!live.done&&!u.admin)s.emit('test:open',pub())});
- s.on('admin:start',d=>{if(!s.u||!s.u.admin)return;const m=(+d.dur||5)*6e4;
-  live={title:String(d.title||'Live Test').slice(0,80),qs:[...db.bank].sort(()=>Math.random()-.5).slice(0,Math.min(+d.n||5,db.bank.length)),end:Date.now()+m,p:{},done:false};
-  clearTimeout(timer);  timer=setTimeout(()=>finish().catch(error=>console.error('Could not save live test results:',error)),m);log('test',`Live test "${live.title}" started (${live.qs.length} Qs, ${d.dur||5} min)`);io.emit('test:open',pub())});
+ s.on('auth',t=>{const u=liveSess(t);if(!u)return;s.u=u;if(u.admin){s.join('adm');if(live&&!live.done){s.emit('test:open',pub());s.emit('test:live',Object.entries(live.p).map(([id,p])=>({id,name:p.name,answered:Object.keys(p.ans).length,warn:p.warn,sub:!!p.sub,autoSubmitted:!!p.autoSubmitted})));s.emit('test:rank',currentBoard())}}else{s.join('test-students');const st=db.students.find(x=>x.id===u.id);if(!st||st.disabled||feeBalance(st)>0)return;if(live&&!live.done){s.emit('test:open',pub());if(live.showRanks)s.emit('test:rank',currentBoard())}}});
+ s.on('admin:start',d=>{if(!s.u||!s.u.admin)return;
+  if(live&&!live.done){s.emit('test:error',{e:'A live test is already in progress. End it before starting another.'});return}
+  const duration=Number(d.dur),n=Number(d.n),tabLimit=Number(d.tabLimit)||0;
+  const title=String(d.title||'').trim().slice(0,80);
+  const selected=Array.isArray(d.questionIds)?[...new Set(d.questionIds.map(String))]:[];
+  const questions=d.mode==='selected'?selected.map(id=>db.bank.find(x=>x.id===id)).filter(Boolean):[...db.bank].sort(()=>Math.random()-.5).slice(0,Math.min(n||5,db.bank.length));
+  if(!title||!Number.isInteger(duration)||duration<1||duration>180||!questions.length||questions.length>100||d.mode==='selected'&&questions.length!==selected.length||d.mode!=='selected'&&(!Number.isInteger(n)||n<1||n>db.bank.length)||!Number.isInteger(tabLimit)||tabLimit<0||tabLimit>50){s.emit('test:error',{e:'Choose a title and valid duration, questions, and tab-switch limit.'});return}
+  const m=duration*6e4;
+  live={title,qs:questions,end:Date.now()+m,p:{},done:false,showRanks:!!d.showRanks,tabLimit};
+  clearTimeout(timer);timer=setTimeout(()=>finish().catch(error=>console.error('Could not save live test results:',error)),m);log('test',`Live test "${live.title}" started (${live.qs.length} Qs, ${duration} min)`);io.emit('test:open',pub())});
+ s.on('admin:rank-control',enabled=>{if(!s.u||!s.u.admin||!live||live.done)return;live.showRanks=!!enabled;s.emit('test:rank',currentBoard());io.to('test-students').emit('test:rank-control',{enabled:live.showRanks});if(live.showRanks)io.to('test-students').emit('test:rank',currentBoard())});
  s.on('admin:end',()=>{if(s.u&&s.u.admin)finish().catch(error=>console.error('Could not save live test results:',error))});
- s.on('test:join',()=>{if(!live||live.done||!s.u||s.u.admin)return;const st=db.students.find(x=>x.id===s.u.id);if(!st)return;
+ s.on('test:join',()=>{if(!live||live.done||!s.u||s.u.admin)return;const st=db.students.find(x=>x.id===s.u.id);if(!st||st.disabled||feeBalance(st)>0)return;
   const p=live.p[st.id]=live.p[st.id]||{name:st.name,ans:{},warn:0};
-  s.emit('test:begin',{title:live.title,end:live.end,ans:p.ans,qs:live.qs.map(({q,o})=>({q,o}))});updLive()});
- const P=()=>s.u&&live&&!live.done&&live.p[s.u.id];
- s.on('test:answer',({i,o})=>{const p=P();if(p){p.ans[i]=o;updLive()}});
- s.on('test:warn',()=>{const p=P();if(p){p.warn++;updLive()}});
- s.on('test:submit',()=>{const p=P();if(p){p.sub=true;updLive()}});
+  if(p.sub){s.emit('test:submitted');return}
+  s.emit('test:begin',{title:live.title,end:live.end,ans:p.ans,qs:live.qs.map(x=>({q:x.q,type:x.type,points:x.points,o:x.o||[]}))});updLive()});
+ const P=()=>{
+  if(!s.u||s.u.admin||!live||live.done)return null;
+  const student=db.students.find(x=>x.id===s.u.id),participant=live.p[s.u.id];
+  return student&&!student.disabled&&!feeBalance(student)&&participant&&!participant.sub?participant:null;
+ };
+ s.on('test:answer',({i,o})=>{const p=P();if(!p||!Number.isInteger(i)||i<0||i>=live.qs.length)return;
+  const question=live.qs[i];if(question.type==='subjective'){if(typeof o!=='string'||o.length>5000)return;p.ans[i]=o.trim()}else if(Number.isInteger(o)&&o>=0&&o<question.o.length)p.ans[i]=o;else return;
+  updLive()});
+ s.on('test:warn',()=>{const p=P();if(p){p.warn++;s.emit('test:warning',{warn:p.warn,limit:live.tabLimit});if(live.tabLimit&&p.warn>=live.tabLimit){p.sub=true;p.autoSubmitted=true;s.emit('test:auto-submit',{warn:p.warn,limit:live.tabLimit})}updLive()}});
+ s.on('test:submit',()=>{const p=P();if(p){p.sub=true;updLive();s.emit('test:submitted')}});
 });
 
 function listen(){
